@@ -347,36 +347,52 @@
   .services h2 span { display: block; color: var(--muted); }
   .services h2 { text-wrap: balance; }
   .services > header p { color: var(--muted); font-size: 18px; line-height: 1.5; margin-top: 16px; }
-  .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 250px; gap: 16px; }
-  .tile {
-    position: relative; overflow: hidden; border-radius: 28px; padding: 26px; display: flex; flex-direction: column; justify-content: flex-end;
-    background: #fff; box-shadow: 0 0 0 1px var(--line), var(--shadow);
-    transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .8s cubic-bezier(.2,.8,.2,1);
+  /* Soluciones: lista editorial (filas + hairlines) con un escenario de preview al costado.
+     La estructura es tipográfica y atemporal; los artefactos animados viven en el escenario. */
+  .svc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 460px); gap: clamp(36px, 5vw, 72px); align-items: start; }
+  .rows { list-style: none; padding: 0; margin: 0; }
+  .row {
+    display: grid; grid-template-columns: 50px minmax(0, 1fr) 30px; column-gap: 16px; align-items: center;
+    width: 100%; padding: 21px 4px; text-align: left; border: 0; border-top: 1px solid var(--line);
+    background: none; cursor: pointer; font: inherit; color: inherit;
+    transition: opacity .7s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.2,.8,.2,1);
   }
   /* El contenido no muere sin JS: solo se esconde para animar cuando el script corre */
-  .js .tile:not(.on) { opacity: 0; transform: translateY(24px); }
-  .tile:not(.vis) *, .tile:not(.vis)::before { animation-play-state: paused !important; }
-  .tile h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -.03em; position: relative; }
-  /* Índice mono en cada tile (estilo Profound/Typesafe) */
-  .tile .idx { position: absolute; top: 26px; left: 30px; font: 600 12.5px/1 ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .12em; color: var(--muted); z-index: 1; }
-  .tile.t-dark .idx { color: rgba(255,255,255,.65); }
-  .tile p { color: var(--muted); font-size: 15px; line-height: 1.45; margin-top: 6px; max-width: 34ch; position: relative; }
-  .tile .viz { position: absolute; inset: 0 0 96px; display: grid; place-items: center; }
-  .t-app { grid-column: span 2; grid-row: span 2; background: linear-gradient(180deg, #fff, #f5f6f8); }
-  .t-web { grid-column: span 2; } .t-int { grid-column: span 2; } .t-data { grid-column: span 2; }
-  .t-app .viz { inset: 0 0 110px; }
-  .t-dark { background: var(--ink); color: #fff; } .t-dark p { color: #a7a9ae; }
-  /* Resplandor que sigue el cursor: un solo radial pre-renderizado, movido en compositores */
-  .tile::before { content: ''; position: absolute; inset: 0; z-index: 0; opacity: 0; pointer-events: none;
-    background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(232,54,79,.07), transparent 65%);
-    transition: opacity .3s ease; }
-  .tile:hover::before { opacity: 1; }
-  .t-dark::before { background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,.07), transparent 65%); }
+  .js .row:not(.seen) { opacity: 0; transform: translateY(16px); }
+  .row .n { grid-column: 1; grid-row: 1 / span 2; font: 600 12.5px/1.9 ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .12em; color: var(--muted); transition: color .3s ease; }
+  .row h3 { grid-column: 2; grid-row: 1; font-family: Manrope, sans-serif; font-weight: 700; font-size: 23px; line-height: 1.15; letter-spacing: -.03em; }
+  .row p { grid-column: 2; grid-row: 2; color: var(--muted); font-size: 15px; line-height: 1.45; margin: 3px 0 0; max-width: 44ch; }
+  .row .arr { grid-column: 3; grid-row: 1 / span 2; color: var(--ink); opacity: 0; transform: translateX(-7px); transition: opacity .35s cubic-bezier(.2,.8,.2,1), transform .35s cubic-bezier(.2,.8,.2,1); }
+  .row.on .n { color: #e8364f; }
+  .row.on .arr, .row:hover .arr { opacity: 1; transform: none; }
+  .rows li:last-child .row { border-bottom: 1px solid var(--line); }
 
-  /* En desktop las tarjetas responden al hover (solo texto/arte: en busy-text le toca sombra profunda) */
-  @media (hover: hover) {
-    .tile { transition: opacity .8s cubic-bezier(.2,.8,.2,1), transform .25s cubic-bezier(.2,.8,.2,1), box-shadow .25s cubic-bezier(.2,.8,.2,1); }
-    .tile:hover { transform: translateY(-4px); box-shadow: 0 0 0 1px var(--line), 0 24px 48px -12px rgba(17,18,20,.16); }
+  /* Escenario: un solo marco donde cada fila deja su artefacto. Los carriles con animaciones
+     viven aquí, así la lista se queda limpia y las animaciones corren solo en pantalla. */
+  .stageon { position: relative; height: 460px; border-radius: 28px; overflow: hidden;
+    background: #fff; box-shadow: 0 0 0 1px var(--line), var(--shadow); }
+  .pn { position: absolute; inset: 0; margin: 0; display: grid; place-items: center; padding: 30px;
+    opacity: 0; transform: translateY(14px) scale(.985); pointer-events: none;
+    transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .5s cubic-bezier(.2,.8,.2,1); }
+  .pn.on { opacity: 1; transform: none; }
+  .pn--dark { background: var(--ink); }
+  /* Los artefactos suben de escala para el marco grande del escenario */
+  .pn .phone { margin-top: 0; }
+  .pn .bars3 { height: 150px; gap: 13px; }
+  .pn .bars3 i { width: 27px; }
+  .pn .spark { width: min(78%, 360px); }
+  .pn .spark svg { width: 100%; min-width: 0; height: 150px; }
+  .pn .pipe { height: 46px; }
+  .stageon:not(.vis) * { animation-play-state: paused !important; }
+  .tag { position: absolute; top: 22px; left: 26px; z-index: 5; font: 600 11.5px/1.6 ui-monospace, 'SF Mono', Menlo, monospace;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--muted); transition: color .4s ease; }
+  .stageon.ondark .tag { color: rgba(255,255,255,.62); }
+  @media (max-width: 800px) {
+    .stageon { height: 360px; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; }
+    .stageon::-webkit-scrollbar { display: none; }
+    .stageon { scrollbar-width: none; }
+    .pn { position: relative; inset: auto; flex: 0 0 100%; scroll-snap-align: center; opacity: 1; transform: none; }
+    .tag { top: 16px; left: 20px; }
   }
 
   /* App: teléfono con notificaciones que van subiendo */
@@ -433,8 +449,8 @@
   .spark strong small { display: block; font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0; color: #1fbf6b; margin-top: 4px; }
   @keyframes draw { 0% { stroke-dashoffset: 600; } 60%, 100% { stroke-dashoffset: 0; } }
 
-  @media (max-width: 960px) { .proof { grid-template-columns: repeat(2, 1fr); } .proof div:nth-child(3) { border-left: 0; } .proof div:nth-child(n+3) { border-top: 1px solid var(--line); } .bento { grid-template-columns: repeat(2, 1fr); } .t-app { grid-row: span 2; } }
-  @media (max-width: 640px) { .bento { grid-template-columns: 1fr; grid-auto-rows: 260px; } .tile { grid-column: auto !important; } .t-app { grid-row: span 2; } .hub .col:last-child { display: none; } .proof { grid-template-columns: 1fr; } .proof div + div { border-left: 0; border-top: 1px solid var(--line); } }
+  @media (max-width: 960px) { .proof { grid-template-columns: repeat(2, 1fr); } .proof div:nth-child(3) { border-left: 0; } .proof div:nth-child(n+3) { border-top: 1px solid var(--line); } .svc { grid-template-columns: 1fr; } .stageon { order: -1; } }
+  @media (max-width: 640px) { .hub .col:last-child { display: none; } .proof { grid-template-columns: 1fr; } .proof div + div { border-left: 0; border-top: 1px solid var(--line); } .row { padding: 17px 0; } .row h3 { font-size: 20px; } .row .n { display: none; } .row { grid-template-columns: minmax(0, 1fr) 30px; } .stageon { height: 320px; border-radius: 22px; } }
 
   @media (max-width: 760px) { .flow { display: none; } }
   @media (max-width: 760px) {
@@ -586,53 +602,77 @@
     <h2>Software hecho a tu medida. <span>De la idea al lanzamiento.</span></h2>
     <p>Diseñamos, programamos y lanzamos. Tú solo nos cuentas qué te quita tiempo o qué te imaginas.</p>
   </header>
-  <div class="bento">
-    <article class="tile t-app"><i class="idx">01</i>
-      <div class="viz"><div class="phone"><div class="notes">
-        <div><i style="--c:#f59e0b"></i><span>Tu bus llega en 3 min<small>Ya Viene · ahora</small></span></div>
-        <div><i style="--c:#ec4899"></i><span>Pedido #2041 confirmado<small>Tienda · hace 1 min</small></span></div>
-        <div><i style="--c:#06b6d4"></i><span>Nueva reserva a las 4:00<small>Agenda · hace 5 min</small></span></div>
-        <div><i style="--c:#22c55e"></i><span>Pago recibido<small>Caja · hace 8 min</small></span></div>
-        <div><i style="--c:#8b5cf6"></i><span>Reporte semanal listo<small>Panel · hoy</small></span></div>
-        <div><i style="--c:#f59e0b"></i><span>Tu bus llega en 3 min<small>Ya Viene · ahora</small></span></div>
-        <div><i style="--c:#ec4899"></i><span>Pedido #2041 confirmado<small>Tienda · hace 1 min</small></span></div>
-      </div></div></div>
-      <h3>Apps móviles</h3>
-      <p>Para iPhone y Android, rápidas y fáciles de usar. Como Ya Viene, publicada en App Store y Google Play.</p>
-    </article>
-    <article class="tile t-web"><i class="idx">02</i>
-      <div class="viz"><div class="browser"><div class="top"><i></i><i></i><i></i></div><div class="body"><b></b><b></b><b></b><b></b></div></div></div>
-      <h3>Páginas web y tiendas</h3>
-      <p>Sitios que venden: catálogo, pagos y pedidos en un solo lugar.</p>
-    </article>
-    <article class="tile t-dark"><i class="idx">03</i>
-      <div class="viz"><div class="pipe"><i></i><i></i><i></i><b></b></div></div>
-      <h3>Automatización</h3>
-      <p>Las tareas repetitivas se hacen solas.</p>
-    </article>
-    <article class="tile"><i class="idx">04</i>
-      <div class="viz"><div class="bars3"><i></i><i></i><i></i><i></i><i></i></div></div>
-      <h3>Sistemas a la medida</h3>
-      <p>Inventario, ventas y operación.</p>
-    </article>
-    <article class="tile t-int"><i class="idx">05</i>
-      <div class="viz"><div class="hub">
-        <div class="col"><span class="pill"><i style="--c:#22c55e"></i>WhatsApp</span><span class="pill"><i style="--c:#10b981"></i>Excel</span></div>
-        <span class="line"></span><span class="core"><svg><use href="#estela"/></svg></span><span class="line"></span>
-        <div class="col"><span class="pill"><i style="--c:#8b5cf6"></i>Pagos</span><span class="pill"><i style="--c:#3b82f6"></i>Tu CRM</span></div>
-      </div></div>
-      <h3>Integraciones</h3>
-      <p>Conectamos las herramientas que ya usas para que hablen entre sí.</p>
-    </article>
-    <article class="tile t-data"><i class="idx">06</i>
-      <div class="viz"><div class="spark">
-        <svg viewBox="0 0 300 90" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="#e8364f"/><stop offset="1" stop-color="#7b4fd6"/></linearGradient></defs>
-          <path d="M0 78 C30 74 45 60 70 62 S110 40 135 46 S175 22 200 30 S250 8 300 6" fill="none" stroke="url(#sg)" stroke-width="3" stroke-linecap="round"/></svg>
-        <strong>+38%<small>ventas · ejemplo</small></strong>
-      </div></div>
-      <h3>Datos y reportes</h3>
-      <p>Paneles en tiempo real para decidir con números, no con corazonadas.</p>
-    </article>
+  <div class="svc">
+    <ul class="rows">
+      <li><button class="row" data-s="app" data-t="Ya Viene · Apps"><i class="n">01</i>
+        <h3>Apps móviles</h3>
+        <p>Para iPhone y Android, rápidas y fáciles de usar. Como Ya Viene, publicada en App Store y Google Play.</p>
+        <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3l5 5-5 5"/></svg>
+      </button></li>
+      <li><button class="row" data-s="web" data-t="Web · Tiendas"><i class="n">02</i>
+        <h3>Páginas web y tiendas</h3>
+        <p>Sitios que venden: catálogo, pagos y pedidos en un solo lugar.</p>
+        <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3l5 5-5 5"/></svg>
+      </button></li>
+      <li><button class="row" data-s="dark" data-t="Automatización"><i class="n">03</i>
+        <h3>Automatización</h3>
+        <p>Las tareas repetitivas se hacen solas.</p>
+        <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3l5 5-5 5"/></svg>
+      </button></li>
+      <li><button class="row" data-s="sys" data-t="Sistemas a la medida"><i class="n">04</i>
+        <h3>Sistemas a la medida</h3>
+        <p>Inventario, ventas y operación.</p>
+        <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3l5 5-5 5"/></svg>
+      </button></li>
+      <li><button class="row" data-s="int" data-t="Integraciones"><i class="n">05</i>
+        <h3>Integraciones</h3>
+        <p>Conectamos las herramientas que ya usas para que hablen entre sí.</p>
+        <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3l5 5-5 5"/></svg>
+      </button></li>
+      <li><button class="row" data-s="data" data-t="Datos · Reportes"><i class="n">06</i>
+        <h3>Datos y reportes</h3>
+        <p>Paneles en tiempo real para decidir con números, no con corazonadas.</p>
+        <svg class="arr" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 3l5 5-5 5"/></svg>
+      </button></li>
+    </ul>
+
+    <div class="stageon" id="escena">
+      <output class="tag" aria-hidden="true">Ya Viene · Apps</output>
+      <figure class="pn on pn--" data-s="app" data-t="Ya Viene · Apps">
+        <div class="phone"><div class="notes">
+          <div><i style="--c:#f59e0b"></i><span>Tu bus llega en 3 min<small>Ya Viene · ahora</small></span></div>
+          <div><i style="--c:#ec4899"></i><span>Pedido #2041 confirmado<small>Tienda · hace 1 min</small></span></div>
+          <div><i style="--c:#06b6d4"></i><span>Nueva reserva a las 4:00<small>Agenda · hace 5 min</small></span></div>
+          <div><i style="--c:#22c55e"></i><span>Pago recibido<small>Caja · hace 8 min</small></span></div>
+          <div><i style="--c:#8b5cf6"></i><span>Reporte semanal listo<small>Panel · hoy</small></span></div>
+          <div><i style="--c:#f59e0b"></i><span>Tu bus llega en 3 min<small>Ya Viene · ahora</small></span></div>
+          <div><i style="--c:#ec4899"></i><span>Pedido #2041 confirmado<small>Tienda · hace 1 min</small></span></div>
+        </div></div>
+      </figure>
+      <figure class="pn pn--" data-s="web" data-t="Web · Tiendas" aria-hidden="true">
+        <div class="browser"><div class="top"><i></i><i></i><i></i></div><div class="body"><b></b><b></b><b></b><b></b></div></div>
+      </figure>
+      <figure class="pn pn--dark" data-s="dark" data-t="Automatización" aria-hidden="true">
+        <div class="pipe"><i></i><i></i><i></i><b></b></div>
+      </figure>
+      <figure class="pn pn--" data-s="sys" data-t="Sistemas a la medida" aria-hidden="true">
+        <div class="bars3"><i></i><i></i><i></i><i></i><i></i></div>
+      </figure>
+      <figure class="pn pn--" data-s="int" data-t="Integraciones" aria-hidden="true">
+        <div class="hub">
+          <div class="col"><span class="pill"><i style="--c:#22c55e"></i>WhatsApp</span><span class="pill"><i style="--c:#10b981"></i>Excel</span></div>
+          <span class="line"></span><span class="core"><svg><use href="#estela"/></svg></span><span class="line"></span>
+          <div class="col"><span class="pill"><i style="--c:#8b5cf6"></i>Pagos</span><span class="pill"><i style="--c:#3b82f6"></i>Tu CRM</span></div>
+        </div>
+      </figure>
+      <figure class="pn pn--" data-s="data" data-t="Datos · Reportes" aria-hidden="true">
+        <div class="spark">
+          <svg viewBox="0 0 300 90" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="#e8364f"/><stop offset="1" stop-color="#7b4fd6"/></linearGradient></defs>
+            <path d="M0 78 C30 74 45 60 70 62 S110 40 135 46 S175 22 200 30 S250 8 300 6" fill="none" stroke="url(#sg)" stroke-width="3" stroke-linecap="round"/></svg>
+          <strong>+38%<small>ventas · ejemplo</small></strong>
+        </div>
+      </figure>
+    </div>
   </div>
 </section>
 
@@ -865,33 +905,53 @@ function stream() {
   };
   tick();
 }
-// Las tarjetas del bento aparecen al entrar en pantalla.
-const seen = new IntersectionObserver(es => es.forEach(e => {
-  if (!e.isIntersecting) return;
-  e.target.classList.add('on'); seen.unobserve(e.target);
-  // Count-up del +38%: comandado por la misma aparición de la tarjeta, sin timers extra
-  const n = e.target.querySelector('.spark strong');
-  if (n && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const t0 = performance.now();
-    (function tick(now) {
-      const k = Math.min(1, (now - t0) / 1100), p = 1 - (1 - k) ** 3;
-      n.firstChild.textContent = '+' + Math.round(38 * p) + '%';
-      if (k < 1) requestAnimationFrame(tick);
-    })(performance.now());
+// La lista y el escenario se hablan: la fila deja su artefacto al entrar el puntero o el foco.
+// En pantallas angostas el escenario es una tira scrollable y la fila conduce el scroll.
+const escena = document.getElementById('escena');
+const panes = [...escena.querySelectorAll('.pn')];
+const rows = [...document.querySelectorAll('.row')];
+const tira = matchMedia('(max-width: 800px)');
+const clra = matchMedia('(prefers-reduced-motion: reduce)');
+let uso = null;
+function vaya(row) {
+  if (uso === row.dataset.s) return;
+  uso = row.dataset.s;
+  rows.forEach(r => r.classList.toggle('on', r === row));
+  panes.forEach(p => {
+    const on = p.dataset.s === uso;
+    p.classList.toggle('on', on);
+    p.setAttribute('aria-hidden', String(!on));
+  });
+  escena.classList.toggle('ondark', uso === 'dark');
+  escena.querySelector('.tag').textContent = row.dataset.t;
+  if (tira.matches) panes[rows.indexOf(row)].scrollIntoView({ behavior: clra.matches ? 'auto' : 'smooth', inline: 'center', block: 'nearest' });
+  if (uso === 'data' && !vaya.conto) {
+    vaya.conto = true;
+    const n = escena.querySelector('.spark strong');
+    if (n && !clra.matches) {
+      const t0 = performance.now();
+      (function tick(now) {
+        const k = Math.min(1, (now - t0) / 1100), p = 1 - (1 - k) ** 3;
+        n.firstChild.textContent = '+' + Math.round(38 * p) + '%';
+        if (k < 1) requestAnimationFrame(tick);
+      })(performance.now());
+    }
   }
-}), { threshold: .2 });
-const enVista = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('vis', e.isIntersecting)));
-document.querySelectorAll('.tile').forEach(t => enVista.observe(t));
-document.querySelectorAll('.tile').forEach((t, i) => { t.style.transitionDelay = (i % 3) * 90 + 'ms'; t.addEventListener('transitionend', () => t.style.transitionDelay = '', { once: true }); seen.observe(t); });
-
-// Resplandor del cursor en los tiles: sigue el puntero 1:1, sin timers ni easing artificial
-if (matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').matches) {
-  document.querySelectorAll('.tile').forEach(t => t.addEventListener('pointermove', e => {
-    const r = t.getBoundingClientRect();
-    t.style.setProperty('--mx', Math.round(e.clientX - r.left) + 'px');
-    t.style.setProperty('--my', Math.round(e.clientY - r.top) + 'px');
-  }));
 }
+rows.forEach(r => {
+  r.addEventListener('pointerenter', () => vaya(r));
+  r.addEventListener('focusin', () => vaya(r));
+  r.addEventListener('click', () => vaya(r));
+});
+
+// Aparición escalada de las filas, y pausa de las animaciones del escenario fuera de pantalla
+const enVista = new IntersectionObserver(es => es.forEach(e => {
+  if (e.target === escena) { escena.classList.toggle('vis', e.isIntersecting); return; }
+  if (!e.isIntersecting) return;
+  e.target.classList.add('seen'); enVista.unobserve(e.target);
+}), { threshold: .15 });
+rows.forEach((r, i) => { r.style.transitionDelay = i * 55 + 'ms'; enVista.observe(r); r.addEventListener('transitionend', () => r.style.transitionDelay = '', { once: true }); });
+enVista.observe(escena);
 
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
   ws.act.innerHTML = PASOS_APP.map(([h]) => h).join(''); estado('Publicada', '#3ecf74');
