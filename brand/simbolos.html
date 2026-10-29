@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Símbolos Abstractos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&family=Manrope:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter, system-ui, sans-serif; background:#f2f2f2; color:#111; }
+  .wrap { max-width:1100px; margin:0 auto; padding:40px 16px 80px; }
+  h1 { font-weight:600; font-size:28px; } p.sub { color:#666; margin:6px 0 8px; max-width:720px; }
+  h2 { font-size:20px; margin:40px 0 4px; } h2 + p { color:#666; font-size:14px; margin-bottom:16px; max-width:720px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(300px, 1fr)); gap:20px; }
+  .card { background:#fff; border-radius:20px; padding:20px; }
+  .pair { display:flex; gap:12px; justify-content:center; align-items:center; }
+  .ig { width:110px; aspect-ratio:1; border-radius:50%; overflow:hidden; box-shadow:0 0 0 1px #ddd; }
+  .ig.sm { width:36px; }
+  .ig svg { width:100%; height:100%; display:block; }
+  .lock { margin-top:16px; background:#000; color:#fff; border-radius:14px; padding:16px 18px; display:flex; align-items:center; gap:12px; }
+  .lock svg { width:34px; height:34px; flex:none; }
+  .lock span { font-family:Manrope, sans-serif; font-weight:700; font-size:17px; letter-spacing:.18em; white-space:nowrap; }
+  .card h3 { font-size:15px; margin-top:14px; } .card small { color:#666; font-size:12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Símbolos abstractos · Ya Viene Tech</h1>
+  <p class="sub">Las tres ideas, cada una con variantes. Cada símbolo aparece en blanco sobre negro y en negro sobre blanco, recortado en círculo como en Instagram, a 36 px y junto al nombre en Manrope.</p>
+  <div id="out"></div>
+</div>
+<script>
+// Lienzo 200×200, centrado en 100,100. Cada figura recibe el color de primer plano (fg) y uno secundario (dim).
+const poly = (pts, fill) => `<polygon points="${pts}" fill="${fill}"/>`;
+const arc = (cx, cy, r, w, fill) =>   // cuarto de anillo de arriba a la derecha, con cortes rectos
+  `<path d="M ${cx} ${cy - r - w/2} A ${r + w/2} ${r + w/2} 0 0 1 ${cx + r + w/2} ${cy}
+    L ${cx + r - w/2} ${cy} A ${r - w/2} ${r - w/2} 0 0 0 ${cx} ${cy - r + w/2} Z" fill="${fill}"/>`;
+
+const groups = [
+  { t:'1 · Prisma / rombo cinético', s:'Un rombo partido en dos: la ciudad y el ciudadano que se encuentran. Es sólido e institucional.', items:[
+    { t:'Rombo partido', s:'Corte vertical limpio',
+      d:(fg) => poly('30,100 96,34 96,166', fg) + poly('104,34 170,100 104,166', fg) },
+    { t:'Rombo en dos tonos', s:'Una mitad llena y la otra en gris',
+      d:(fg, dim) => poly('30,100 96,34 96,166', fg) + poly('104,34 170,100 104,166', dim) },
+    { t:'Hexágono partido', s:'Más de nodo o de chip',
+      d:(fg) => poly('96,30.3 38,64 38,136 96,169.7', fg) + poly('104,30.3 162,64 162,136 104,169.7', fg) },
+    { t:'Rombo con facetas', s:'Cuatro piezas, como una piedra angular',
+      d:(fg, dim) => poly('34,100 96,38 96,96', fg) + poly('104,38 166,100 104,96', dim)
+                   + poly('34,104 96,104 96,166', dim) + poly('104,104 166,104 104,166', fg) },
+  ]},
+  { t:'2 · Pulso de llegada', s:'El “ping” que detecta el vehículo acercándose. Apunta arriba a la derecha y transmite señal en vivo.', items:[
+    { t:'Tres arcos', s:'Un punto emisor y tres ondas con cortes rectos',
+      d:(fg) => `<rect x="44" y="134" width="22" height="22" fill="${fg}"/>` + arc(55,145,40,16,fg) + arc(55,145,66,16,fg) + arc(55,145,92,16,fg) },
+    { t:'Arcos que se apagan', s:'Cada onda más tenue',
+      d:(fg, dim) => `<rect x="44" y="134" width="22" height="22" fill="${fg}"/>` + arc(55,145,40,16,fg) + arc(55,145,66,16,dim) + arc(55,145,92,16,dim + '" fill-opacity=".45') },
+    { t:'Pulso compacto', s:'Un solo arco grueso y el punto',
+      d:(fg) => `<circle cx="62" cy="138" r="16" fill="${fg}"/>` + arc(62,138,64,30,fg) },
+  ]},
+  { t:'3 · Chevron dual / vértice de avance', s:'Dos piezas en ángulo separadas por un hueco mínimo. Es aerodinámico, afilado y llena el círculo de forma pareja.', items:[
+    { t:'Esquineros enfrentados', s:'Dos L que se encuentran en el centro',
+      d:(fg) => poly('40,40 112,40 112,64 64,64 64,112 40,112', fg) + poly('160,160 88,160 88,136 136,136 136,88 160,88', fg) },
+    { t:'Doble chevron', s:'Dos flechas planas hacia adelante',
+      d:(fg) => poly('40,50 72,50 106,100 72,150 40,150 74,100', fg) + poly('94,50 126,50 160,100 126,150 94,150 128,100', fg) },
+    { t:'Chevrones al centro', s:'Dos puntas que apuntan al punto de encuentro',
+      d:(fg) => poly('36,48 66,48 96,100 66,152 36,152 64,100', fg) + poly('164,48 134,48 104,100 134,152 164,152 136,100', fg) },
+    { t:'Chevron en dos tonos', s:'El de adelante lleno y el de atrás en gris',
+      d:(fg, dim) => poly('40,50 72,50 106,100 72,150 40,150 74,100', dim) + poly('94,50 126,50 160,100 126,150 94,150 128,100', fg) },
+  ]},
+];
+
+const svg = (d, bg, fg, dim) =>
+  `<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">${bg ? `<rect width="200" height="200" fill="${bg}"/>` : ''}${d(fg, dim)}</svg>`;
+// En el círculo el símbolo se reduce al 78 % para que respire dentro del recorte.
+const ig = (d, bg, fg, dim, cls = '') =>
+  `<div class="ig ${cls}"><svg viewBox="-28 -28 256 256" xmlns="http://www.w3.org/2000/svg"><rect x="-28" y="-28" width="256" height="256" fill="${bg}"/>${d(fg, dim)}</svg></div>`;
+
+document.getElementById('out').innerHTML = groups.map(g => `
+  <h2>${g.t}</h2><p>${g.s}</p>
+  <div class="grid">${g.items.map(it => `
+    <div class="card">
+      <div class="pair">${ig(it.d,'#000','#fff','#8a8a8a')}${ig(it.d,'#fff','#000','#9a9a9a')}
+        ${ig(it.d,'#000','#fff','#8a8a8a','sm')}${ig(it.d,'#fff','#000','#9a9a9a','sm')}</div>
+      <div class="lock">${svg(it.d, null, '#fff', '#8a8a8a')}<span>YA VIENE TECH</span></div>
+      <h3>${it.t}</h3><small>${it.s}</small>
+    </div>`).join('')}</div>`).join('');
+</script>
+</body>
+</html>

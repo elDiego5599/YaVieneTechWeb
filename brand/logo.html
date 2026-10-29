@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Logo Y Partido</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing:border-box; margin:0; }
+  body { font-family:Inter, system-ui, sans-serif; background:#f2f2f2; color:#111; }
+  .wrap { max-width:1100px; margin:0 auto; padding:40px 16px 80px; }
+  h1 { font-weight:600; font-size:28px; }
+  p.sub { color:#666; margin:6px 0 28px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(230px, 1fr)); gap:20px; }
+  .card { background:#fff; border-radius:20px; padding:20px; text-align:center; }
+  .card h3 { font-size:15px; margin-top:14px; } .card small { color:#666; font-size:12px; }
+  .pair { display:flex; gap:12px; justify-content:center; align-items:center; }
+  .ig { width:120px; aspect-ratio:1; border-radius:50%; overflow:hidden; box-shadow:0 0 0 1px #ddd; }
+  .ig.sm { width:40px; }
+  .ig svg { width:100%; height:100%; display:block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Y partido · blanco y negro</h1>
+  <p class="sub">Piernas largas, brazos cortos y poco inclinados, base recta, esquina exterior redondeada y la interior en punta. Cada opción aparece en negro sobre blanco y al revés, recortada en círculo como en Instagram y también a 40 px.</p>
+  <div class="grid" id="grid"></div>
+</div>
+<script>
+// Media Y rellena (la izquierda; la derecha es su espejo). Lienzo 200×200, centrada.
+// w grosor del palo, gap hueco, arm alto del brazo, stem alto del palo, slope dx/dy, r radio de la esquina exterior.
+function half({ w, gap, arm, stem, slope: s, r }) {
+  const wa = w * Math.hypot(1, s);              // ancho horizontal del brazo con grosor perpendicular w
+  const H = arm + stem, T = 100 - H / 2, B = T + H;
+  const x1 = 100 - gap / 2, x0 = x1 - w;        // bordes del palo
+  const Fi = T + arm, Fo = Fi + (wa - w) / s;   // quiebre del borde interno y del externo
+  const tipIn = [x1 - s * (Fi - T), T], tipOut = [x0 - s * (Fo - T), T];
+  // Esquina exterior redondeada: un punto sobre el corte superior y otro sobre la diagonal.
+  const L = Math.hypot(s, 1), a = [tipOut[0] + r, T], b = [tipOut[0] + r * s / L, T + r / L];
+  return `M ${x1} ${B} L ${x1} ${Fi} L ${tipIn[0]} ${T} L ${a[0]} ${a[1]}
+    Q ${tipOut[0]} ${T} ${b[0]} ${b[1]} L ${x0} ${Fo} L ${x0} ${B} Z`;
+}
+const Y = (o, fg) => { const d = half(o);
+  return `<g fill="${fg}"><path d="${d}"/><path d="${d}" transform="translate(200 0) scale(-1 1)"/></g>`; };
+
+const opts = [
+  { t:'Clásica',       s:'La pierna mide el doble que el brazo',      w:20, gap:8,  arm:34, stem:70, slope:.55, r:12 },
+  { t:'Esbelta',       s:'Pierna larga y brazo más vertical',          w:18, gap:8,  arm:36, stem:76, slope:.45, r:12 },
+  { t:'Recta',         s:'Casi sin inclinación',                       w:20, gap:8,  arm:40, stem:68, slope:.35, r:14 },
+  { t:'Firme',         s:'Más grosor y brazo corto',                   w:24, gap:10, arm:30, stem:70, slope:.5,  r:14 },
+  { t:'Redondeada',    s:'Mismas proporciones, esquina bien curva',    w:20, gap:8,  arm:34, stem:70, slope:.5,  r:20 },
+  { t:'Fina',          s:'Delgada y alta, más premium',                w:14, gap:7,  arm:38, stem:78, slope:.45, r:10 },
+];
+
+const circle = (o, bg, fg, cls = '') =>
+  `<div class="ig ${cls}"><svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><rect width="200" height="200" fill="${bg}"/>${Y(o, fg)}</svg></div>`;
+
+document.getElementById('grid').innerHTML = opts.map((o, i) => `
+  <div class="card">
+    <div class="pair">${circle(o, '#000', '#fff')}${circle(o, '#fff', '#000')}</div>
+    <div class="pair" style="margin-top:10px">${circle(o, '#000', '#fff', 'sm')}${circle(o, '#fff', '#000', 'sm')}</div>
+    <h3>${i + 1} · ${o.t}</h3><small>${o.s}</small>
+  </div>`).join('');
+</script>
+</body>
+</html>
