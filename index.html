@@ -4,15 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Ya Viene Tech</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <meta name="description" content="Tu idea entra, sale una solución. Software, apps y automatización a la medida.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@200;500;600;700;800&family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@200;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #111214;
     --ink-2: #1f2025;
-    --muted: #6f7175;
+    --muted: #5f6267;
     --page: #eef0f1;
     --frame: #f6f7f8;
     --line: rgba(17, 18, 20, .08);
@@ -28,6 +29,10 @@
   body { font-family: Inter, system-ui, sans-serif; background: var(--page); color: var(--ink); }
   ::selection { background: rgba(232,54,79,.18); }
   a { color: inherit; text-decoration: none; }
+  :focus-visible { outline: 2.5px solid #e8364f; outline-offset: 3px; }
+  .btn:focus-visible, nav .links a:focus-visible { outline-offset: 4px; }
+  @media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+  [id] { scroll-margin-top: 96px; }
 
   /* Marco del hero: va metido 8 px dentro de la página, como en Bevel */
   .hero {
@@ -68,16 +73,24 @@
     display: flex; align-items: center; gap: 28px; padding: 0 12px 0 28px;
     background: #fff;
     border-radius: 0 0 24px 24px; box-shadow: 0 1px 0 rgba(17,18,20,.06), 0 8px 24px -16px rgba(17,18,20,.18);
+    transition: background .5s cubic-bezier(.4,0,.2,1), box-shadow .5s cubic-bezier(.4,0,.2,1), backdrop-filter .5s cubic-bezier(.4,0,.2,1);
   }
   /* Pega el nav al tope de la pantalla una vez que pasa el borde del marco */
-  nav.pin { position: fixed; top: 0; }
-  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; }
+  nav.pin { position: fixed; top: 0; background: rgba(255,255,255,.68); -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%);
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(17,18,20,.05), 0 12px 32px -18px rgba(17,18,20,.28); }
+  @media (prefers-reduced-transparency: reduce) { nav.pin { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; } }
+  @media (prefers-contrast: more) {
+    :root { --muted: #3f4247; --line: rgba(17,18,20,.24); }
+    nav.pin { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1px rgba(17,18,20,.4); }
+    .flag { background: #111214; }
+  }
+  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; padding: 12px 0; border-radius: 12px; }
   .brand svg { width: 48px; height: 25px; }
   .brand span { font-family: Manrope, sans-serif; font-size: 25px; letter-spacing: -.02em; white-space: nowrap; }
   .brand b { font-weight: 800; }
   nav .links { display: flex; gap: 6px; }
-  nav .links a { padding: 12px 20px; border-radius: 999px; font-size: 20px; font-weight: 600; color: var(--ink); transition: background .2s, scale .12s ease-out; }
-  nav .btn { font-size: 20px; font-weight: 700; padding: 16px 32px; }
+  nav .links a { white-space: nowrap; padding: 12px 18px; border-radius: 999px; font-size: 17px; font-weight: 600; color: var(--ink); transition: background .2s, scale .12s ease-out; }
+  nav .btn { font-size: 17px; font-weight: 700; padding: 15px 28px; }
   nav .links a:hover { background: rgba(17,18,20,.05); }
   .btn {
     display: inline-flex; align-items: center; gap: 10px; border-radius: 999px;
@@ -92,7 +105,7 @@
   .copy { position: relative; z-index: 4; text-align: center; padding: calc(72px + clamp(28px, 6vh, 64px)) 16px 0; }
   h1 {
     font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(44px, 6.6vw, 96px);
-    line-height: .94; letter-spacing: -.055em; color: var(--ink);
+    line-height: .96; letter-spacing: -.035em; color: var(--ink);
   }
   h1 .soft { color: var(--ink); }
   h1 em { font-style: normal; }
@@ -137,125 +150,148 @@
   .screen::after { content: ''; position: absolute; inset: 0; z-index: 20; pointer-events: none;
     background: linear-gradient(to bottom, rgba(255,255,255,.04), transparent 25%); }
 
-  /* Editor dentro de la pantalla: a la izquierda los archivos del proyecto, al centro el código que se
-     va escribiendo a mano y a la derecha la app de Ya Viene armándose en un iPhone (todo en cqw) */
-  .ide { position: absolute; inset: 0; display: grid; grid-template-columns: 14.5cqw 1fr 31cqw; gap: .7cqw;
-    padding: 2.5cqw .8cqw 3cqw 0; background: #0b0c0f; color: #d9dbe1; font: .95cqw/1.5 Inter, sans-serif; }
-  .ide-side svg, .ide-ed svg { flex: none; width: 1.15cqw; height: 1.15cqw; }
-  .ide-side { display: flex; flex-direction: column; gap: .15cqw; padding: .3cqw .8cqw 0 1.2cqw; color: #8d9099; min-width: 0; }
-  .ide-side p { display: flex; align-items: center; gap: .75cqw; margin: 0; padding: .5cqw .7cqw; border-radius: .6cqw; white-space: nowrap; overflow: hidden; }
-  .ide-side p em { margin-left: auto; font-style: normal; font-size: .8cqw; color: #6b6e77; }
-  .ide-side p.on { background: #1d1f24; color: #f2f3f5; }
-  .ide-side .ws { margin-bottom: .5cqw; color: #f2f3f5; font-weight: 600; }
-  .ide-side .ws i { display: grid; place-items: center; width: 1.6cqw; height: 1.6cqw; border-radius: .45cqw; background: #e8364f; color: #fff; font: 700 .85cqw Inter, sans-serif; font-style: normal; }
-  .ide-side .srch { margin-bottom: .6cqw; border: .08cqw solid #23252b; color: #6b6e77; }
-  .ide-side kbd { margin-left: auto; font: .75cqw Inter, sans-serif; color: #5c5f68; }
-  .ide-side small { margin: 1.2cqw .7cqw .35cqw; font-size: .78cqw; font-weight: 500; color: #5c5f68; }
-  .ide-side .file { padding-left: 2.7cqw; }
-  .ide-side .tree { padding-top: .35cqw; padding-bottom: .35cqw; color: #8d9099; }
-  .ide-side .tree svg { width: .95cqw; height: .95cqw; color: #5c5f68; }
-  .ide-side .tree b { font-weight: 500; }
-  .ide-side .d1 { padding-left: 1.5cqw; } .ide-side .d2 { padding-left: 2.6cqw; } .ide-side .d3 { padding-left: 3.7cqw; }
-  .ide-side .ft { flex: none; width: 1cqw; margin: 0; font: 700 .62cqw/1 ui-monospace, Menlo, monospace; font-style: normal; text-align: center; color: #4ea1ff; }
-  .ide-side .ft.j { color: #e8c547; } .ide-side .ft.s { color: #3ecf74; }
-  .ide-side .branch { margin-top: auto; margin-bottom: .2cqw; color: #6b6e77; font-size: .85cqw; }
+  /* La pantalla: un espacio de trabajo oscuro y sereno. A la izquierda el espacio de Ya Viene Tech, al centro
+     el proyecto con su actividad y a la derecha la app armándose en un iPhone (todo en cqw) */
+  .ws { position: absolute; inset: 0; display: grid; grid-template-columns: 17cqw 1fr; gap: .9cqw;
+    padding: 2.6cqw .9cqw .9cqw; background: #0a0b0d; color: #e6e7ea; font: 1.05cqw/1.5 Inter, sans-serif; letter-spacing: -.005em; }
+  .ws-side svg { flex: none; width: 1.25cqw; height: 1.25cqw; }
+  .act svg { flex: none; width: 1.55cqw; height: 1.55cqw; }
+  .ws-side { display: flex; flex-direction: column; gap: .2cqw; padding: .4cqw .2cqw 0 .6cqw; color: #9a9ca3; min-width: 0; }
+  .ws-side p { display: flex; align-items: center; gap: .85cqw; margin: 0; padding: .55cqw .75cqw; border-radius: .7cqw; white-space: nowrap; }
+  .ws-side p.on { background: #17181c; color: #f3f4f6; }
+  .ws-side p em { margin-left: auto; font-style: normal; font-size: .85cqw; color: #63666e; }
+  .ws-side small { margin: 1.4cqw .75cqw .3cqw; font-size: .9cqw; color: #63666e; }
+  .ws-side .brand-ws { margin-bottom: .9cqw; color: #f3f4f6; font-weight: 600; font-size: 1.15cqw; }
+  .ws-side .brand-ws > svg { width: 1.6cqw; height: 1.6cqw; filter: drop-shadow(0 .1cqw .3cqw rgba(0,0,0,.4)); }
+  .ws-side .brand-ws span { margin-left: auto; display: flex; gap: .9cqw; color: #63666e; }
+  .ws-side .lg { flex: none; display: grid; place-items: center; width: 1.45cqw; height: 1.45cqw; border-radius: .42cqw;
+    background: linear-gradient(150deg, color-mix(in srgb, var(--c) 62%, #fff), var(--c) 55%, color-mix(in srgb, var(--c) 78%, #000));
+    box-shadow: inset 0 .06cqw 0 rgba(255,255,255,.35), 0 .1cqw .3cqw rgba(0,0,0,.4); color: #fff; }
+  .ws-side .lg svg { width: .95cqw; height: .95cqw; }
+  .ws-side img, .ws-top img { flex: none; width: 1.3cqw; height: 1.3cqw; }
+  .ws-main { min-width: 0; min-height: 0; display: grid; grid-template-rows: auto 1fr; overflow: hidden;
+    border: .08cqw solid #1c1d22; border-radius: 1.2cqw; background: #101114; }
+  .ws-top { display: flex; align-items: center; gap: .9cqw; padding: .9cqw 1.4cqw; border-bottom: .08cqw solid #1a1b20; color: #f3f4f6; font-weight: 500; white-space: nowrap; }
+  .ws-top em { font-style: normal; color: #8b8e96; } .ws-top i { font-style: normal; color: #f5c542; } .ws-top u { text-decoration: none; color: #63666e; }
+  .ws-st { margin-left: auto; display: flex; align-items: center; gap: .6cqw; padding: .3cqw .95cqw; border-radius: 99px; background: #17181c; color: #c9cbd0; font-size: .95cqw; }
+  .ws-st::before { content: ''; width: .65cqw; height: .65cqw; border-radius: 50%; background: var(--d, #63666e); box-shadow: 0 0 .8cqw var(--d, transparent); transition: background .8s, box-shadow .8s; }
+  .ws-body { display: grid; grid-template-columns: 1fr 27cqw; min-height: 0; }
+  .ws-doc { min-width: 0; overflow: hidden; padding: 2.8cqw 2.6cqw 0; }
+  .ws-doc h3 { margin: 0 0 .6cqw; font-size: 2.15cqw; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: #f5f6f7; }
+  .ws-doc > p { margin: 0 0 2.4cqw; max-width: 46cqw; color: #9a9ca3; font-size: 1.2cqw; line-height: 1.55; }
+  .ws-doc h4 { margin: 0 0 1.3cqw; font-size: 1.3cqw; font-weight: 600; color: #f3f4f6; }
+  .act { display: grid; gap: 1.25cqw; transition: opacity .7s cubic-bezier(.4,0,.2,1), filter .7s cubic-bezier(.4,0,.2,1); }
+  .act.out { opacity: 0; filter: blur(.4cqw); }
+  .act > * { animation: llega .9s cubic-bezier(.16,1,.3,1) both; }
+  @keyframes llega { from { opacity: 0; transform: translateY(.7cqw); filter: blur(.3cqw); } }
+  .act .ev { display: flex; align-items: center; gap: 1cqw; padding-left: .35cqw; color: #7d8088; font-size: 1.3cqw; white-space: nowrap; }
+  .act .ev b { color: #c9cbd0; font-weight: 500; } .act .ev em { font-style: normal; color: #55585f; }
+  .act .ev svg { color: var(--c); }
+  .act .msg { padding: 1.3cqw 1.5cqw; border: .08cqw solid #1f2025; border-radius: 1cqw; background: #141519; }
+  .act .msg header { display: flex; align-items: center; gap: .8cqw; font-size: 1.3cqw; font-weight: 500; color: #f3f4f6; }
+  .act .msg header em { font-style: normal; font-weight: 400; color: #63666e; }
+  .act .msg p { margin: .6cqw 0 0; color: #b4b6bc; font-size: 1.4cqw; line-height: 1.45; }
+  .av { flex: none; display: grid; place-items: center; width: 2.1cqw; height: 2.1cqw; border-radius: 50%; font-size: 1.05cqw; font-weight: 600; font-style: normal; color: #fff; background: var(--c); }
+  .av svg { width: 1.35cqw !important; height: .75cqw !important; }
+  .av.av-logo { background: #000; box-shadow: inset 0 0 0 .06cqw rgba(255,255,255,.14); }
+  .av.av-logo svg { width: 1.5cqw !important; height: 1.125cqw !important; }
+  .ws-prev { display: grid; place-items: center; min-height: 0; border-left: .08cqw solid #1a1b20;
+    background: radial-gradient(55% 45% at 50% 46%, rgba(124,43,255,.2), transparent 75%), radial-gradient(40% 30% at 60% 62%, rgba(255,61,139,.1), transparent 75%), #0d0e11; }
 
-  .ide-ed, .ide-prev { min-width: 0; min-height: 0; border: .08cqw solid #202228; border-radius: 1.1cqw; background: #131418; overflow: hidden; }
-  .ide-ed { display: grid; grid-template-rows: auto auto 1fr auto; background: #0f1013; }
-  .ed-tabs { display: flex; align-items: center; gap: .3cqw; padding: .55cqw .7cqw; background: #131418; border-bottom: .08cqw solid #202228; white-space: nowrap; }
-  .ed-tabs span { display: flex; align-items: center; gap: .5cqw; padding: .35cqw .9cqw; border-radius: .55cqw; color: #6b6e77; font-size: .88cqw; }
-  .ed-tabs span.on { background: #1f2126; color: #f2f3f5; }
-  .ed-tabs span i { font-style: normal; color: #5c5f68; margin-left: .2cqw; }
-  .ed-tabs .ft { font: 700 .62cqw ui-monospace, Menlo, monospace; color: #4ea1ff; }
-  .ed-crumb { display: flex; gap: .5cqw; padding: .7cqw 1.5cqw .3cqw; color: #5c5f68; font-size: .82cqw; }
-  .ed-crumb b { color: #a9acb4; font-weight: 500; }
-  .ed-bar { display: flex; align-items: center; gap: 1.4cqw; padding: .5cqw 1.4cqw; border-top: .08cqw solid #202228; background: #131418; color: #6b6e77; font-size: .78cqw; white-space: nowrap; }
-  .ed-bar span:last-child { margin-left: auto; display: flex; align-items: center; gap: .5cqw; }
-  .ed-bar span:last-child::before { content: ''; width: .55cqw; height: .55cqw; border-radius: 50%; background: #febc2e; }
-  .ed-bar .ok::before { background: #28c840 !important; }
-  .ide-code { padding: .4cqw 0 .8cqw; counter-reset: ln; overflow: hidden; min-height: 0; white-space: pre; color: #d6d8de; font: .85cqw/1.65 ui-monospace, 'SF Mono', Menlo, monospace; }
-  .ide-code div { counter-increment: ln; }
-  .ide-code div.cur { background: rgba(255,255,255,.035); }
-  .ide-code div::before { content: counter(ln); display: inline-block; width: 2.4cqw; margin-right: 1.5cqw; text-align: right; color: #3d4047; }
-  .ide-code div.cur::before { color: #8d9099; }
-  .ide-code .k { color: #ff7ab2; } .ide-code .s { color: #a5e3a0; } .ide-code .f { color: #7cc4ff; }
-  .ide-code .g { color: #ff8f8f; } .ide-code .a { color: #ffcf7a; } .ide-code .c { color: #61656f; font-style: italic; }
-  .caret { display: inline-block; width: .16cqw; height: 1.15em; vertical-align: -.22em; background: #e8364f; animation: blink 1s steps(1) infinite; }
-  @keyframes blink { 50% { opacity: 0; } }
-
-  .ide-prev { display: grid; grid-template-rows: auto 1fr; place-items: center;
-    background: radial-gradient(circle at 1px 1px, rgba(255,255,255,.06) 1px, transparent 0) 0 0 / 1.3cqw 1.3cqw, #111216; }
-  .prev-hd { justify-self: stretch; padding: .65cqw 1cqw; background: #131418; }
-  .prev-hd span { padding: .25cqw .8cqw; border-radius: .5cqw; } .prev-hd span.on { background: #1f2126; color: #f2f3f5; }
-  .prev-hd em { margin-left: auto; font-style: normal; font-size: .82cqw; color: #6b6e77; }
-  .prev-hd b { padding: .3cqw .9cqw; border-radius: .5cqw; background: #e8364f; color: #fff; font-weight: 500; font-size: .85cqw; }
-
-  /* El iPhone: la foto tiene la pantalla transparente y la app va detrás. La app copia la de Ya Viene:
-     --u es un punto de la app (402 de ancho), así las medidas salen igual que en Flutter */
-  .iph { position: relative; height: 48.5cqw; aspect-ratio: 1470 / 3000; filter: drop-shadow(0 1.5cqw 2.5cqw rgba(0,0,0,.55)); }
+  /* El iPhone: la foto tiene la pantalla transparente y la app va detrás.
+     --u es un punto de la app (402 de ancho), así las medidas salen igual que en un diseño de iPhone */
+  .iph { position: relative; height: 45cqw; aspect-ratio: 1470 / 3000; filter: drop-shadow(0 1.5cqw 2.5cqw rgba(0,0,0,.55)); }
   .iph > img { position: absolute; inset: 0; width: 100%; height: 100%; }
   .pscreen { position: absolute; left: 5.17%; top: 2.2%; width: 89.73%; height: 95.6%; border-radius: 12% / 5.8%; overflow: hidden;
-    container-type: inline-size; --u: calc(100cqw / 402); background: #FAF6F0; color: #0F172A; font-family: 'Plus Jakarta Sans', Inter, sans-serif; }
+    container-type: inline-size; --u: calc(100cqw / 402); background: #F4F2F8; color: #17132A; font-family: 'Plus Jakarta Sans', Inter, sans-serif; }
   .pstat { position: absolute; z-index: 5; left: 0; right: 0; top: 0; height: calc(59 * var(--u)); font-weight: 600; font-size: calc(15 * var(--u)); }
   .pstat b { position: absolute; left: 0; top: calc(19 * var(--u)); width: calc(138 * var(--u)); line-height: calc(22 * var(--u)); text-align: center; font-weight: 600; }
   .pstat span { position: absolute; left: calc(299 * var(--u)); top: calc(24 * var(--u)); display: flex; gap: calc(5 * var(--u)); } .pstat svg { height: calc(12 * var(--u)); width: auto; }
   .phome { position: absolute; z-index: 5; left: calc(132 * var(--u)); bottom: calc(8 * var(--u)); width: calc(139 * var(--u)); height: calc(5 * var(--u)); border-radius: 99px; background: rgba(11,22,40,.42); }
   .papp { position: absolute; inset: 0; transition: opacity .7s cubic-bezier(.4,0,.2,1), filter .7s cubic-bezier(.4,0,.2,1); }
   .papp.out { opacity: 0; filter: blur(calc(6 * var(--u))); }
-  .papp > *, .yv-cta, .yv-chip { animation: pop .8s cubic-bezier(.16,1,.3,1) both; }
+  .papp > * { animation: pop .8s cubic-bezier(.16,1,.3,1) both; }
   @keyframes pop { from { opacity: 0; transform: translateY(calc(10 * var(--u))) scale(.98); filter: blur(calc(4 * var(--u))); } }
-  .yv-map { position: absolute; inset: 0; }
-  .papp > .yv-map { animation: fade 1s cubic-bezier(.4,0,.2,1) both; } @keyframes fade { from { opacity: 0; } }
-  .yv-map svg { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .yv-loc { position: absolute; left: calc(338 * var(--u)); top: calc(407 * var(--u)); display: grid; place-items: center; width: calc(48 * var(--u)); height: calc(48 * var(--u)); border-radius: 50%;
-    border: 1px solid #E5E7EB; background: rgba(255,255,255,.96); color: #047857; box-shadow: 0 calc(10 * var(--u)) calc(24 * var(--u)) rgba(20,39,78,.08); }
-  .yv-loc svg { width: calc(22 * var(--u)); }
-  .yv-top { position: absolute; z-index: 2; left: calc(20 * var(--u)); right: calc(20 * var(--u)); top: calc(71 * var(--u)); display: flex; flex-direction: column; align-items: center; gap: calc(10 * var(--u)); }
-  .yv-pill, .yv-chip { display: flex; align-items: center; border-radius: 999px; background: #fff; border: 1px solid rgba(20,39,78,.08); }
-  .yv-pill { align-self: stretch; height: calc(61 * var(--u)); padding: calc(5 * var(--u)) calc(8 * var(--u)); gap: calc(8 * var(--u)); box-shadow: 0 calc(8 * var(--u)) calc(24 * var(--u)) rgba(20,39,78,.08); }
-  .yv-pill > i { flex: none; display: grid; place-items: center; width: calc(48 * var(--u)); height: calc(48 * var(--u)); border-radius: 50%; }
-  .yv-pill > i img { width: calc(36 * var(--u)); height: calc(36 * var(--u)); } .yv-pill > i:last-child { background: #F1F5F9; color: #5E6B82; } .yv-pill > i svg { width: calc(20 * var(--u)); }
-  .yv-pill span { flex: 1; min-width: 0; text-align: center; }
-  .yv-pill small { display: inline-block; font-size: calc(12 * var(--u)); line-height: calc(16 * var(--u)); font-weight: 600;
-    background: linear-gradient(90deg, #064E3B 35%, #008846 50%, #064E3B 65%); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .yv-pill b { display: block; margin-top: calc(1 * var(--u)); font-size: calc(18 * var(--u)); line-height: calc(23 * var(--u)); font-weight: 700; letter-spacing: calc(-.3 * var(--u)); white-space: nowrap; }
-  .yv-chip { height: calc(50 * var(--u)); gap: calc(10 * var(--u)); padding: calc(7 * var(--u)) calc(14 * var(--u)) calc(7 * var(--u)) calc(8 * var(--u)); font-size: calc(15 * var(--u)); font-weight: 600; white-space: nowrap; box-shadow: 0 calc(3 * var(--u)) calc(10 * var(--u)) rgba(20,39,78,.06); }
-  .yv-chip > i { display: grid; place-items: center; width: calc(32 * var(--u)); height: calc(32 * var(--u)); border-radius: 50%; background: #E6F7F0; color: #00A859; }
-  .yv-chip > i svg { width: calc(18 * var(--u)); }
-  .yv-chip em { padding: calc(7 * var(--u)) calc(12 * var(--u)); border-radius: 999px; background: #F1F5F9; color: #5E6B82; font-style: normal; font-size: calc(13 * var(--u)); }
-  .yv-sheet { position: absolute; z-index: 3; left: 0; right: 0; top: calc(437 * var(--u)); bottom: 0; padding: calc(15 * var(--u)) calc(24 * var(--u)) 0;
-    border-top: 1px solid rgba(20,39,78,.08); border-radius: calc(32 * var(--u)) calc(32 * var(--u)) 0 0; background: #fff; box-shadow: 0 calc(-4 * var(--u)) calc(20 * var(--u)) rgba(20,39,78,.06); }
-  .papp > .yv-sheet { animation: rise .9s cubic-bezier(.16,1,.3,1) both; } @keyframes rise { from { transform: translateY(100%); } }
-  .yv-sheet > u { display: block; width: calc(44 * var(--u)); height: calc(5 * var(--u)); margin: 0 auto calc(31 * var(--u)); border-radius: 999px; background: #E5E7EB; }
-  .yv-eta { padding: calc(12 * var(--u)) 0 calc(14 * var(--u)); border: 1px solid rgba(20,39,78,.08); border-radius: calc(24 * var(--u)); background: #fff; text-align: center; box-shadow: 0 calc(4 * var(--u)) calc(14 * var(--u)) rgba(20,39,78,.06); }
-  .yv-eta > p { display: flex; justify-content: center; align-items: center; gap: calc(10 * var(--u)); margin: 0; height: calc(22 * var(--u)); font-size: calc(12 * var(--u)); font-weight: 600; letter-spacing: calc(1.4 * var(--u)); color: #5E6B82; }
-  .yv-eta > p b { padding: calc(2 * var(--u)) calc(8 * var(--u)); border: 1px solid #0F172A; border-radius: calc(6 * var(--u)); font-size: calc(13 * var(--u)); line-height: calc(18 * var(--u)); letter-spacing: calc(1.5 * var(--u)); color: #0F172A; }
-  .yv-eta > i { display: block; height: 1px; margin-top: calc(8 * var(--u)); background: rgba(20,39,78,.08); }
-  .yv-eta strong { display: block; margin-top: calc(10 * var(--u)); font-size: calc(54 * var(--u)); font-weight: 200; line-height: calc(49 * var(--u)); letter-spacing: calc(-2 * var(--u)); font-variant-numeric: tabular-nums; color: #A85206; }
-  .yv-eta strong span { display: inline-block; }
-  .yv-eta .baja { animation: baja .7s cubic-bezier(.16,1,.3,1) both; }
-  @keyframes baja { from { opacity: 0; transform: translateY(-.42em); filter: blur(.06em); } }
-  .yv-eta small { display: block; margin-top: calc(2 * var(--u)); font-size: calc(15 * var(--u)); line-height: calc(21 * var(--u)); font-weight: 600; color: #5E6B82; }
-  .yv-det { display: flex; align-items: center; gap: calc(10 * var(--u)); height: calc(53 * var(--u)); margin-top: calc(17 * var(--u)); padding: 0 calc(12 * var(--u)); border: 1px solid rgba(20,39,78,.08); border-radius: calc(16 * var(--u)); background: #fff; font-size: calc(12 * var(--u)); font-weight: 500; color: #475569; }
-  .yv-det > i { display: grid; place-items: center; width: calc(30 * var(--u)); height: calc(30 * var(--u)); border-radius: 50%; background: #E6F7F0; color: #047857; } .yv-det svg { width: calc(18 * var(--u)); }
-  .yv-det em { margin-left: auto; padding: calc(7 * var(--u)) calc(14 * var(--u)); border-radius: 999px; background: #F1F5F9; color: #C0392B; font-style: normal; font-size: calc(13 * var(--u)); font-weight: 600; }
-  .yv-cta { display: flex; align-items: center; justify-content: center; gap: calc(10 * var(--u)); height: calc(52 * var(--u)); margin-top: calc(12 * var(--u)); border-radius: 999px;
-    background: #065F46; color: #fff; font-size: calc(16 * var(--u)); font-weight: 800; box-shadow: 0 calc(8 * var(--u)) calc(20 * var(--u)) rgba(6,95,70,.24); }
-  .yv-cta svg { width: calc(22 * var(--u)); }
-  /* Ocupación aprox.: el filo, la fila y la pista que se llena en la escala de calor de la app */
-  .yv-oc { margin: calc(10 * var(--u)) calc(14 * var(--u)) 0; padding-top: calc(10 * var(--u)); border-top: 1px solid rgba(20,39,78,.08); text-align: left; }
-  .yv-oc p { display: flex; align-items: center; gap: calc(6 * var(--u)); margin: 0; font-size: calc(13 * var(--u)); line-height: calc(21 * var(--u)); font-weight: 600; color: #5E6B82; }
-  .yv-oc p svg { width: calc(16 * var(--u)); }
-  .yv-oc p b { margin-left: auto; font-size: calc(15 * var(--u)); font-weight: 500; color: #0B1628; font-variant-numeric: tabular-nums; }
-  .yv-oc > i { display: block; height: calc(6 * var(--u)); margin-top: calc(8 * var(--u)); border-radius: 999px; background: #EEF0F3; overflow: hidden; }
-  .yv-oc > i s { display: block; width: 58%; height: 100%; border-radius: inherit; background: #F39A2D; animation: llena 1.6s .6s cubic-bezier(.16,1,.3,1) both; }
-  @keyframes llena { from { width: 0; background: #7CC04A; } }
+  /* La app que se arma en el iPhone: la tarjeta de Banco Nova, un cliente de finanzas. Clara, con la tarjeta como
+     protagonista y cada acción con su propio color; --u es un punto de la app (402 de ancho) */
+  .papp > .nv-tabs { animation-name: sube; } @keyframes sube { from { transform: translateY(100%); } }
+  .nv-head { position: absolute; left: calc(20 * var(--u)); right: calc(20 * var(--u)); top: calc(64 * var(--u)); height: calc(48 * var(--u));
+    display: flex; align-items: center; justify-content: space-between; }
+  .nv-head > i { display: grid; place-items: center; width: calc(44 * var(--u)); height: calc(44 * var(--u)); border-radius: calc(14 * var(--u)); background: #E9E6F1; color: #17132A; }
+  .nv-head > i svg { width: calc(21 * var(--u)); }
+  .nv-head span { text-align: center; }
+  .nv-head b { display: block; font-size: calc(18 * var(--u)); line-height: calc(23 * var(--u)); font-weight: 700; letter-spacing: calc(-.3 * var(--u)); color: #17132A; }
+  .nv-head small { display: block; font: 500 calc(12.5 * var(--u))/calc(17 * var(--u)) Inter, sans-serif; color: #6B6780; }
+  .nv-card { position: absolute; left: calc(20 * var(--u)); right: calc(20 * var(--u)); top: calc(128 * var(--u)); aspect-ratio: 1.586; border-radius: calc(22 * var(--u)); overflow: hidden; color: #fff;
+    background: radial-gradient(70% 85% at 100% 0%, #FFB547, transparent 70%), radial-gradient(75% 95% at 92% 100%, #FF3D8B, transparent 70%),
+      radial-gradient(70% 95% at 0% 100%, #22D3EE, transparent 72%), linear-gradient(135deg, #4F24FF, #7C2BFF 55%, #B62BE0);
+    box-shadow: 0 calc(20 * var(--u)) calc(36 * var(--u)) calc(-16 * var(--u)) rgba(95,40,255,.6), inset 0 1px 0 rgba(255,255,255,.4); }
+  /* El panel claro de la izquierda, como el corte de las tarjetas metálicas, y un brillo que cruza una vez al aparecer */
+  .nv-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 63%; border-radius: 0 calc(36 * var(--u)) calc(36 * var(--u)) 0;
+    background: linear-gradient(160deg, rgba(255,255,255,.2), rgba(255,255,255,.04)); box-shadow: inset -1px 0 0 rgba(255,255,255,.18); }
+  .nv-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(105deg, transparent 38%, rgba(255,255,255,.3) 50%, transparent 62%);
+    transform: translateX(-120%); animation: brillo 2.4s .7s cubic-bezier(.4,0,.2,1) both; }
+  @keyframes brillo { to { transform: translateX(120%); } }
+  .nv-card > * { position: absolute; z-index: 1; }
+  .nv-card strong { left: calc(22 * var(--u)); top: calc(14 * var(--u)); font: 800 calc(42 * var(--u))/1 Manrope, sans-serif; letter-spacing: calc(-2.2 * var(--u)); }
+  .nv-card em { right: calc(22 * var(--u)); top: calc(22 * var(--u)); font: 500 calc(13 * var(--u)) Inter, sans-serif; font-style: normal; letter-spacing: calc(.6 * var(--u)); opacity: .9; }
+  .nv-card s { left: calc(24 * var(--u)); top: calc(92 * var(--u)); width: calc(44 * var(--u)); height: calc(33 * var(--u)); border-radius: calc(8 * var(--u));
+    background: linear-gradient(90deg, transparent 32%, rgba(120,80,10,.35) 32% 34%, transparent 34% 66%, rgba(120,80,10,.35) 66% 68%, transparent 68%),
+      linear-gradient(transparent 46%, rgba(120,80,10,.35) 46% 54%, transparent 54%), linear-gradient(135deg, #FBE7AE, #D9A94E);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.35); }
+  .nv-card u { left: calc(76 * var(--u)); top: calc(96 * var(--u)); width: calc(24 * var(--u)); opacity: .9; } .nv-card u svg { width: 100%; }
+  .nv-card small { left: calc(22 * var(--u)); bottom: calc(44 * var(--u)); font: 600 calc(16 * var(--u)) Inter, sans-serif; letter-spacing: calc(2.4 * var(--u)); font-variant-numeric: tabular-nums; }
+  .nv-card span { left: calc(22 * var(--u)); bottom: calc(20 * var(--u)); font: 500 calc(11.5 * var(--u)) Inter, sans-serif; letter-spacing: calc(1.4 * var(--u)); opacity: .85; }
+  .nv-card b { right: calc(22 * var(--u)); bottom: calc(18 * var(--u)); display: flex; }
+  .nv-card b i { width: calc(30 * var(--u)); height: calc(30 * var(--u)); border-radius: 50%; background: rgba(255,255,255,.9); }
+  .nv-card b i + i { margin-left: calc(-12 * var(--u)); background: rgba(255,255,255,.45); backdrop-filter: blur(calc(4 * var(--u))); }
+  /* Congelada: la tarjeta se escarcha (blur + velo frío) y el botón se enciende; vuelve igual de suave */
+  .nv-hielo { inset: 0; display: grid; place-content: center; justify-items: center; gap: calc(6 * var(--u)); z-index: 2 !important;
+    background: rgba(214,228,255,.32); -webkit-backdrop-filter: blur(calc(9 * var(--u))) saturate(130%); backdrop-filter: blur(calc(9 * var(--u))) saturate(130%);
+    font: 600 calc(15 * var(--u)) 'Plus Jakarta Sans', sans-serif; opacity: 0; transition: opacity .9s cubic-bezier(.4,0,.2,1); }
+  .nv-hielo svg { width: calc(34 * var(--u)); }
+  .frio .nv-hielo { opacity: 1; }
+  .nv-acc { position: absolute; left: calc(20 * var(--u)); right: calc(20 * var(--u)); top: calc(378 * var(--u)); display: grid; grid-template-columns: repeat(3, 1fr); gap: calc(12 * var(--u)); }
+  .nv-acc > div { text-align: center; font-size: calc(13.5 * var(--u)); font-weight: 600; color: #17132A; }
+  .nv-acc i { position: relative; overflow: hidden; display: grid; place-items: center; height: calc(80 * var(--u)); margin-bottom: calc(8 * var(--u)); border-radius: calc(20 * var(--u));
+    background: var(--b); color: var(--c); transition: background .7s cubic-bezier(.4,0,.2,1), color .7s cubic-bezier(.4,0,.2,1), box-shadow .7s cubic-bezier(.4,0,.2,1); }
+  .nv-acc i svg { position: relative; width: calc(26 * var(--u)); }
+  .nv-acc i::before { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, #4F24FF, #9B2BF0); opacity: 0; transition: opacity .7s cubic-bezier(.4,0,.2,1); }
+  .frio .nv-acc > div:first-child i { color: #fff; box-shadow: 0 calc(10 * var(--u)) calc(22 * var(--u)) calc(-8 * var(--u)) rgba(95,40,255,.55); }
+  .frio .nv-acc > div:first-child i::before { opacity: 1; }
+  /* El toque: una onda que nace del centro del botón y se desvanece */
+  .nv-acc i::after { content: ''; position: absolute; left: 50%; top: 50%; width: calc(90 * var(--u)); height: calc(90 * var(--u)); margin: calc(-45 * var(--u)) 0 0 calc(-45 * var(--u));
+    border-radius: 50%; background: rgba(255,255,255,.55); opacity: 0; transform: scale(.2); }
+  .nv-acc .toque i::after { animation: toque .8s cubic-bezier(.16,1,.3,1); }
+  @keyframes toque { 0% { opacity: .9; transform: scale(.2); } 100% { opacity: 0; transform: scale(1.4); } }
+  .nv-set { position: absolute; left: calc(20 * var(--u)); right: calc(20 * var(--u)); top: calc(508 * var(--u)); }
+  .nv-set h5 { margin: 0 0 calc(10 * var(--u)) calc(4 * var(--u)); font-size: calc(17 * var(--u)); font-weight: 700; letter-spacing: calc(-.2 * var(--u)); color: #17132A; }
+  .nv-list { padding: 0 calc(16 * var(--u)); border-radius: calc(22 * var(--u)); background: #fff; box-shadow: 0 calc(4 * var(--u)) calc(16 * var(--u)) rgba(23,19,42,.05); }
+  .nv-list p { display: flex; align-items: center; gap: calc(14 * var(--u)); min-height: calc(66 * var(--u)); margin: 0; border-bottom: 1px solid #EFEDF5; }
+  .nv-list p:last-child { border-bottom: 0; }
+  .nv-list p > i { flex: none; display: grid; place-items: center; width: calc(38 * var(--u)); height: calc(38 * var(--u)); border-radius: calc(12 * var(--u)); background: var(--b); color: var(--c); }
+  .nv-list p > i svg { width: calc(19 * var(--u)); }
+  .nv-list span { flex: 1; min-width: 0; font-size: calc(15 * var(--u)); font-weight: 600; color: #17132A; }
+  .nv-list small { display: block; margin-top: calc(1 * var(--u)); font: 400 calc(12.5 * var(--u))/calc(17 * var(--u)) Inter, sans-serif; color: #6B6780; }
+  .nv-list p > svg { flex: none; width: calc(17 * var(--u)); color: #ABA7BA; }
+  .nv-tabs { position: absolute; z-index: 4; left: 0; right: 0; bottom: 0; height: calc(92 * var(--u)); padding-top: calc(10 * var(--u)); display: grid; grid-template-columns: repeat(4, 1fr);
+    background: rgba(255,255,255,.8); -webkit-backdrop-filter: blur(calc(16 * var(--u))) saturate(180%); backdrop-filter: blur(calc(16 * var(--u))) saturate(180%); border-top: 1px solid rgba(23,19,42,.06); }
+  .nv-tabs p { display: flex; flex-direction: column; align-items: center; gap: calc(4 * var(--u)); margin: 0; font-size: calc(11.5 * var(--u)); font-weight: 600; color: #A6A2B5; }
+  .nv-tabs p > i { display: grid; place-items: center; width: calc(28 * var(--u)); height: calc(28 * var(--u)); }
+  .nv-tabs svg { width: calc(23 * var(--u)); }
+  .nv-tabs .on { color: #17132A; }
+  .nv-tabs .on > i { border-radius: 50%; background: linear-gradient(135deg, #4F24FF, #B62BE0); color: #fff; } .nv-tabs .on svg { width: calc(16 * var(--u)); }
+  .nv-ico { flex: none; width: 1.3cqw; height: 1.3cqw; border-radius: .38cqw; background: radial-gradient(80% 80% at 100% 0%, #FFB547, transparent 70%), radial-gradient(80% 90% at 90% 100%, #FF3D8B, transparent 70%), linear-gradient(135deg, #4F24FF, #9B2BF0);
+    box-shadow: inset 0 .06cqw 0 rgba(255,255,255,.35); }
+
 
   /* Píldoras que viajan por los carriles del túnel: entran por la izquierda (problemas, ideas, propuestas)
      y salen por la derecha ya resueltas. Pasan por detrás de la pantalla, así parece que la atraviesan. */
   /* Corriente de tarjetas: se mueven en 3D hacia el punto de fuga, que es el centro de la pantalla */
   .flow { position: absolute; z-index: 1; left: 50%; top: -42.3%; width: 100vw; height: 160%; transform: translateX(-50%);
-    pointer-events: none; overflow: hidden; perspective: 900px; perspective-origin: 50% 50%; }
+    pointer-events: none; overflow: hidden; perspective: 900px; perspective-origin: 50% 50%;
+    /* Las tarjetas se disuelven antes de llegar a la tarjeta de Ya Viene, sin chocar con ella */
+    -webkit-mask-image: linear-gradient(transparent 0, #000 14%, #000 70%, transparent 80%); mask-image: linear-gradient(transparent 0, #000 14%, #000 70%, transparent 80%); }
   .chip {
     position: absolute; left: 50%; top: 50%; display: flex; align-items: center; gap: 12px; white-space: nowrap;
     padding: 12px 20px 12px 12px; border-radius: 18px; font-size: 15px; font-weight: 600; line-height: 1.25; letter-spacing: -.01em;
@@ -268,6 +304,11 @@
   .chip.sol .e, .out .card .ic { background: color-mix(in srgb, var(--c) 24%, transparent); }
   .chip small { display: block; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #a0a2a7; margin-bottom: 2px; }
   .chip.sol { background: rgba(17,18,20,.94); color: #fff; } .chip.sol .e { background: rgba(255,255,255,.1); } .chip.sol small { color: #5fd39a; }
+  /* Luz de portal: un velo blanco suave se enciende en la pared, justo donde una tarjeta entra o sale de la Mac.
+     Va detrás de las tarjetas, así solo se iluminan las paredes. */
+  .glow { position: absolute; left: 0; top: 0; width: 180px; height: 380px; margin: -190px 0 0 -90px; pointer-events: none; opacity: 0;
+    mix-blend-mode: plus-lighter; filter: blur(16px); will-change: transform, opacity;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(255,255,255,.75), rgba(255,255,255,.28) 45%, transparent 80%); }
 
   /* Tarjeta flotante de Ya Viene, abajo a la derecha */
   .flag {
@@ -287,22 +328,24 @@
   .credit a { text-decoration: underline; text-underline-offset: 2px; }
 
   /* Bento de servicios */
-  .services { max-width: 1180px; margin: 0 auto; padding: clamp(72px, 10vw, 128px) 16px 40px; }
-  .services > header { text-align: center; max-width: 640px; margin: 0 auto 48px; }
+  .services { max-width: 1180px; margin: 0 auto; padding: clamp(56px, 7vw, 96px) 16px 40px; }
+  .services > header { text-align: center; max-width: 860px; margin: 0 auto 48px; }
+  .services > header p { max-width: 560px; margin-inline: auto; }
 
   /* Banda de prueba social estilo Mobbin: números grandes con separadores finos, sin cards */
   .proof {
-    max-width: 1180px; margin: clamp(60px, 9vw, 110px) auto clamp(52px, 7vw, 84px); padding: 0 16px;
-    display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line);
+    max-width: 1180px; margin: clamp(56px, 8vw, 100px) auto 0; padding: 0 16px;
+    display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line);
   }
-  .proof small { display: block; margin-top: 6px; font-size: 13.5px; color: var(--muted); }
-  .proof b { display: block; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 3.4vw, 46px); letter-spacing: -.04em; color: var(--ink); }
-  .proof div { padding: 26px clamp(18px, 2.6vw, 36px); }
+  .proof small { display: block; margin-top: 8px; font-size: 15px; color: var(--muted); }
+  .proof b { display: block; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(28px, 2.5vw, 38px); letter-spacing: -.04em; color: var(--ink); white-space: nowrap; }
+  .proof div { padding: 30px clamp(18px, 2vw, 30px); }
   .proof div + div { border-left: 1px solid var(--line); }
   .eyebrow { display: inline-block; font-size: 12px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
     padding: 7px 12px; border-radius: 999px; background: #fff; box-shadow: 0 0 0 1px var(--line); }
   .services h2 { font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(34px, 4.4vw, 60px); line-height: 1; letter-spacing: -.05em; margin-top: 18px; }
-  .services h2 span { color: var(--muted); }
+  .services h2 span { display: block; color: var(--muted); }
+  .services h2 { text-wrap: balance; }
   .services > header p { color: var(--muted); font-size: 18px; line-height: 1.5; margin-top: 16px; }
   .bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 250px; gap: 16px; }
   .tile {
@@ -312,6 +355,7 @@
   }
   /* El contenido no muere sin JS: solo se esconde para animar cuando el script corre */
   .js .tile:not(.on) { opacity: 0; transform: translateY(24px); }
+  .tile:not(.vis) *, .tile:not(.vis)::before { animation-play-state: paused !important; }
   .tile h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 22px; letter-spacing: -.03em; position: relative; }
   /* Índice mono en cada tile (estilo Profound/Typesafe) */
   .tile .idx { position: absolute; top: 26px; left: 30px; font: 600 12.5px/1 ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .12em; color: var(--muted); z-index: 1; }
@@ -338,7 +382,8 @@
   /* App: teléfono con notificaciones que van subiendo */
   .phone { width: 190px; height: 300px; border-radius: 36px; background: #fff; position: relative; overflow: hidden; margin-top: 40px;
     box-shadow: 0 0 0 7px #111214, 0 0 0 8px #3a3b40, 0 30px 60px -20px rgba(17,18,20,.45); }
-  .phone::before { content: ''; position: absolute; top: 10px; left: 50%; width: 64px; height: 18px; border-radius: 9px; background: #111214; transform: translateX(-50%); }
+  .phone::after { content: ''; position: absolute; z-index: 1; left: 0; right: 0; top: 0; height: 58px; pointer-events: none; background: linear-gradient(#fff 50%, rgba(255,255,255,0)); }
+  .phone::before { content: ''; position: absolute; z-index: 2; top: 10px; left: 50%; width: 64px; height: 18px; border-radius: 9px; background: #111214; transform: translateX(-50%); }
   .notes { position: absolute; left: 10px; right: 10px; top: 44px; display: grid; gap: 8px; animation: notes 9s cubic-bezier(.7,0,.2,1) infinite; }
   .notes div { display: flex; gap: 9px; align-items: center; padding: 9px; border-radius: 14px; background: #f3f4f6; font-size: 11px; font-weight: 600; line-height: 1.25; }
   .notes i { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--c); }
@@ -388,21 +433,51 @@
   .spark strong small { display: block; font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0; color: #1fbf6b; margin-top: 4px; }
   @keyframes draw { 0% { stroke-dashoffset: 600; } 60%, 100% { stroke-dashoffset: 0; } }
 
-  @media (max-width: 960px) { .bento { grid-template-columns: repeat(2, 1fr); } .t-app { grid-row: span 2; } }
+  @media (max-width: 960px) { .proof { grid-template-columns: repeat(2, 1fr); } .proof div:nth-child(3) { border-left: 0; } .proof div:nth-child(n+3) { border-top: 1px solid var(--line); } .bento { grid-template-columns: repeat(2, 1fr); } .t-app { grid-row: span 2; } }
   @media (max-width: 640px) { .bento { grid-template-columns: 1fr; grid-auto-rows: 260px; } .tile { grid-column: auto !important; } .t-app { grid-row: span 2; } .hub .col:last-child { display: none; } .proof { grid-template-columns: 1fr; } .proof div + div { border-left: 0; border-top: 1px solid var(--line); } }
 
   @media (max-width: 760px) { .flow { display: none; } }
   @media (max-width: 760px) {
     nav .links { display: none; }
     .brand span { font-size: 17px; }
-    nav .btn { padding: 10px 16px; }
-    nav { width: calc(100% - 32px); height: 64px; padding: 0 8px 0 18px; border-radius: 0 0 20px 20px; }
+    nav .btn { font-size: 15px; padding: 0 18px; height: 40px; box-shadow: none; }
+    /* En móvil el nav calza justo dentro del marco: borde a borde con el cuadro y el botón con el mismo aire arriba, abajo y a la derecha */
+    nav { width: calc(100% - 16px); top: 8px; height: 56px; gap: 12px; padding: 0 8px 0 16px; border-radius: 28px 28px 20px 20px; }
+    nav.pin { top: 0; width: 100%; border-radius: 0 0 20px 20px; }
     .brand svg { width: 32px; height: 17px; }
-    .copy { padding-top: calc(64px + 28px); }
+    .copy { padding-top: calc(56px + 28px); }
     .hero { padding-bottom: 130px; }
     .stage { width: 112%; }
     .flag { left: 16px; right: 16px; bottom: 16px; width: auto; }
   }
+  /* Contacto: una tarjeta oscura, el único lugar a donde llevan todos los CTA */
+  .contact { max-width: 1180px; margin: 0 auto; padding: 56px 16px 0; }
+  .contact .box { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 72px); padding: clamp(28px, 5vw, 64px); border-radius: 32px;
+    background: radial-gradient(520px 260px at 0% 0%, rgba(232,54,79,.22), transparent 70%), radial-gradient(520px 260px at 100% 100%, rgba(123,79,214,.2), transparent 70%), var(--ink);
+    color: #fff; box-shadow: var(--shadow); }
+  .contact h2 { font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(32px, 4vw, 52px); line-height: 1.02; letter-spacing: -.04em; text-wrap: balance; }
+  .contact .box > div > p { margin-top: 16px; color: #b9bbc0; font-size: 17px; line-height: 1.5; max-width: 40ch; }
+  .contact .alt { display: grid; gap: 10px; margin-top: 28px; }
+  .contact .alt a { display: inline-flex; align-items: center; gap: 12px; width: fit-content; padding: 6px 0; color: #e6e7ea; font-weight: 500; }
+  .contact .alt a:hover { color: #fff; }
+  .contact .alt svg { width: 20px; height: 20px; color: #9fa1a6; }
+  .contact form { display: grid; gap: 14px; align-content: start; }
+  .contact label { display: grid; gap: 8px; font-size: 13.5px; font-weight: 600; color: #c6c8cc; }
+  .contact input, .contact textarea { width: 100%; padding: 14px 16px; border: 1px solid rgba(255,255,255,.12); border-radius: 14px; background: rgba(255,255,255,.06);
+    color: #fff; font: 16px/1.45 Inter, system-ui, sans-serif; transition: border-color .2s, background .2s; resize: vertical; }
+  .contact input::placeholder, .contact textarea::placeholder { color: #8b8e96; }
+  .contact input:focus, .contact textarea:focus { outline: none; border-color: rgba(255,255,255,.4); background: rgba(255,255,255,.09); }
+  .contact form .btn { justify-self: start; margin-top: 4px; background: #fff; color: var(--ink); font-size: 17px; padding: 16px 28px; }
+  .contact form .btn:hover { background: #f1f2f4; }
+  .contact form small { color: #8b8e96; font-size: 13px; }
+  footer { max-width: 1180px; margin: 0 auto; padding: 40px 16px 32px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 28px; color: var(--muted); font-size: 14px; }
+  footer .brand { margin-right: auto; color: var(--ink); }
+  footer .brand svg { width: 36px; height: 19px; } footer .brand span { font-size: 18px; }
+  footer nav { all: unset; display: flex; flex-wrap: wrap; gap: 4px 20px; }
+  footer a { padding: 12px 0; } footer a:hover { color: var(--ink); }
+  footer .credit { width: 100%; padding: 0; text-align: left; }
+  footer .credit a { display: inline-block; padding: 12px 0; }
+  @media (max-width: 760px) { .contact .box { grid-template-columns: 1fr; } .contact form .btn { justify-self: stretch; justify-content: center; } }
   /* Press instantáneo en pointer-down, no al soltar (§1): escala sola, sin pisar el transform inline de los botones magnéticos */
   .btn:active, nav .links a:active, .flag:active { scale: .96; }
   @media (prefers-reduced-motion: reduce) {
@@ -431,9 +506,9 @@
   <div class="links">
     <a href="#soluciones">Soluciones</a>
     <a href="https://yavienetech.com">Ya Viene</a>
-    <a href="#soluciones">Contacto</a>
+    <a href="#contacto">Contacto</a>
   </div>
-  <a class="btn" href="#soluciones">Hablemos</a>
+  <a class="btn" href="#contacto">Hablemos</a>
 </nav>
 
 <header class="hero">
@@ -441,7 +516,7 @@
     <h1>Tu idea entra.<br><span class="soft">Sale una <em>solución.</em></span></h1>
     <p class="sub">No tienes que pelear con lo técnico. Cuéntanos el problema y déjalo en nuestras manos: lo convertimos en una solución que funciona, hecha a tu medida.</p>
     <div class="cta">
-      <a class="btn" href="#soluciones">Cuéntanos tu idea
+      <a class="btn" href="#contacto">Cuéntanos tu idea
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
       </a>
       <small>Sin costo de la propuesta.</small>
@@ -454,19 +529,21 @@
 
     <div class="mac">
       <div class="screen">
-        <div class="ide" aria-hidden="true">
-          <aside class="ide-side" id="ideSide"></aside>
-          <section class="ide-ed">
-            <div class="ed-tabs"><span class="on"><em class="ft">TSX</em>Rastreo.tsx<i>×</i></span><span>tema.ts</span><span>gps.ts</span></div>
-            <div class="ed-crumb">ya-viene-app <span>›</span> src <span>›</span> pantallas <span>›</span> <b>Rastreo.tsx</b></div>
-            <div class="ide-code" id="ideCode"></div>
-            <div class="ed-bar"><span>⎇ main</span><span id="edPos">Ln 1, Col 1</span><span>TypeScript JSX</span><span>UTF-8</span><span id="edStatus">Escribiendo…</span></div>
-          </section>
-          <section class="ide-prev">
-            <div class="prev-hd"><span class="on">Vista previa</span><span>Código</span><em>iPhone 16 Pro</em><b>Publicar</b></div>
+        <div class="ws" aria-hidden="true">
+          <aside class="ws-side" id="wsSide"></aside>
+          <section class="ws-main">
+            <div class="ws-top"><b class="nv-ico"></b>NV-214 <em>App de tarjeta Nova</em><i>★</i><u>···</u><span class="ws-st" id="wsSt">Idea</span></div>
+            <div class="ws-body">
+              <div class="ws-doc">
+                <h3>App de tarjeta Nova</h3>
+                <p>Que cada cliente maneje su tarjeta desde el celular: congelarla, ver su PIN y poner límites, sin llamar al banco.</p>
+                <h4>Actividad</h4>
+                <div class="act" id="act"></div>
+              </div>
+              <div class="ws-prev">
             <div class="iph">
               <div class="pscreen">
-                <div class="pstat"><b>7:23</b><span>
+                <div class="pstat"><b>9:41</b><span>
                   <svg viewBox="0 0 17 12" fill="currentColor"><rect x="0" y="8.2" width="3" height="3.8" rx="1"/><rect x="4.7" y="5.5" width="3" height="6.5" rx="1"/><rect x="9.4" y="2.8" width="3" height="9.2" rx="1"/><rect x="14" y="0" width="3" height="12" rx="1"/></svg>
                   <svg viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1.31 4.98A9 9 0 0 1 14.69 4.98"/><path d="M3.54 6.99A6 6 0 0 1 12.46 6.99"/><path d="M5.7 8.93A3.1 3.1 0 0 1 10.3 8.93"/><circle cx="8" cy="10.8" r=".95" fill="currentColor" stroke="none"/></svg>
                   <svg viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.6" stroke="currentColor" opacity=".35"/><rect x="1.9" y="1.9" width="15.2" height="8.2" rx="1.9" fill="currentColor"/><path d="M22.9 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".35"/></svg>
@@ -475,6 +552,8 @@
                 <i class="phome"></i>
               </div>
               <img src="assets/iphone.webp" alt="" width="588" height="1200">
+            </div>
+              </div>
             </div>
           </section>
         </div>
@@ -493,13 +572,15 @@
   </a>
 </header>
 
+<main>
 <section class="proof">
-  <div><b>+38%</b><small>más ventas con un sistema a la medida</small></div>
-  <div><b>Miles</b><small>de personas ya usan la app Ya Viene</small></div>
-  <div><b>4+</b><small>herramientas conectadas: WhatsApp, Excel, pagos y CRM</small></div>
+  <div><b>iOS + Android</b><small>apps móviles para tu negocio, listas para App Store y Google Play</small></div>
+  <div><b>Un equipo</b><small>diseño, código y lanzamiento con las mismas personas</small></div>
+  <div><b>$0</b><small>por la propuesta: sabes el costo antes de empezar</small></div>
+  <div><b>Web + Desktop</b><small>sistemas en el navegador y programas para Mac y Windows</small></div>
 </section>
 
-<section class="services" id="soluciones" role="main">
+<section class="services" id="soluciones">
   <header>
     <span class="eyebrow">Lo que construimos</span>
     <h2>Software hecho a tu medida. <span>De la idea al lanzamiento.</span></h2>
@@ -517,7 +598,7 @@
         <div><i style="--c:#ec4899"></i><span>Pedido #2041 confirmado<small>Tienda · hace 1 min</small></span></div>
       </div></div></div>
       <h3>Apps móviles</h3>
-      <p>Para iPhone y Android, rápidas y fáciles de usar. Como Ya Viene, que hoy usan miles de personas.</p>
+      <p>Para iPhone y Android, rápidas y fáciles de usar. Como Ya Viene, publicada en App Store y Google Play.</p>
     </article>
     <article class="tile t-web"><i class="idx">02</i>
       <div class="viz"><div class="browser"><div class="top"><i></i><i></i><i></i></div><div class="body"><b></b><b></b><b></b><b></b></div></div></div>
@@ -547,7 +628,7 @@
       <div class="viz"><div class="spark">
         <svg viewBox="0 0 300 90" preserveAspectRatio="none"><defs><linearGradient id="sg" x1="0" x2="1"><stop offset="0" stop-color="#e8364f"/><stop offset="1" stop-color="#7b4fd6"/></linearGradient></defs>
           <path d="M0 78 C30 74 45 60 70 62 S110 40 135 46 S175 22 200 30 S250 8 300 6" fill="none" stroke="url(#sg)" stroke-width="3" stroke-linecap="round"/></svg>
-        <strong>+38%<small>más ventas</small></strong>
+        <strong>+38%<small>ventas · ejemplo</small></strong>
       </div></div>
       <h3>Datos y reportes</h3>
       <p>Paneles en tiempo real para decidir con números, no con corazonadas.</p>
@@ -555,9 +636,39 @@
   </div>
 </section>
 
-<p class="credit">Mockup: <a href="https://mrmockup.com">MacBook Pro 16 de Mr.Mockup</a></p>
+<section class="contact" id="contacto">
+  <div class="box">
+    <div>
+      <h2>Cuéntanos qué te quita tiempo.</h2>
+      <p>Te respondemos con una propuesta clara, sin costo y sin tecnicismos.</p>
+      <div class="alt">
+        <a href="https://wa.me/573004438626" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 20.5l1.3-4.6A8.5 8.5 0 1 1 8 19.3zM9 8.5c0 3.5 3 6.5 6.5 6.5l1.2-1.6-2.3-1-1 .9a5 5 0 0 1-2.7-2.7l.9-1-1-2.3z"/></svg>WhatsApp · 300 443 8626</a>
+        <a href="mailto:angaritadiego37@gmail.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18v12H3zM3 7l9 6 9-6"/></svg>angaritadiego37@gmail.com</a>
+      </div>
+    </div>
+    <form id="contactForm">
+      <label>Tu nombre<input name="n" autocomplete="name" placeholder="Marta Pérez" required></label>
+      <label>¿Qué necesitas?<textarea name="m" rows="4" placeholder="Quiero que mis clientes reserven solos, sin escribirme por WhatsApp…" required></textarea></label>
+      <button class="btn" type="submit">Enviar por WhatsApp <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+      <small>Se abre WhatsApp con tu mensaje listo; tú decides si enviarlo.</small>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <a class="brand" href="#" aria-label="Ya Viene Tech, inicio"><svg><use href="#estela"/></svg><span><b>Ya Viene</b> Tech</span></a>
+  <nav aria-label="Pie de página"><a href="#soluciones">Soluciones</a><a href="https://yavienetech.com">Ya Viene</a><a href="#contacto">Contacto</a></nav>
+  <span>© 2026 Ya Viene Tech · Barranquilla</span>
+  <p class="credit">Mockup: <a href="https://mrmockup.com">MacBook Pro 16 de Mr.Mockup</a></p>
+</footer>
 
 <script>
+document.getElementById('contactForm').addEventListener('submit', e => {
+  e.preventDefault();
+  const f = new FormData(e.target);
+  open('https://wa.me/573004438626?text=' + encodeURIComponent(`Hola, soy ${f.get('n')}. ${f.get('m')}`), '_blank', 'noopener');
+});
 document.documentElement.classList.add('js'); // las tarjetas del bento solo se ocultan cuando el script corre (no-JS = visibles)
 // El nav baja pegado al marco y, al pasar su borde, queda fijo arriba. Bajo del tope el rubber-band lo deja seguir al cuadro, sin glitche
 {
@@ -607,10 +718,17 @@ const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" st
 const $ = id => document.getElementById(id);
 const flow = $('flow');
 const wait = ms => new Promise(r => setTimeout(r, ms));
+// El hero solo trabaja cuando se ve: fuera de pantalla la corriente y la actividad se detienen
+let heroOn = true, despertar = [];
+const visible = () => heroOn && !document.hidden;
+const turno = () => visible() ? null : new Promise(r => despertar.push(r));
+const avisa = () => { if (visible()) { despertar.forEach(r => r()); despertar = []; } };
+new IntersectionObserver(([e]) => { heroOn = e.isIntersecting; avisa(); }).observe(document.getElementById('stage'));
+document.addEventListener('visibilitychange', avisa);
 
 // Cada tarjeta viaja en 3D: las de entrada van desde el borde izquierdo hacia el punto de fuga
 // (el centro de la pantalla) y se esconden detrás de ella; las de salida nacen ahí y se van por la derecha.
-function ride({ html, cls = '', lane = 0, out = false, dur = 5200 }) {
+function ride({ html, cls = '', lane = 0, out = false, dur = 5200, entra }) {
   if (getComputedStyle(flow).display === 'none') return;
   const el = document.createElement('div');
   el.className = 'chip ' + cls; el.innerHTML = html; flow.append(el);
@@ -622,127 +740,128 @@ function ride({ html, cls = '', lane = 0, out = false, dur = 5200 }) {
   el.animate(kf, { duration: dur, easing: out ? 'cubic-bezier(0,.55,.6,1)' : 'cubic-bezier(.3,0,1,.5)', fill: 'forwards' });
   el.animate(out ? fade.map(f => ({ ...f, offset: 1 - f.offset })).reverse() : fade, { duration: dur, fill: 'forwards' })
     .finished.then(() => el.remove());
+  watch(el, out, entra);
+}
+// Sigue la tarjeta y enciende la luz de portal justo en el punto donde se esconde detrás de la Mac (o donde reaparece)
+const screenEl = document.querySelector('.screen');
+function watch(el, out, entra) {
+  let was = null;
+  const step = () => {
+    if (!el.isConnected) return;
+    const f = flow.getBoundingClientRect(), s = screenEl.getBoundingClientRect(), c = el.getBoundingClientRect();
+    const bx = s.width * .035, x = c.left + c.width / 2, y = c.top + c.height / 2;
+    const L = s.left - bx, R = s.right + bx, T = s.top - bx, B = s.bottom + bx * 1.5;
+    const inside = x > L && x < R && y > T && y < B;
+    if (was !== null && inside !== was) {
+      if (inside) entra?.();
+      return burst(Math.min(Math.max(x, L), R) - f.left, Math.min(Math.max(y, T), B) - f.top);
+    }
+    was = inside; requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+function burst(x, y) {
+  const g = document.createElement('i');
+  g.className = 'glow'; flow.prepend(g);
+  const at = `translate(${x}px, ${y}px)`;
+  g.animate([
+    { transform: `${at} scale(.7, .55)`, opacity: 0, easing: 'cubic-bezier(.16,1,.3,1)' },
+    { transform: `${at} scale(1, 1)`, opacity: 1, offset: .18, easing: 'cubic-bezier(.45,0,.25,1)' },
+    { transform: `${at} scale(1.12, 1.06)`, opacity: 0 },
+  ], { duration: 3600, fill: 'forwards' }).finished.then(() => g.remove());
 }
 const card = (k, e, t) => `<span class="e" style="--c:${C[e]}">${icon(e)}</span><span><small>${k}</small>${t}</span>`;
 
-// La pantalla: la pantalla de rastreo de Ya Viene se escribe a mano, línea por línea,
-// y cada componente que se escribe aparece en el iPhone de la derecha, igual que en la app real.
+// La pantalla: la app de tarjeta de Banco Nova se escribe a mano, línea por línea,
+// y cada componente que se escribe aparece en el iPhone de la derecha.
 const ico = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="${d}"/></svg>`;
-// El mapa, la ruta, el punto y los buses son los mismos del mockup de la app de Ya Viene (en sus coordenadas)
-const ROUTE = 'M411 2604 L445 2656 L673 2499 L845 2464 L901 2381 L826 2354 L828 2301 L939 2176 L854 1964 L839 1879 L813 1826 L761 1646 L657 1659 L631 1643 L630 1613 L647 1584 L651 1550 L651 1525 L667 1486 L706 1439 L690 1420 L618 1390 L587 1369 L542 1319 L521 1302 L503 1283 L517 1249 L420 1248 L381 1242 L323 1228 L326 1194 L339 1130 L328 1101 L320 1040 L297 1008 L313 984 L333 962 L350 929 L367 903 L381 877 L404 866 L420 896 L371 869 L318 837 L283 817 L204 774 L168 758 L132 749 L102 716 L116 682 L150 609 L165 564 L157 534 L130 519 L89 504 L47 501 L33 522 L9 536 L-18 532 L-46 521 L-149 459 L-199 445 L-500 438 L-711 380 L-725 363 L-598 184 L-611 163 L-721 185 L-734 159 L-716 148 L-604 165 L-599 189 L-734 374 L-512 434 L-176 449 L-129 468 L-65 510 L-31 528 L-3 534 L22 541 L165 609 L175 628 L159 661 L216 688 L327 733 L382 738 L367 770 L423 802 L410 827 L329 968 L307 989 L310 1019 L321 1042 L330 1115 L336 1143 L331 1170 L351 1207 L399 1220 L444 1224 L482 1225 L524 1229 L509 1262 L492 1291 L521 1302 L542 1319 L587 1369 L618 1390 L681 1416 L706 1439 L688 1460 L670 1478 L652 1523 L651 1550 L647 1584 L632 1611 L631 1643 L648 1660 L753 1647 L778 1706 L813 1826 L838 1878 L848 1953 L944 2195 L871 2227 L849 2285 L818 2296 L824 2350 L890 2376 L850 2457 L679 2497 L444 2643 L435 2583 L411 2604';
-const svgMap = body => `<svg viewBox="0 0 804 1750" preserveAspectRatio="xMidYMid slice">${body}</svg>`;
-const bus = (x, y, r) => `<g transform="translate(${x} ${y}) rotate(${r}) scale(.837)"><circle r="63" fill="url(#yvHalo)"/>
-  <rect x="-16" y="-30" width="32" height="60" rx="16" fill="url(#yvBus)"/><ellipse cy="-15.6" rx="11.5" ry="7.8" fill="#fff" opacity=".3"/>
-  <rect x="-16" y="-30" width="32" height="60" rx="16" fill="none" stroke="#fff" stroke-width="2.6" stroke-opacity=".92"/></g>`;
+const NIEVE = 'M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M9 3.5l3 2.5 3-2.5M9 20.5l3-2.5 3 2.5M4 10.5l3.7-.6L6.4 6.4M20 13.5l-3.7.6 1.3 3.5M4 13.5l3.7.6-1.3 3.5M20 10.5l-3.7-.6 1.3-3.5';
+const fila = (c, b, d, t, sub = '') => `<p><i style="--c:${c};--b:${b}">${ico(d)}</i><span>${t}${sub && `<small>${sub}</small>`}</span>${ico('M9 6l6 6-6 6')}</p>`;
 const W = {
-  mapa: `<div class="yv-map">${svgMap(`<image href="assets/ya-mapa.webp" width="804" height="1750"/>
-    <path d="${ROUTE}" fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="${ROUTE}" fill="none" stroke="#00A859" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
-    <circle cx="411" cy="2604" r="14" fill="#fff" stroke="#00A859" stroke-width="5"/>`)}</div>`,
-  buses: `<div class="yv-map">${svgMap(`<defs><linearGradient id="yvBus" x2="0" y2="1"><stop offset="0" stop-color="#EF978E"/><stop offset="1" stop-color="#E86A5E"/></linearGradient>
-    <radialGradient id="yvHalo"><stop offset="0" stop-color="#FFC72C" stop-opacity=".97"/><stop offset=".4" stop-color="#FFD660"/><stop offset=".7" stop-color="#FFEEB1" stop-opacity=".52"/><stop offset="1" stop-color="#FFF3C4" stop-opacity="0"/></radialGradient>
-    <linearGradient id="yvPin" x2="0" y2="1"><stop offset="0" stop-color="#4ADE80"/><stop offset="1" stop-color="#059669"/></linearGradient>
-    <linearGradient id="yvOjo" x2="1" y2="1"><stop offset="0" stop-color="#065F46"/><stop offset="1" stop-color="#00A859"/></linearGradient></defs>
-    <circle cx="388" cy="782" r="310" fill="#00A859" fill-opacity=".05" stroke="#00A859" stroke-opacity=".28" stroke-width="3"/>
-    <g transform="translate(388 782) scale(.821) translate(-40 -76)"><path d="M40 76 Q10 48 14 30 A26 26 0 1 1 66 30 Q70 48 40 76 Z" fill="url(#yvPin)"/>
-      <circle cx="40" cy="30" r="12.5" fill="#fff"/><circle cx="40" cy="30" r="8.5" fill="url(#yvOjo)"/><circle cx="37.5" cy="27" r="2.2" fill="#fff" opacity=".85"/></g>
-    ${bus(299, 722, 112)}${bus(172, 622, 178)}`)}</div>
-    <i class="yv-loc">${ico('M12 19a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM12 2v3M12 19v3M2 12h3M19 12h3')}</i>`,
-  pildora: `<div class="yv-top"><div class="yv-pill"><i><img src="assets/ya-logo.svg" alt=""></i><span><small>Ruta activa</small><b>C16 Calle 72 Uninorte</b></span><i>${ico('M18 6L6 18M6 6l12 12')}</i></div></div>`,
-  chip: `<div class="yv-chip"><i>${ico('M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11zM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4')}</i>2 buses cerca de tu punto<em>Quitar</em></div>`,
-  hoja: `<div class="yv-sheet"><u></u><div class="yv-eta"><p>BUS <b>ABC123</b></p><i></i><strong>1,2</strong><small>km de ti</small><div class="yv-oc"><p>${ico('M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75')}Ocupación aprox.<b>58 %</b></p><i><s></s></i></div></div>
-    <div class="yv-det"><i>${ico('M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7M10.2 20a2 2 0 0 0 3.6 0')}</i>Te avisamos a 1,0 km<em>Cambiar</em></div></div>`,
-  aviso: `<div class="yv-cta">${ico('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM8 12.5l2.8 2.8L16 10')}Aviso activado</div>`,
+  cabecera: `<div class="nv-head"><i>${ico('M19 12H5M12 19l-7-7 7-7')}</i><span><b>Mi tarjeta</b><small>Nova Platinum</small></span><i>${ico('M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3M12 17h.01')}</i></div>`,
+  tarjeta: `<div class="nv-card"><strong>nova</strong><em>platinum</em><s></s><u>${ico('M8.5 8.5a5 5 0 0 1 0 7M12 6a8.5 8.5 0 0 1 0 12M15.5 3.5a12 12 0 0 1 0 17')}</u>
+    <small>•••• 4821</small><span>ANDREA RÍOS</span><b><i></i><i></i></b><div class="nv-hielo">${ico(NIEVE)}Tarjeta congelada</div></div>`,
+  acciones: `<div class="nv-acc"><div><i style="--c:#5B2EFF;--b:#ECE6FF">${ico(NIEVE)}</i><span>Congelar</span></div>
+    <div><i style="--c:#E0367A;--b:#FFE6F0">${ico('M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6')}</i><span>Ver datos</span></div>
+    <div><i style="--c:#E5730B;--b:#FFEFDC">${ico('M5 6h.01M12 6h.01M19 6h.01M5 12h.01M12 12h.01M19 12h.01M12 18h.01').replace('stroke-width="2"', 'stroke-width="3.4"')}</i><span>Ver PIN</span></div></div>`,
+  ajustes: `<div class="nv-set"><h5>Ajustes de la tarjeta</h5><div class="nv-list">`
+    + fila('#0891B2', '#DDF6FB', 'M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5', 'Cambiar PIN')
+    + fila('#059669', '#DDF7EC', 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', 'Límites de gasto', 'Desactiva algunos tipos de compra')
+    + fila('#E5730B', '#FFEFDC', 'M3 6h18v12H3zM3 10h18M7 15h4', 'Pedir tarjeta nueva', '¿Perdida, dañada o robada?')
+    + fila('#DB2777', '#FFE6F0', 'M6 9a6 6 0 0 1 12 0c0 6 2 7 2 7H4s2-1 2-7M10.2 20a2 2 0 0 0 3.6 0', 'Avisos de compras', 'Te avisamos en cada compra')
+    + `</div></div>`,
+  tabs: `<div class="nv-tabs"><p class="on"><i>${ico('M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6')}</i>Cuentas</p>
+    <p><i>${ico('M6 20V12M12 20V6M18 20v-4')}</i>Gastos</p><p><i>${ico('M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z')}</i>Premios</p>
+    <p><i>${ico('M7 20V4M3 8l4-4 4 4M17 4v16M13 16l4 4 4-4')}</i>Pagos</p></div>`,
 };
-// Dónde entra cada pieza: el chip va bajo la píldora y el botón dentro de la hoja
-const inside = { chip: '.yv-top', aviso: '.yv-sheet' };
-const source = [
-  ["import { Pantalla, Mapa, Buses, Pildora, Chip, Hoja, Boton } from '@/ui'"], ["import { useRuta, useAviso } from '@/gps'"], ["import { track } from '@/analytics'"], [''],
-  ['// Pantalla de rastreo: el bus en vivo y cuánto le falta'], ['export default function Rastreo() {'], ["  const ruta = useRuta('C16 Calle 72 Uninorte')"],
-  ['  const bus = ruta.masCercano()'], ['  const aviso = useAviso({ km: 1 })'], [''], ["  track('abrir', { pantalla: 'Rastreo' })"], [''],
-  ['  return ('], ['    <Pantalla>'], ["      <Mapa ciudad='Barranquilla' ruta={ruta} />", 'mapa'], ['      <Buses items={ruta.buses} punto={ruta.punto} />', 'buses'],
-  ["      <Pildora etiqueta='Ruta activa' />", 'pildora'], ['      <Chip cerca={ruta.cercanos} />', 'chip'],
-  ['      <Hoja bus={bus} ocupacion={bus.ocupacion} />', 'hoja'], ['      <Boton aviso={aviso} />', 'aviso'], ['    </Pantalla>'], ['  )'], ['}'], [''],
-  ['// La marca de Ya Viene'], ['export const tema = {'], ["  verde: '#00A859',"], ["  arena: '#FAF6F0',"], ["  fuente: 'Plus Jakarta Sans',"], ['}'],
+const ws = { side: $('wsSide'), act: $('act'), st: $('wsSt'), app: $('papp') };
+const nav = (d, t, x = '') => `<p>${ico(d)}${t}${x}</p>`;
+ws.side.innerHTML = `<p class="brand-ws"><svg viewBox="0 0 64 64"><rect x=".75" y=".75" width="62.5" height="62.5" rx="15.5" fill="#000" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/><g transform="translate(6.5 18.4) scale(.34)" fill="#fff"><circle cx="110" cy="40" r="34"/><rect x="28" y="10" width="47.9" height="12" rx="6" opacity=".4"/><rect x="6" y="34" width="60" height="12" rx="6" opacity=".7"/><rect x="28" y="58" width="47.9" height="12" rx="6" opacity=".4"/></g></svg>Ya Viene Tech<span>${ico('M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4')}${ico('M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z')}</span></p>`
+  + nav('M3 11l9-7 9 7M5 10v10h14V10', 'Inicio') + nav('M3 13l3-8h12l3 8v6H3zM3 13h5l1 2h6l1-2h5', 'Bandeja', '<em>3</em>')
+  + nav('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6', 'Mis proyectos')
+  + nav('M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9', 'Revisiones')
+  + '<small>Clientes</small><p class="on"><b class="nv-ico"></b>Banco Nova</p>'
+  + [['#ec4899', 'Tienda online', 'M6 8h12l-1 12H7zM9 8V6.5a3 3 0 0 1 6 0V8'],
+     ['#06b6d4', 'Reservas 24/7', 'M5 6h14v14H5zM5 10h14M9 4v4M15 4v4M9.5 15l2 2 3.5-3.5'],
+     ['#10b981', 'Inventario', 'M12 3l8 4.5v9L12 21l-8-4.5v-9zM4 7.5l8 4.5 8-4.5M12 12v9'],
+     ['#f97316', 'Domicilios', 'M5 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0M15 17a2 2 0 1 0 4 0 2 2 0 0 0-4 0M3 5h11v12M14 9h4l3 4v4h-2']]
+    .map(([c, t, d]) => `<p><i class="lg" style="--c:${c}">${ico(d)}</i>${t}</p>`).join('');
+// La actividad del proyecto: cada paso aparece en la lista y arma su parte de la app en el iPhone
+const ev = (c, d, t, when) => `<div class="ev" style="--c:${c}">${ico(d)}<span>${t}</span><em>· ${when}</em></div>`;
+const msg = (av, who, when, t) => `<div class="msg"><header>${av}${who}<em>· ${when}</em></header><p>${t}</p></div>`;
+const PASOS_APP = [
+  [msg('<i class="av" style="--c:#7c2bff">A</i>', 'Andrea · Banco Nova', 'hace 3 días', 'Quiero que mis clientes manejen su tarjeta desde el celular, sin tener que llamar al banco.')],
+  [ev('#f5c542', 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 3v18', '<b>Ya Viene Tech</b> tomó el proyecto', 'hace 3 días'), [], ['En progreso', '#f5c542']],
+  [ev('#a78bfa', 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z', 'Diseño aprobado: <b>tarjeta y marca</b>', 'hace 2 días'), ['cabecera', 'tarjeta']],
+  [ev('#f472b6', 'M13 2L3 14h9l-1 8 10-12h-9z', '<b>Acciones rápidas</b> listas', 'ayer'), ['acciones']],
+  [ev('#22d3ee', 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', '<b>PIN y límites</b> conectados al banco', 'hoy'), ['ajustes', 'tabs']],
+  [ev('#818cf8', NIEVE, '<b>Congelar tarjeta</b> en un toque', 'hoy'), ['congelar']],
+  [msg('<i class="av av-logo"><svg viewBox="20 40 160 120"><g fill="#fff"><circle cx="136" cy="100" r="34"/><rect x="54" y="70" width="47.9" height="12" rx="6" opacity=".4"/><rect x="32" y="94" width="60" height="12" rx="6" opacity=".7"/><rect x="54" y="118" width="47.9" height="12" rx="6" opacity=".4"/></g></svg></i>', 'Ya Viene Tech', 'ahora', 'Lista y publicada en App Store y Google Play.'), [], ['Publicada', '#3ecf74']],
 ];
-// Resaltado mínimo: comentarios, textos, palabras clave, etiquetas JSX, atributos y llamadas
-const RX = /(\/\/.*)|('[^']*')|\b(import|from|export|default|function|const|return)\b|(<\/?[A-Z]\w*|\/?>)|(\w+)(?==)|(\w+)(?=\()/g;
-const tok = line => {
-  const out = []; let i = 0;
-  line.replace(RX, (m, c, st, k, g, a, f, at) => {
-    if (at > i) out.push(['', line.slice(i, at)]);
-    out.push([c ? 'c' : st ? 's' : k ? 'k' : g ? 'g' : a ? 'a' : 'f', m]); i = at + m.length;
-  });
-  if (i < line.length) out.push(['', line.slice(i)]);
-  return out;
-};
-const esc = t => t.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-// Pinta una línea hasta el carácter n (para el efecto de tipeo)
-const paint = (toks, n) => toks.map(([c, t]) => { const v = t.slice(0, Math.max(0, n)); n -= t.length; return v && `<span class="${c}">${esc(v)}</span>`; }).join('');
-const ide = { side: $('ideSide'), code: $('ideCode'), pos: $('edPos'), st: $('edStatus'), app: $('papp') };
-const ft = n => n.endsWith('x') ? '<em class="ft">TSX</em>' : n.endsWith('json') ? '<em class="ft j">{ }</em>' : '<em class="ft s">TS</em>';
-const dir = (t, d, open = 1) => `<p class="tree ${d}">${ico(open ? 'M6 9l6 6 6-6' : 'M9 6l6 6-6 6')}<b>${t}</b></p>`;
-const file = (t, d, on) => `<p class="tree ${d}${on ? ' on' : ''}">${ft(t)}${t}</p>`;
-ide.side.innerHTML = '<p class="ws"><i>Y</i>Ya Viene Tech</p>'
-  + `<p class="srch">${ico('M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4')}Buscar archivos<kbd>⌘P</kbd></p>`
-  + '<small>Explorador</small>' + dir('ya-viene-app', '') + dir('src', 'd1') + dir('pantallas', 'd2')
-  + file('Rastreo.tsx', 'd3', 1) + file('Avisos.tsx', 'd3') + file('Mapa.tsx', 'd3')
-  + dir('componentes', 'd2', 0) + file('gps.ts', 'd2') + file('tema.ts', 'd2') + file('package.json', 'd1')
-  + `<p class="branch">${ico('M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9')}main</p>`;
-const status = (t, ok) => { ide.st.textContent = t; ide.st.classList.toggle('ok', !!ok); };
-const done = () => { ide.code.querySelector('.cur')?.classList.remove('cur'); status('✓ Compilado', 1); };
-const open = () => { status('Escribiendo…'); ide.code.innerHTML = ''; ide.app.innerHTML = ''; ide.app.classList.remove('out'); };
-const put = w => (inside[w] && ide.app.querySelector(inside[w]) || ide.app).insertAdjacentHTML('beforeend', W[w]);
-// La distancia baja como en la app: en km con un decimal hasta el kilómetro, luego en metros.
-// Solo ruedan las cifras que cambian, casadas por la derecha, y cada paso tarda un poco más.
-const PASOS = [['1,1', 'km'], ['1,0', 'km'], ['990', 'm'], ['980', 'm'], ['970', 'm'], ['960', 'm'], ['950', 'm'], ['940', 'm']];
-function cifra(el, texto) {
-  const antes = el.textContent, d = antes.length - texto.length;
-  el.replaceChildren(...Array.from(texto, (c, i) => {
-    const s = document.createElement('span'); s.textContent = c;
-    if (c !== antes[i + d]) s.className = 'baja';
-    return s;
-  }));
-}
-async function countdown() {
-  const el = ide.app.querySelector('.yv-eta strong'), u = ide.app.querySelector('.yv-eta small');
+const estado = (t, c) => { ws.st.textContent = t; ws.st.style.setProperty('--d', c || ''); };
+const put = w => ws.app.insertAdjacentHTML('beforeend', W[w]);
+// El toque en Congelar: la onda, la tarjeta se escarcha, se queda un momento y se descongela con otro toque
+async function congela() {
+  const b = ws.app.querySelector('.nv-acc > div'), t = b && b.querySelector('span');
+  if (!b) return;
+  const toca = () => { b.classList.remove('toque'); void b.offsetWidth; b.classList.add('toque'); };
+  toca(); await wait(200); ws.app.classList.add('frio'); t.textContent = 'Congelada';
+  await wait(2600); if (!b.isConnected) return;
+  toca(); await wait(200); ws.app.classList.remove('frio'); t.textContent = 'Congelar';
   await wait(900);
-  for (const [i, [t, unidad]] of PASOS.entries()) {
-    if (!el.isConnected) return;
-    cifra(el, t);
-    if (!u.textContent.startsWith(unidad + ' ')) { u.textContent = unidad + ' de ti'; u.classList.remove('baja'); void u.offsetWidth; u.classList.add('baja'); }
-    await wait(620 + i * 70);
-  }
 }
 async function loop() {
-  let cd;
   for (;;) {
-    open(); await wait(500);
-    for (const [i, [line, w]] of source.entries()) {
-      const row = document.createElement('div'), toks = tok(line);
-      ide.code.querySelector('.cur')?.classList.remove('cur'); row.className = 'cur'; ide.code.append(row);
-      for (let n = 0; n <= line.length; n += 3) {
-        row.innerHTML = paint(toks, n) + '<i class="caret"></i>'; ide.pos.textContent = `Ln ${i + 1}, Col ${Math.min(n, line.length) + 1}`; await wait(24);
-      }
-      row.innerHTML = paint(toks, line.length) || ' '; ide.code.scrollTop = ide.code.scrollHeight;
-      if (w) { put(w); if (w === 'hoja') cd = countdown(); await wait(500); } else await wait(40);
+    ws.act.innerHTML = ''; ws.app.innerHTML = ''; ws.act.classList.remove('out'); ws.app.classList.remove('out', 'frio'); estado('Idea');
+    await wait(700);
+    for (const [html, piezas = [], st] of PASOS_APP) {
+      await turno();
+      ws.act.insertAdjacentHTML('beforeend', html);
+      if (st) estado(...st);
+      await wait(450);
+      for (const w of piezas) { if (w === 'congelar') await congela(); else { put(w); await wait(500); } }
+      await wait(1000);
     }
-    done(); await cd; await wait(3200); ide.app.classList.add('out'); await wait(750);
+    await wait(3500); await turno(); ws.act.classList.add('out'); ws.app.classList.add('out'); await wait(800);
   }
 }
 // La corriente: tarjetas alternando lado, en carriles barajados para que entren en diagonal desde arriba y abajo.
 function stream() {
   const ins = [...pairs.map(x => [x.k, x.pi, x.p]), ...extraIn], outs = [...pairs.map(x => [x.si, x.s]), ...extraOut];
-  const lanes = [-1, .35, -.55, .9, -.15, .6, -.85, .1];
-  let n = 0;
+  // Carriles que saltan de arriba a abajo en cada lado, para que dos seguidas nunca vayan pegadas
+  const inL = [-.85, .55, -.3, .95, -.65, .2, -1, .75], outL = [.7, -.9, .3, -.5, 1, -.2, .5, -.75];
+  // Un resuelto solo sale después de que un problema entró a la Mac: nunca hay soluciones sin problemas
+  let a = 0, b = 0, listos = 0, toca = false;
   const tick = () => {
-    if (!document.hidden) {
-      const out = n % 2 === 1, i = n >> 1, lane = lanes[(i * 3 + (out ? 5 : 0)) % lanes.length];
-      out ? ride({ html: card('Resuelto', ...outs[i % outs.length]), cls: 'sol', lane, out, dur: 7000 })
-          : ride({ html: card(...ins[i % ins.length]), lane, dur: 7000 });
-      n++;
+    if (visible()) {
+      if (toca && listos > 0) {
+        listos--; ride({ html: card('Resuelto', ...outs[b % outs.length]), cls: 'sol', lane: outL[b % 8], out: true, dur: 7000 }); b++;
+      } else {
+        ride({ html: card(...ins[a % ins.length]), lane: inL[a % 8], dur: 7000, entra: () => listos++ }); a++;
+      }
+      toca = !toca;
     }
-    setTimeout(tick, 850 + Math.random() * 300);
+    setTimeout(tick, 1400 + Math.random() * 300);
   };
   tick();
 }
@@ -761,6 +880,8 @@ const seen = new IntersectionObserver(es => es.forEach(e => {
     })(performance.now());
   }
 }), { threshold: .2 });
+const enVista = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('vis', e.isIntersecting)));
+document.querySelectorAll('.tile').forEach(t => enVista.observe(t));
 document.querySelectorAll('.tile').forEach((t, i) => { t.style.transitionDelay = (i % 3) * 90 + 'ms'; t.addEventListener('transitionend', () => t.style.transitionDelay = '', { once: true }); seen.observe(t); });
 
 // Resplandor del cursor en los tiles: sigue el puntero 1:1, sin timers ni easing artificial
@@ -773,8 +894,8 @@ if (matchMedia('(hover: hover) and (prefers-reduced-motion: no-preference)').mat
 }
 
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  open(); ide.code.innerHTML = source.map(([l]) => `<div>${paint(tok(l), l.length) || ' '}</div>`).join('');
-  source.forEach(([, w]) => w && put(w)); ide.app.querySelector('.yv-eta strong').textContent = '940'; ide.app.querySelector('.yv-eta small').textContent = 'm de ti'; done();
+  ws.act.innerHTML = PASOS_APP.map(([h]) => h).join(''); estado('Publicada', '#3ecf74');
+  PASOS_APP.forEach(([, piezas = []]) => piezas.forEach(w => W[w] && put(w)));
 } else { loop(); stream(); }
 
 // Túnel de luz: una cinta en forma de reloj de arena acostado. Los colores giran alrededor del eje y
@@ -784,8 +905,11 @@ if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
   if (!gl) return;
   const frag = `precision mediump float;
 uniform vec2 R; uniform float T;
-// Paleta de marca congelada en el ancho: cherry -> magenta -> violeta (los del brillo de "Tech").
-// La única variación temporal es una respiración lenta de intensidad, que no cambie de color.
+vec3 pal(float k) {
+  k = fract(k) * 4.0;
+  vec3 a = vec3(.70,.05,.17), b = vec3(.93,.26,.36), c = vec3(.99,.88,.90), d = vec3(.45,.16,.55);
+  return k < 1.0 ? mix(a, b, k) : k < 2.0 ? mix(b, c, k - 1.0) : k < 3.0 ? mix(c, d, k - 2.0) : mix(d, a, k - 3.0);
+}
 float h(float n) { return fract(sin(n * 91.7) * 43758.5); }
 void main() {
   vec2 p = (gl_FragCoord.xy / R) * 2.0 - 1.0;
@@ -794,28 +918,31 @@ void main() {
   float d = p.y / hw;
   if (abs(d) > 1.0) { gl_FragColor = vec4(0); return; }
   float a = asin(d);                                           // ángulo sobre la cinta, como si fuera un cilindro
-
+  // Los colores giran sobre el cilindro, teñidos por la paleta de marca a lo ancho (cherry -> magenta -> violeta)
   float g = (p.x + 1.0) * .5;
-  vec3 col = g < .5 ? mix(vec3(.91,.21,.31), vec3(.76,.19,.48), g * 2.0)
-                    : mix(vec3(.76,.19,.48), vec3(.48,.31,.84), g * 2.0 - 1.0);
-  col *= 1.0 + .06 * sin(T * .6);                              // respira, no cicla
-
-  // Estelas tipo cometa: cola larga y suave con cabeza tenue, sin líneas regladas entre los carriles.
-  // Gateados para que pasen pocos y se lean.
-  float lf = (a + 1.5708) * 18.0, lane = floor(lf);
+  vec3 brand = g < .5 ? mix(vec3(.91,.21,.31), vec3(.76,.19,.48), g * 2.0)
+                      : mix(vec3(.76,.19,.48), vec3(.48,.31,.84), g * 2.0 - 1.0);
+  vec3 col = mix(pal(a / 3.1416 * .9 + T * .16 + x * .08), brand, .4);
+  // Menos chillón: baja la saturación y levanta un poco hacia un rosa claro
+  col = mix(col, vec3(dot(col, vec3(.299, .587, .114))), .3);
+  col = mix(col, vec3(.98, .93, .95), .14);
+  // Estelas tipo cometa, lisas: perfil redondo a lo ancho del carril y cola que se desvanece sin cortes.
+  // Cada carril tiene su velocidad y brillo, y corren más rápido al salir del cuello.
+  float lf = (a + 1.5708) * 14.0, lane = floor(lf);
   float thin = 1.0 - abs(fract(lf) - .5) * 2.0;
   float u = x * 1.3 + .7 * x * x * x;
   float q = fract(u * .3 - T * (.18 + .3 * h(lane + 1.0)) + h(lane));
-  float comet = pow(q, 2.5) * smoothstep(1.0, .96, q) * step(.78, h(lane + 3.0)) * (.55 + .45 * h(lane + 5.0));
-  float line = thin * thin;
-  col = mix(col, vec3(1), clamp(comet * line * 1.1, 0.0, 1.0));
-
-  // Núcleo + halo: el túnel vuelve a leerse como luz (línea de tubo brillante) sin mancha
+  float comet = pow(q, 3.0) * smoothstep(1.0, .9, q) * step(.55, h(lane + 3.0)) * (.55 + .45 * h(lane + 5.0));
+  float line = thin * thin * (3.0 - 2.0 * thin);
+  line *= line;
+  col = mix(col, vec3(1), clamp(comet * line * .9, 0.0, 1.0));
+  // Núcleo de luz en el eje: el túnel se lee como un tubo brillante
   float core = smoothstep(.11, .0, abs(p.y));
-  float halo = smoothstep(1.0, .4, abs(d));
+  col = mix(col, vec3(1), core * .2);
+  float edge = smoothstep(1.0, .45, abs(d));
   float ends = smoothstep(1.05, .55, abs(p.x));
-  float al = (halo * .26 + core * .34) * ends;
-  // Dithering con hash en ±1/255: mata el banding de los gradientes suaves a alfa bajo
+  float al = (edge * .7 + core * .2) * ends;
+  // Dithering ±1/255: sin banding en los degradados de alfa bajo
   al = clamp(al + (h(gl_FragCoord.x + gl_FragCoord.y * 911.0) - .5) * (2.0 / 255.0), 0.0, 1.0);
   gl_FragColor = vec4(col * al, al);
 }`;
