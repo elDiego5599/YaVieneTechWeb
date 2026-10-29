@@ -44,9 +44,13 @@
       radial-gradient(280px 100px at 22% 34%, rgba(255,255,255,.55), transparent 72%),
       radial-gradient(380px 130px at 85% 44%, rgba(255,255,255,.55), transparent 72%),
       radial-gradient(260px 90px at 79% 40%, rgba(255,255,255,.5), transparent 72%),
-      linear-gradient(#f9e3e7 0%, #fbf1f4 20%, #faf5f6 45%, var(--frame) 68%);
+      linear-gradient(#a9c8f5 0%, #cadff9 24%, #e8f0fb 46%, var(--frame) 68%);
     display: flex; flex-direction: column; align-items: center; box-shadow: inset 0 0 0 1px var(--line);
   }
+  /* Nubes suaves que le dan cuerpo al cielo, como en Bevel; se disuelven antes de llegar a la Mac */
+  .clouds { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; opacity: .95;
+    -webkit-mask-image: linear-gradient(#000 0, #000 30%, rgba(0,0,0,.5) 50%, transparent 72%);
+    mask-image: linear-gradient(#000 0, #000 30%, rgba(0,0,0,.5) 50%, transparent 72%); }
   /* Grano propio del hero, más marcado que el de la página */
   .hero::before {
     content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none; opacity: .1; mix-blend-mode: multiply;
@@ -104,7 +108,7 @@
   /* Titular */
   .copy { position: relative; z-index: 4; text-align: center; padding: calc(72px + clamp(28px, 6vh, 64px)) 16px 0; }
   h1 {
-    font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(44px, 6.6vw, 96px);
+    font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(38px, 5.2vw, 76px);
     line-height: .96; letter-spacing: -.035em; color: var(--ink);
   }
   h1 .soft { color: var(--ink); }
@@ -112,7 +116,7 @@
   /* "Tech" lleva los colores del túnel y el brillo se desliza despacio */
   .brand i {
     font-style: normal; font-weight: 700; padding-right: .04em;
-    background: linear-gradient(90deg, #e8364f, #c2307a 35%, #7b4fd6 65%, #e8364f) 0 0 / 300% 100%;
+    background: linear-gradient(90deg, #ff3b30, #ff8a00 35%, #2f6bff 65%, #ff3b30) 0 0 / 300% 100%;
     -webkit-background-clip: text; background-clip: text; color: transparent; animation: sheen 9s linear infinite;
   }
   @keyframes sheen { to { background-position: 300% 0; } }
@@ -122,7 +126,7 @@
   .cta small { color: #5d6066; font-size: 13.5px; }
 
   /* Escenario de la MacBook: completa a la vista, sin pasarse del alto de la pantalla */
-  .stage { position: relative; z-index: 2; flex: none; width: min(1140px, 100%, 135svh); margin-top: clamp(8px, 3vh, 32px); }
+  .stage { position: relative; z-index: 2; flex: none; width: min(1320px, 100%, 152svh); margin-top: clamp(8px, 3vh, 32px); }
   .mac { position: relative; width: 100%; aspect-ratio: 2010 / 1180; container-type: inline-size; }
   /* Niebla baja que envuelve la base de la Mac sin taparla */
   .mac::after {
@@ -139,7 +143,7 @@
   }
   /* Luz de borde cherry que la integra con el fondo */
   .mac > img { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none;
-    filter: drop-shadow(0 -6px 22px rgba(232,54,79,.22)) drop-shadow(0 3cqw 4cqw rgba(17,18,20,.38)) drop-shadow(0 .5cqw .8cqw rgba(17,18,20,.32)); }
+    filter: drop-shadow(0 -6px 22px rgba(255,110,40,.24)) drop-shadow(0 3cqw 4cqw rgba(17,18,20,.38)) drop-shadow(0 .5cqw .8cqw rgba(17,18,20,.32)); }
   /* Pantalla en HTML detrás de la foto; la foto es transparente donde va la pantalla y conserva bisel y notch */
   .screen {
     position: absolute; z-index: 1; left: 24.3%; top: 9.3%; width: 51.4%; height: 56.9%;
@@ -153,54 +157,54 @@
   /* La pantalla: un espacio de trabajo oscuro y sereno. A la izquierda el espacio de Ya Viene Tech, al centro
      el proyecto con su actividad y a la derecha la app armándose en un iPhone (todo en cqw) */
   .ws { position: absolute; inset: 0; display: grid; grid-template-columns: 17cqw 1fr; gap: .9cqw;
-    padding: 2.6cqw .9cqw .9cqw; background: #0a0b0d; color: #e6e7ea; font: 1.05cqw/1.5 Inter, sans-serif; letter-spacing: -.005em; }
+    padding: 2.6cqw .9cqw .9cqw; background: #FBFBFD; color: #2a2c31; font: 1.05cqw/1.5 Inter, sans-serif; letter-spacing: -.005em; }
   .ws-side svg { flex: none; width: 1.25cqw; height: 1.25cqw; }
   .act svg { flex: none; width: 1.55cqw; height: 1.55cqw; }
-  .ws-side { display: flex; flex-direction: column; gap: .2cqw; padding: .4cqw .2cqw 0 .6cqw; color: #9a9ca3; min-width: 0; }
+  .ws-side { display: flex; flex-direction: column; gap: .2cqw; padding: .4cqw .2cqw 0 .6cqw; color: #6B6F7A; min-width: 0; }
   .ws-side p { display: flex; align-items: center; gap: .85cqw; margin: 0; padding: .55cqw .75cqw; border-radius: .7cqw; white-space: nowrap; }
-  .ws-side p.on { background: #17181c; color: #f3f4f6; }
-  .ws-side p em { margin-left: auto; font-style: normal; font-size: .85cqw; color: #63666e; }
-  .ws-side small { margin: 1.4cqw .75cqw .3cqw; font-size: .9cqw; color: #63666e; }
-  .ws-side .brand-ws { margin-bottom: .9cqw; color: #f3f4f6; font-weight: 600; font-size: 1.15cqw; }
-  .ws-side .brand-ws > svg { width: 1.6cqw; height: 1.6cqw; filter: drop-shadow(0 .1cqw .3cqw rgba(0,0,0,.4)); }
-  .ws-side .brand-ws span { margin-left: auto; display: flex; gap: .9cqw; color: #63666e; }
+  .ws-side p.on { background: #ECECF1; color: #17181C; }
+  .ws-side p em { margin-left: auto; font-style: normal; font-size: .85cqw; color: #9A9DA6; }
+  .ws-side small { margin: 1.4cqw .75cqw .3cqw; font-size: .9cqw; color: #9A9DA6; }
+  .ws-side .brand-ws { margin-bottom: .9cqw; color: #17181C; font-weight: 600; font-size: 1.15cqw; }
+  .ws-side .brand-ws > svg { width: 1.6cqw; height: 1.6cqw; filter: drop-shadow(0 .1cqw .3cqw rgba(0,0,0,.15)); }
+  .ws-side .brand-ws span { margin-left: auto; display: flex; gap: .9cqw; color: #9A9DA6; }
   .ws-side .lg { flex: none; display: grid; place-items: center; width: 1.45cqw; height: 1.45cqw; border-radius: .42cqw;
     background: linear-gradient(150deg, color-mix(in srgb, var(--c) 62%, #fff), var(--c) 55%, color-mix(in srgb, var(--c) 78%, #000));
-    box-shadow: inset 0 .06cqw 0 rgba(255,255,255,.35), 0 .1cqw .3cqw rgba(0,0,0,.4); color: #fff; }
+    box-shadow: inset 0 .06cqw 0 rgba(255,255,255,.35), 0 .1cqw .3cqw rgba(0,0,0,.15); color: #fff; }
   .ws-side .lg svg { width: .95cqw; height: .95cqw; }
   .ws-side img, .ws-top img { flex: none; width: 1.3cqw; height: 1.3cqw; }
   .ws-main { min-width: 0; min-height: 0; display: grid; grid-template-rows: auto 1fr; overflow: hidden;
-    border: .08cqw solid #1c1d22; border-radius: 1.2cqw; background: #101114; }
-  .ws-top { display: flex; align-items: center; gap: .9cqw; padding: .9cqw 1.4cqw; border-bottom: .08cqw solid #1a1b20; color: #f3f4f6; font-weight: 500; white-space: nowrap; }
-  .ws-top em { font-style: normal; color: #8b8e96; } .ws-top i { font-style: normal; color: #f5c542; } .ws-top u { text-decoration: none; color: #63666e; }
-  .ws-st { margin-left: auto; display: flex; align-items: center; gap: .6cqw; padding: .3cqw .95cqw; border-radius: 99px; background: #17181c; color: #c9cbd0; font-size: .95cqw; }
-  .ws-st::before { content: ''; width: .65cqw; height: .65cqw; border-radius: 50%; background: var(--d, #63666e); box-shadow: 0 0 .8cqw var(--d, transparent); transition: background .8s, box-shadow .8s; }
+    border: .08cqw solid #E8E8EE; border-radius: 1.2cqw; background: #fff; }
+  .ws-top { display: flex; align-items: center; gap: .9cqw; padding: .9cqw 1.4cqw; border-bottom: .08cqw solid #EEEEF2; color: #17181C; font-weight: 500; white-space: nowrap; }
+  .ws-top em { font-style: normal; color: #8A8D96; } .ws-top i { font-style: normal; color: #D99A06; } .ws-top u { text-decoration: none; color: #9A9DA6; }
+  .ws-st { margin-left: auto; display: flex; align-items: center; gap: .6cqw; padding: .3cqw .95cqw; border-radius: 99px; background: #F2F2F5; color: #4A4D55; font-size: .95cqw; }
+  .ws-st::before { content: ''; width: .65cqw; height: .65cqw; border-radius: 50%; background: var(--d, #9A9DA6); box-shadow: 0 0 .8cqw var(--d, transparent); transition: background .8s, box-shadow .8s; }
   .ws-body { display: grid; grid-template-columns: 1fr 27cqw; min-height: 0; }
   .ws-doc { min-width: 0; overflow: hidden; padding: 2.8cqw 2.6cqw 0; }
-  .ws-doc h3 { margin: 0 0 .6cqw; font-size: 2.15cqw; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: #f5f6f7; }
-  .ws-doc > p { margin: 0 0 2.4cqw; max-width: 46cqw; color: #9a9ca3; font-size: 1.2cqw; line-height: 1.55; }
-  .ws-doc h4 { margin: 0 0 1.3cqw; font-size: 1.3cqw; font-weight: 600; color: #f3f4f6; }
+  .ws-doc h3 { margin: 0 0 .6cqw; font-size: 2.15cqw; font-weight: 600; letter-spacing: -.02em; line-height: 1.2; color: #17181C; }
+  .ws-doc > p { margin: 0 0 2.4cqw; max-width: 46cqw; color: #6B6F7A; font-size: 1.2cqw; line-height: 1.55; }
+  .ws-doc h4 { margin: 0 0 1.3cqw; font-size: 1.3cqw; font-weight: 600; color: #17181C; }
   .act { display: grid; gap: 1.25cqw; transition: opacity .7s cubic-bezier(.4,0,.2,1), filter .7s cubic-bezier(.4,0,.2,1); }
   .act.out { opacity: 0; filter: blur(.4cqw); }
   .act > * { animation: llega .9s cubic-bezier(.16,1,.3,1) both; }
   @keyframes llega { from { opacity: 0; transform: translateY(.7cqw); filter: blur(.3cqw); } }
-  .act .ev { display: flex; align-items: center; gap: 1cqw; padding-left: .35cqw; color: #7d8088; font-size: 1.3cqw; white-space: nowrap; }
-  .act .ev b { color: #c9cbd0; font-weight: 500; } .act .ev em { font-style: normal; color: #55585f; }
+  .act .ev { display: flex; align-items: center; gap: 1cqw; padding-left: .35cqw; color: #7A7D86; font-size: 1.3cqw; white-space: nowrap; }
+  .act .ev b { color: #4A4D55; font-weight: 500; } .act .ev em { font-style: normal; color: #A6A9B1; }
   .act .ev svg { color: var(--c); }
-  .act .msg { padding: 1.3cqw 1.5cqw; border: .08cqw solid #1f2025; border-radius: 1cqw; background: #141519; }
-  .act .msg header { display: flex; align-items: center; gap: .8cqw; font-size: 1.3cqw; font-weight: 500; color: #f3f4f6; }
-  .act .msg header em { font-style: normal; font-weight: 400; color: #63666e; }
-  .act .msg p { margin: .6cqw 0 0; color: #b4b6bc; font-size: 1.4cqw; line-height: 1.45; }
+  .act .msg { padding: 1.3cqw 1.5cqw; border: .08cqw solid #ECECF1; border-radius: 1cqw; background: #fff; }
+  .act .msg header { display: flex; align-items: center; gap: .8cqw; font-size: 1.3cqw; font-weight: 500; color: #17181C; }
+  .act .msg header em { font-style: normal; font-weight: 400; color: #9A9DA6; }
+  .act .msg p { margin: .6cqw 0 0; color: #4A4D55; font-size: 1.4cqw; line-height: 1.45; }
   .av { flex: none; display: grid; place-items: center; width: 2.1cqw; height: 2.1cqw; border-radius: 50%; font-size: 1.05cqw; font-weight: 600; font-style: normal; color: #fff; background: var(--c); }
   .av svg { width: 1.35cqw !important; height: .75cqw !important; }
-  .av.av-logo { background: #000; box-shadow: inset 0 0 0 .06cqw rgba(255,255,255,.14); }
+  .av.av-logo { background: #fff; box-shadow: inset 0 0 0 .08cqw rgba(17,18,20,.14); }
   .av.av-logo svg { width: 1.5cqw !important; height: 1.125cqw !important; }
-  .ws-prev { display: grid; place-items: center; min-height: 0; border-left: .08cqw solid #1a1b20;
-    background: radial-gradient(55% 45% at 50% 46%, rgba(124,43,255,.2), transparent 75%), radial-gradient(40% 30% at 60% 62%, rgba(255,61,139,.1), transparent 75%), #0d0e11; }
+  .ws-prev { display: grid; place-items: center; min-height: 0; border-left: .08cqw solid #EEEEF2;
+    background: radial-gradient(55% 45% at 50% 46%, rgba(124,43,255,.13), transparent 75%), radial-gradient(40% 30% at 60% 62%, rgba(255,61,139,.08), transparent 75%), #F6F5FA; }
 
   /* El iPhone: la foto tiene la pantalla transparente y la app va detrás.
      --u es un punto de la app (402 de ancho), así las medidas salen igual que en un diseño de iPhone */
-  .iph { position: relative; height: 45cqw; aspect-ratio: 1470 / 3000; filter: drop-shadow(0 1.5cqw 2.5cqw rgba(0,0,0,.55)); }
+  .iph { position: relative; height: 45cqw; aspect-ratio: 1470 / 3000; filter: drop-shadow(0 1.5cqw 2.5cqw rgba(40,20,80,.22)); }
   .iph > img { position: absolute; inset: 0; width: 100%; height: 100%; }
   .pscreen { position: absolute; left: 5.17%; top: 2.2%; width: 89.73%; height: 95.6%; border-radius: 12% / 5.8%; overflow: hidden;
     container-type: inline-size; --u: calc(100cqw / 402); background: #F4F2F8; color: #17132A; font-family: 'Plus Jakarta Sans', Inter, sans-serif; }
@@ -208,10 +212,28 @@
   .pstat b { position: absolute; left: 0; top: calc(19 * var(--u)); width: calc(138 * var(--u)); line-height: calc(22 * var(--u)); text-align: center; font-weight: 600; }
   .pstat span { position: absolute; left: calc(299 * var(--u)); top: calc(24 * var(--u)); display: flex; gap: calc(5 * var(--u)); } .pstat svg { height: calc(12 * var(--u)); width: auto; }
   .phome { position: absolute; z-index: 5; left: calc(132 * var(--u)); bottom: calc(8 * var(--u)); width: calc(139 * var(--u)); height: calc(5 * var(--u)); border-radius: 99px; background: rgba(11,22,40,.42); }
-  .papp { position: absolute; inset: 0; transition: opacity .7s cubic-bezier(.4,0,.2,1), filter .7s cubic-bezier(.4,0,.2,1); }
+  .papp { position: absolute; z-index: 1; inset: 0; transition: opacity .7s cubic-bezier(.4,0,.2,1), filter .7s cubic-bezier(.4,0,.2,1); }
   .papp.out { opacity: 0; filter: blur(calc(6 * var(--u))); }
   .papp > * { animation: pop .8s cubic-bezier(.16,1,.3,1) both; }
   @keyframes pop { from { opacity: 0; transform: translateY(calc(10 * var(--u))) scale(.98); filter: blur(calc(4 * var(--u))); } }
+  /* Cada pieza se arma por dentro: sus partes llegan una tras otra, como si se estuvieran escribiendo */
+  .papp > * > *, .papp .nv-list > p { animation: arma .8s cubic-bezier(.16,1,.3,1) backwards; animation-delay: calc(140ms + var(--i, 0) * 90ms); }
+  @keyframes arma { from { opacity: 0; transform: translateY(calc(6 * var(--u))); filter: blur(calc(3 * var(--u))); } }
+  /* El boceto: la pantalla nunca está vacía. Lo que todavía no se construye espera como esqueleto que respira,
+     y cada pieza real se funde encima del suyo; al reiniciar, el esqueleto vuelve igual de suave */
+  .sk-layer { position: absolute; z-index: 0; inset: 0; animation: respira 1.8s ease-in-out infinite alternate; }
+  @keyframes respira { to { opacity: .62; } }
+  .sk-layer > * { transition: opacity .9s cubic-bezier(.4,0,.2,1), filter .9s cubic-bezier(.4,0,.2,1); }
+  .sk-layer > .ya { opacity: 0; filter: blur(calc(4 * var(--u))); }
+  .sk-layer .br { display: block; border-radius: 99px; background: #E4E1EC; }
+  .sk-layer .nv-head > i, .sk-layer .nv-acc i, .sk-layer .nv-list p > i { background: #E4E1EC; }
+  .sk-layer .nv-head span { display: flex; flex-direction: column; align-items: center; gap: calc(7 * var(--u)); }
+  .sk-layer .nv-acc .br { margin: 0 auto; }
+  .sk-layer .nv-list span { display: flex; flex-direction: column; gap: calc(8 * var(--u)); }
+  .sk-layer .nv-card { background: linear-gradient(135deg, #E6E1F4, #EEE4F1); box-shadow: none; }
+  .sk-layer .nv-card::after { animation: brillo 2.6s cubic-bezier(.4,0,.2,1) infinite; }
+  .sk-layer .nv-card .br { background: rgba(255,255,255,.7); }
+  .sk-layer .nv-tabs p > i { width: calc(24 * var(--u)); height: calc(24 * var(--u)); margin-bottom: calc(2 * var(--u)); border-radius: 50%; background: #E4E1EC; }
   /* La app que se arma en el iPhone: la tarjeta de Banco Nova, un cliente de finanzas. Clara, con la tarjeta como
      protagonista y cada acción con su propio color; --u es un punto de la app (402 de ancho) */
   .papp > .nv-tabs { animation-name: sube; } @keyframes sube { from { transform: translateY(100%); } }
@@ -528,6 +550,7 @@
 </nav>
 
 <header class="hero">
+  <svg class="clouds" aria-hidden="true"><filter id="nube" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".0022 .0052" numOctaves="5" seed="11"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.6 0 0 0 -1.15"/><feGaussianBlur stdDeviation="3"/></filter><rect width="100%" height="100%" filter="url(#nube)"/></svg>
   <div class="copy">
     <h1>Tu idea entra.<br><span class="soft">Sale una <em>solución.</em></span></h1>
     <p class="sub">No tienes que pelear con lo técnico. Cuéntanos el problema y déjalo en nuestras manos: lo convertimos en una solución que funciona, hecha a tu medida.</p>
@@ -564,7 +587,7 @@
                   <svg viewBox="0 0 16 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M1.31 4.98A9 9 0 0 1 14.69 4.98"/><path d="M3.54 6.99A6 6 0 0 1 12.46 6.99"/><path d="M5.7 8.93A3.1 3.1 0 0 1 10.3 8.93"/><circle cx="8" cy="10.8" r=".95" fill="currentColor" stroke="none"/></svg>
                   <svg viewBox="0 0 25 12" fill="none"><rect x=".5" y=".5" width="21" height="11" rx="3.6" stroke="currentColor" opacity=".35"/><rect x="1.9" y="1.9" width="15.2" height="8.2" rx="1.9" fill="currentColor"/><path d="M22.9 4.5v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".35"/></svg>
                 </span></div>
-                <div class="papp" id="papp"></div>
+                <div class="sk-layer" id="psk" aria-hidden="true"></div><div class="papp" id="papp"></div>
                 <i class="phome"></i>
               </div>
               <img src="assets/iphone.webp" alt="" width="588" height="1200">
@@ -834,9 +857,19 @@ const W = {
     <p><i>${ico('M6 20V12M12 20V6M18 20v-4')}</i>Gastos</p><p><i>${ico('M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z')}</i>Premios</p>
     <p><i>${ico('M7 20V4M3 8l4-4 4 4M17 4v16M13 16l4 4 4-4')}</i>Pagos</p></div>`,
 };
-const ws = { side: $('wsSide'), act: $('act'), st: $('wsSt'), app: $('papp') };
+const ws = { side: $('wsSide'), act: $('act'), st: $('wsSt'), app: $('papp'), sk: $('psk') };
+// El esqueleto de cada pieza, con las mismas medidas, para que la real nazca justo encima
+const br = (w, h, x = '') => `<i class="br" style="width:calc(${w} * var(--u));height:calc(${h} * var(--u));${x}"></i>`;
+const u = n => `calc(${n} * var(--u))`;
+ws.sk.innerHTML = `<div class="nv-head" data-w="cabecera"><i></i><span>${br(92, 15)}${br(68, 10)}</span><i></i></div>`
+  + `<div class="nv-card" data-w="tarjeta">${br(104, 30, `left:${u(22)};top:${u(20)}`)}${br(44, 33, `left:${u(24)};top:${u(92)};border-radius:${u(8)}`)}`
+  + `${br(132, 14, `left:${u(22)};bottom:${u(46)}`)}${br(96, 10, `left:${u(22)};bottom:${u(22)}`)}${br(50, 30, `right:${u(22)};bottom:${u(18)}`)}</div>`
+  + `<div class="nv-acc" data-w="acciones">${`<div><i></i>${br(62, 11)}</div>`.repeat(3)}</div>`
+  + `<div class="nv-set" data-w="ajustes"><h5>${br(156, 15)}</h5><div class="nv-list"><p><i></i><span>${br(104, 13)}</span></p>`
+  + `<p><i></i><span>${br(120, 13)}${br(184, 9)}</span></p>`.repeat(3) + `</div></div>`
+  + `<div class="nv-tabs" data-w="tabs">${`<p><i></i>${br(42, 8)}</p>`.repeat(4)}</div>`;
 const nav = (d, t, x = '') => `<p>${ico(d)}${t}${x}</p>`;
-ws.side.innerHTML = `<p class="brand-ws"><svg viewBox="0 0 64 64"><rect x=".75" y=".75" width="62.5" height="62.5" rx="15.5" fill="#000" stroke="rgba(255,255,255,.16)" stroke-width="1.5"/><g transform="translate(6.5 18.4) scale(.34)" fill="#fff"><circle cx="110" cy="40" r="34"/><rect x="28" y="10" width="47.9" height="12" rx="6" opacity=".4"/><rect x="6" y="34" width="60" height="12" rx="6" opacity=".7"/><rect x="28" y="58" width="47.9" height="12" rx="6" opacity=".4"/></g></svg>Ya Viene Tech<span>${ico('M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4')}${ico('M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z')}</span></p>`
+ws.side.innerHTML = `<p class="brand-ws"><svg viewBox="0 0 64 64"><rect x=".75" y=".75" width="62.5" height="62.5" rx="15.5" fill="#fff" stroke="rgba(17,18,20,.12)" stroke-width="1.5"/><g transform="translate(6.5 18.4) scale(.34)" fill="#111214"><circle cx="110" cy="40" r="34"/><rect x="28" y="10" width="47.9" height="12" rx="6" opacity=".4"/><rect x="6" y="34" width="60" height="12" rx="6" opacity=".7"/><rect x="28" y="58" width="47.9" height="12" rx="6" opacity=".4"/></g></svg>Ya Viene Tech<span>${ico('M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4')}${ico('M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z')}</span></p>`
   + nav('M3 11l9-7 9 7M5 10v10h14V10', 'Inicio') + nav('M3 13l3-8h12l3 8v6H3zM3 13h5l1 2h6l1-2h5', 'Bandeja', '<em>3</em>')
   + nav('M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6', 'Mis proyectos')
   + nav('M6 3v12M18 9a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM6 21a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM18 9a9 9 0 0 1-9 9', 'Revisiones')
@@ -856,10 +889,16 @@ const PASOS_APP = [
   [ev('#f472b6', 'M13 2L3 14h9l-1 8 10-12h-9z', '<b>Acciones rápidas</b> listas', 'ayer'), ['acciones']],
   [ev('#22d3ee', 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z', '<b>PIN y límites</b> conectados al banco', 'hoy'), ['ajustes', 'tabs']],
   [ev('#818cf8', NIEVE, '<b>Congelar tarjeta</b> en un toque', 'hoy'), ['congelar']],
-  [msg('<i class="av av-logo"><svg viewBox="20 40 160 120"><g fill="#fff"><circle cx="136" cy="100" r="34"/><rect x="54" y="70" width="47.9" height="12" rx="6" opacity=".4"/><rect x="32" y="94" width="60" height="12" rx="6" opacity=".7"/><rect x="54" y="118" width="47.9" height="12" rx="6" opacity=".4"/></g></svg></i>', 'Ya Viene Tech', 'ahora', 'Lista y publicada en App Store y Google Play.'), [], ['Publicada', '#3ecf74']],
+  [msg('<i class="av av-logo"><svg viewBox="20 40 160 120"><g fill="#111214"><circle cx="136" cy="100" r="34"/><rect x="54" y="70" width="47.9" height="12" rx="6" opacity=".4"/><rect x="32" y="94" width="60" height="12" rx="6" opacity=".7"/><rect x="54" y="118" width="47.9" height="12" rx="6" opacity=".4"/></g></svg></i>', 'Ya Viene Tech', 'ahora', 'Lista y publicada en App Store y Google Play.'), [], ['Publicada', '#3ecf74']],
 ];
 const estado = (t, c) => { ws.st.textContent = t; ws.st.style.setProperty('--d', c || ''); };
-const put = w => ws.app.insertAdjacentHTML('beforeend', W[w]);
+const put = w => {
+  ws.app.insertAdjacentHTML('beforeend', W[w]);
+  const el = ws.app.lastElementChild;
+  [...el.children].forEach((c, i) => c.style.setProperty('--i', i));
+  el.querySelectorAll('.nv-list > p').forEach((p, i) => p.style.setProperty('--i', i + 1));
+  ws.sk.querySelector(`[data-w="${w}"]`)?.classList.add('ya');
+};
 // El toque en Congelar: la onda, la tarjeta se escarcha, se queda un momento y se descongela con otro toque
 async function congela() {
   const b = ws.app.querySelector('.nv-acc > div'), t = b && b.querySelector('span');
@@ -882,7 +921,8 @@ async function loop() {
       for (const w of piezas) { if (w === 'congelar') await congela(); else { put(w); await wait(500); } }
       await wait(1000);
     }
-    await wait(3500); await turno(); ws.act.classList.add('out'); ws.app.classList.add('out'); await wait(800);
+    await wait(3500); await turno(); ws.act.classList.add('out'); ws.app.classList.add('out');
+    ws.sk.querySelectorAll('.ya').forEach(e => e.classList.remove('ya')); await wait(900);
   }
 }
 // La corriente: tarjetas alternando lado, en carriles barajados para que entren en diagonal desde arriba y abajo.
@@ -967,7 +1007,7 @@ if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
 uniform vec2 R; uniform float T;
 vec3 pal(float k) {
   k = fract(k) * 4.0;
-  vec3 a = vec3(.70,.05,.17), b = vec3(.93,.26,.36), c = vec3(.99,.88,.90), d = vec3(.45,.16,.55);
+  vec3 a = vec3(.92,.12,.10), b = vec3(1.0,.55,.05), c = vec3(1.0,.93,.85), d = vec3(.14,.38,1.0);
   return k < 1.0 ? mix(a, b, k) : k < 2.0 ? mix(b, c, k - 1.0) : k < 3.0 ? mix(c, d, k - 2.0) : mix(d, a, k - 3.0);
 }
 float h(float n) { return fract(sin(n * 91.7) * 43758.5); }
@@ -980,12 +1020,12 @@ void main() {
   float a = asin(d);                                           // ángulo sobre la cinta, como si fuera un cilindro
   // Los colores giran sobre el cilindro, teñidos por la paleta de marca a lo ancho (cherry -> magenta -> violeta)
   float g = (p.x + 1.0) * .5;
-  vec3 brand = g < .5 ? mix(vec3(.91,.21,.31), vec3(.76,.19,.48), g * 2.0)
-                      : mix(vec3(.76,.19,.48), vec3(.48,.31,.84), g * 2.0 - 1.0);
+  vec3 brand = g < .5 ? mix(vec3(1.0,.23,.19), vec3(1.0,.54,.0), g * 2.0)
+                      : mix(vec3(1.0,.54,.0), vec3(.18,.42,1.0), g * 2.0 - 1.0);
   vec3 col = mix(pal(a / 3.1416 * .9 + T * .16 + x * .08), brand, .4);
   // Menos chillón: baja la saturación y levanta un poco hacia un rosa claro
-  col = mix(col, vec3(dot(col, vec3(.299, .587, .114))), .3);
-  col = mix(col, vec3(.98, .93, .95), .14);
+  col = mix(col, vec3(dot(col, vec3(.299, .587, .114))), .1);
+  col = mix(col, vec3(1.0, .96, .92), .08);
   // Estelas tipo cometa, lisas: perfil redondo a lo ancho del carril y cola que se desvanece sin cortes.
   // Cada carril tiene su velocidad y brillo, y corren más rápido al salir del cuello.
   float lf = (a + 1.5708) * 14.0, lane = floor(lf);
