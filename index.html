@@ -963,7 +963,11 @@
   .ya-buses, #yaSel { transition: opacity .5s ease; }
   .ya-halo { opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity .4s ease; animation: yaRespira 2.4s ease-in-out infinite; }
   .ya-halo.ya-on { opacity: 1; }
+  .ya-ping { opacity: 0; transform-box: fill-box; transform-origin: center; }
+  .ya-halo.ya-on ~ .ya-ping { animation: yaPing 1.8s cubic-bezier(.1,.4,.3,1) infinite; }
   @keyframes yaRespira { 50% { transform: scale(1.14); } }
+  @keyframes yaPing { from { transform: scale(.6); opacity: .55; } to { transform: scale(1.9); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .ya-ping, .ya-halo { animation: none; } }
   /* El dedo que actúa la demo */
   .ya-dedo { position: absolute; z-index: 9; left: 0; top: 0; width: calc(38 * var(--u)); height: calc(38 * var(--u)); margin: calc(-19 * var(--u)) 0 0 calc(-19 * var(--u));
     border-radius: 50%; background: rgba(15,23,42,.16); box-shadow: 0 0 0 calc(1.5 * var(--u)) rgba(255,255,255,.9), 0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(15,23,42,.18);
@@ -1574,7 +1578,7 @@
         <path id="yaRuta" d="M102.2 287.1L160.5 301.5 228 331.8 321.2 375 427.3 423.5 472.8 444.7 600.1 492.5 657.7 531.1 730 579.6" fill="none" stroke="#00A859" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
         <g class="ya-buses">
           <use class="ya-otro" href="#yaBus" transform="translate(216.8 326.8) rotate(24)"/><use class="ya-otro" href="#yaBus" transform="translate(410.5 415.8) rotate(25)"/><use class="ya-otro" href="#yaBus" transform="translate(585.2 486.9) rotate(21)"/>
-          <g id="yaSel"><circle class="ya-halo" r="17" fill="#FFC72C" fill-opacity=".55" stroke="#FFF3C4" stroke-opacity=".9" stroke-width="1.7"/><use href="#yaBus"/></g>
+          <g id="yaSel"><circle class="ya-halo" r="17" fill="#FFC72C" fill-opacity=".55" stroke="#FFF3C4" stroke-opacity=".9" stroke-width="1.7"/><circle class="ya-ping" r="17" fill="none" stroke="#FFC72C" stroke-opacity=".75" stroke-width="1.6"/><use href="#yaBus"/></g>
         </g>
         <circle id="yaOnda" r="0" fill="none" stroke="#00A859" stroke-width="1.6" stroke-opacity="0"/>
         <g transform="translate(440.9 430.3) scale(.42) translate(-40 -76)"><path d="M40 76Q10 48 14 30A26 26 0 0 1 66 30Q70 48 40 76Z" fill="url(#yaPin)" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.25))"/><ellipse cx="40" cy="14" rx="12" ry="4.5" fill="#fff" fill-opacity=".2"/><circle cx="40" cy="30" r="12.5" fill="#fff"/><circle cx="40" cy="30" r="8.5" fill="url(#yaPinC)"/><circle cx="37.5" cy="27" r="2.2" fill="#fff" fill-opacity=".85"/></g>
