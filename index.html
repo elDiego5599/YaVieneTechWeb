@@ -561,13 +561,18 @@
   .pn--x > .erp { position: absolute; left: 56px; right: 0; top: 204px; bottom: 0; display: grid; grid-template-columns: 184px minmax(0, 1fr); padding-top: 8px;
     border-top-left-radius: 14px; background: #f4f4f5; font-family: Inter, sans-serif;
     box-shadow: 0 0 0 1px rgba(17,18,20,.08), 0 34px 60px -26px rgba(17,18,20,.3); }
-  .erp-side { display: grid; align-content: start; gap: 1px; padding: 6px 10px; }
+  .erp-side { display: grid; align-content: start; gap: 1px; padding: 6px 10px; position: relative; }
   .erp-ws { display: flex; align-items: center; gap: 8px; padding: 2px 8px 14px; font-size: 13px; font-weight: 600; }
   .erp-ws b { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; color: #fff; font-size: 10.5px; background: linear-gradient(135deg, #facc15, #f97316); }
   .erp-side a { display: flex; align-items: center; gap: 9px; height: 30px; padding: 0 8px; border-radius: 7px; font-size: 13px; color: #5b5e66; }
   .erp-side a svg { width: 15px; height: 15px; flex: none; }
   .erp-side a.on { background: rgba(17,18,20,.06); color: var(--ink); font-weight: 500; }
   .erp-side em { margin-left: auto; font-style: normal; font-size: 11.5px; color: #8a8d93; }
+  .erp-me { position: absolute; left: 10px; right: 10px; bottom: 20px; display: flex; align-items: center; gap: 9px; padding: 7px 9px; border-radius: 10px;
+    background: #fff; box-shadow: 0 0 0 .5px rgba(17,18,20,.10), 0 10px 18px -12px rgba(17,18,20,.25); }
+  .erp-me b { flex: none; width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-size: 9.5px; font-weight: 600; background: linear-gradient(135deg, #facc15, #f97316); }
+  .erp-me i { display: block; font-style: normal; font-size: 12.5px; font-weight: 600; line-height: 1.15; }
+  .erp-me small { display: block; font-size: 11px; color: #8a8d93; }
   .erp-main { min-width: 0; padding: 0 32px 0 24px; overflow: hidden; background: #fff; border-top-left-radius: 10px; box-shadow: 0 0 0 .5px rgba(17,18,20,.12); }
   .erp-main header { display: flex; align-items: center; gap: 14px; height: 56px; box-shadow: 0 1px 0 rgba(17,18,20,.07); }
   .erp-main h5 { font-size: 14px; font-weight: 600; }
@@ -1487,6 +1492,7 @@
             <a><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20c1-4 4-5.6 7.5-5.6s6.5 1.6 7.5 5.6"/></svg>Clientes</a>
             <a><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20H7zM14 3.5v4h4M10 12h5M10 16h5"/></svg>Facturas</a>
             <a><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 19c.8-3.2 3-4.6 5.5-4.6s4.7 1.4 5.5 4.6M15 14.6c2.5 0 4.2 1.4 4.8 4.4"/></svg>Equipo</a>
+            <div class="erp-me" aria-hidden="true"><b>DM</b><div><i>Daniela M.</i><small>Administradora</small></div></div>
           </aside>
           <div class="erp-main">
             <header><h5>Pedidos</h5><div class="erp-tabs"><span class="on">Todos</span><span>Por despachar</span><span>En camino</span><span>Entregados</span></div><b>+ Nuevo pedido</b></header>
