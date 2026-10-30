@@ -534,8 +534,8 @@
   @keyframes lnin { from { opacity: 0; transform: translateY(8px); } }
   .ln-m { gap: 10px; }
   .ln-av { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font: normal 600 9px Inter, sans-serif; color: #fff; background: var(--c); }
-  .ln-av.ln-bot { border-radius: 7px; background: linear-gradient(135deg, #e8364f, #7b4fd6); }
-  .ln-bot svg { width: 15px; height: 8px; fill: currentColor; }
+  .ln-av.ln-bot { border-radius: 7px; background: linear-gradient(135deg, #14b8a6, #3b82f6); }
+  .ln-bot svg { width: 13px; height: 13px; fill: currentColor; }
   .ln-m > div { flex: 1; min-width: 0; }
   .ln-m p { display: flex; align-items: center; gap: 7px; height: 24px; font-size: 13px; }
   .ln-m p b { font-weight: 600; color: var(--ink); }
@@ -1245,6 +1245,12 @@
     <rect x="32" y="94" width="60" height="12" rx="6" fill="currentColor" opacity=".7"/>
     <rect x="54" y="118" width="47.9" height="12" rx="6" fill="currentColor" opacity=".4"/>
   </symbol>
+  <!-- Sonrisa: el logito de Clínica Sonrisa (cara mínima: dos ojos y una sonrisa) -->
+  <symbol id="sonrisa" viewBox="0 0 48 48">
+    <circle cx="16.5" cy="15" r="3.6" fill="currentColor"/>
+    <circle cx="31.5" cy="15" r="3.6" fill="currentColor"/>
+    <path d="M12 25c0 9 5.5 12 12 12s12-3 12-12" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/>
+  </symbol>
 </svg>
 
 <!-- El nav vive fuera del hero: el hero tiene isolation: isolate y atraparía al nav fijo dentro de su stacking context, dejando que los tiles lo tapen -->
@@ -1464,12 +1470,12 @@
           </div>
           <div class="ln-msgs">
             <div class="ln-m" data-at="500"><i class="ln-av" style="--c:#4ea7fc">JR</i><div><p><b>Julio Rodríguez</b><time>9:12</time></p><span>Hola 👋 ¿tienen cita para mañana?</span></div></div>
-            <div class="ln-m" data-at="1400" data-out="2800"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><span class="ln-dots"><i></i><i></i><i></i></span></p></div></div>
-            <div class="ln-m" data-at="2800"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><em>Automático</em><time>9:12</time></p><span>¡Hola, Laura! Mañana tengo estos horarios libres:</span>
+            <div class="ln-m" data-at="1400" data-out="2800"><i class="ln-av ln-bot"><svg><use href="#sonrisa"/></svg></i><div><p><b>Clínica Sonrisa</b><span class="ln-dots"><i></i><i></i><i></i></span></p></div></div>
+            <div class="ln-m" data-at="2800"><i class="ln-av ln-bot"><svg><use href="#sonrisa"/></svg></i><div><p><b>Clínica Sonrisa</b><em>Automático</em><time>9:12</time></p><span>¡Hola, Laura! Mañana tengo estos horarios libres:</span>
               <div class="ln-opts"><u>9:00 am</u><u data-at="4300">11:30 am</u><u>4:00 pm</u></div></div></div>
             <div class="ln-m" data-at="4700"><i class="ln-av" style="--c:#4ea7fc">JR</i><div><p><b>Julio Rodríguez</b><time>9:13</time></p><span>11:30 am</span></div></div>
-            <div class="ln-m" data-at="5600" data-out="7000"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><span class="ln-dots"><i></i><i></i><i></i></span></p></div></div>
-            <div class="ln-m" data-at="7000"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><em>Automático</em><time>9:13</time></p><span>Listo ✅ Quedaste agendada mañana a las <b>11:30 am</b> con la Dra. Ríos. Te escribo una hora antes para recordarte.</span></div></div>
+            <div class="ln-m" data-at="5600" data-out="7000"><i class="ln-av ln-bot"><svg><use href="#sonrisa"/></svg></i><div><p><b>Clínica Sonrisa</b><span class="ln-dots"><i></i><i></i><i></i></span></p></div></div>
+            <div class="ln-m" data-at="7000"><i class="ln-av ln-bot"><svg><use href="#sonrisa"/></svg></i><div><p><b>Clínica Sonrisa</b><em>Automático</em><time>9:13</time></p><span>Listo ✅ Quedaste agendada mañana a las <b>11:30 am</b> con la Dra. Ríos. Te escribo una hora antes para recordarte.</span></div></div>
           </div>
           <div class="ln-cmp">Responder…<i><svg class="ln-i" viewBox="0 0 16 16"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></i></div>
         </div>
