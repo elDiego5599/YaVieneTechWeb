@@ -605,17 +605,23 @@
   .erp-new > .erp-r { min-height: 0; height: auto; overflow: hidden; transition: background 1.6s ease; }
   .erp-new > .erp-r > :not(.erp-s) { padding: 11px 0; }
   .pn .erp-new.ya { grid-template-rows: 1fr; } .erp-new.ya > .erp-r { background: rgba(250,204,21,.12); }
-  .pn--x > .erp-toast { position: absolute; z-index: 4; right: 24px; bottom: 20px; display: flex; gap: 10px; align-items: center; width: 244px; padding: 11px 13px; border-radius: 15px;
-    background: #fff; color: var(--ink); font-family: Inter, sans-serif;
-    box-shadow: 0 0 0 .5px rgba(17,18,20,.08), 0 24px 44px -18px rgba(17,18,20,.28), 0 2px 8px -2px rgba(17,18,20,.04);
-    opacity: 0; transform: translateY(14px) scale(.96); transform-origin: 100% 100%;
-    transition: opacity .45s cubic-bezier(.2,.8,.2,1), transform .6s cubic-bezier(.3,1.5,.5,1); }
-  .pn--x > .erp-toast.ya { opacity: 1; transform: none; }
-  .erp-toast i { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font: 800 13px Inter, sans-serif; font-style: normal; color: #fff; background: #ef4444; box-shadow: 0 4px 10px -4px rgba(239,68,68,.5); }
-  .erp-toast b { display: block; font-size: 13px; font-weight: 600; }
-  .erp-toast span { display: block; font-size: 12px; color: #6b6e75; line-height: 1.4; margin-top: 2px; }
-  .erp-toast > div { position: relative; min-width: 0; }
-  .erp-toast time { position: absolute; top: 2px; right: 0; font-size: 10.5px; color: #9a9da3; }
+  .pn--x > .erp-modal { position: absolute; z-index: 5; inset: 204px 0 0 56px; display: grid; place-items: center; border-radius: 14px 0 0 0;
+    background: rgba(17,18,20,.32); opacity: 0; pointer-events: none; transform: none; }
+  .pn--x > .erp-modal.ya { opacity: 1; pointer-events: auto; }
+  .erp-modal > div { width: min(340px, calc(100% - 24px)); padding: 17px 17px 15px; border-radius: 18px; background: #fff; color: var(--ink); font-family: Inter, sans-serif; text-align: center;
+    box-shadow: 0 0 0 .5px rgba(17,18,20,.08), 0 40px 70px -24px rgba(17,18,20,.4);
+    opacity: 0; transform: translateY(12px) scale(.94); transition: transform .6s cubic-bezier(.3,1.4,.5,1), opacity .45s cubic-bezier(.2,.8,.2,1); }
+  .pn--x > .erp-modal.ya > div { opacity: 1; transform: none; }
+  .erp-modal i { flex: none; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; font: 800 15px Inter, sans-serif; font-style: normal; color: #fff; background: #ef4444; box-shadow: 0 4px 10px -4px rgba(239,68,68,.5); margin: 0 auto 10px; }
+  .erp-modal b { display: block; font-size: 15px; font-weight: 700; }
+  .erp-modal span { display: block; font-size: 12.5px; color: #6b6e75; line-height: 1.45; margin-top: 4px; }
+  .erp-pend { opacity: 0; transform: scale(.6); transition: opacity .35s cubic-bezier(.2,.8,.2,1), transform .5s cubic-bezier(.3,1.4,.5,1); }
+  .erp-pend.ya { opacity: 1; transform: none; }
+  .erp-modal .erp-act > * { cursor: pointer; transition: transform .14s ease, filter .14s ease; }
+  .erp-modal .erp-act > :hover { filter: brightness(.94); } .erp-modal .erp-act > :active { transform: scale(.96); }
+  .erp-modal .erp-act { display: flex; justify-content: center; gap: 8px; margin-top: 14px; }
+  .erp-modal .erp-act b { display: grid; place-items: center; height: 32px; padding: 0 13px; border-radius: 8px; background: var(--ink); color: #fff; font-size: 12.5px; font-weight: 600; white-space: nowrap; }
+  .erp-modal .erp-act span { margin: 0; display: grid; place-items: center; height: 32px; padding: 0 12px; border-radius: 8px; border: .5px solid rgba(17,18,20,.14); color: #5b5e66; font-size: 12.5px; font-weight: 500; }
 
   /* Integraciones: tarjetas blancas sobre papel cálido y líneas que se encienden, al estilo incident.io */
   .pn--ig { background: #f6f4ef; }
@@ -700,7 +706,7 @@
     .ln-hd > small { display: none; }
     .pn--x > .erp { left: 16px; top: 224px; grid-template-columns: minmax(0, 1fr); padding-top: 0; }
     .erp-side { display: none; } .erp-main { border-top-left-radius: 14px; padding: 0 16px; }
-    .pn--x > .erp-toast { left: 16px; right: 16px; top: auto; bottom: 16px; width: auto; }
+    .pn--x > .erp-modal { inset: 224px 0 0 16px; }
     .pn--x > .ig { left: 16px; right: 16px; top: 224px; bottom: 16px; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 10px; }
     .ig-l, .ig-fan, .ig-core { display: none; }
     .ig-out { grid-template-rows: repeat(3, 58px); gap: 8px; } .ig-c { padding: 0 14px; gap: 12px; } .ig-c small { display: none; } .ig-c b { font-size: 13.5px; } .ig-in { padding: 13px 15px; } .ig-in > b { margin-top: 10px; } .ig-in p { font-size: 13px; }
@@ -1498,7 +1504,7 @@
             <div class="erp-ws"><b>R</b>Ferretería Roble</div>
             <a><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"/></svg>Inicio</a>
             <a class="on"><svg viewBox="0 0 24 24"><path d="M6 4h12v16l-3-2-3 2-3-2-3 2zM9 9h6M9 13h4"/></svg>Pedidos<em>12</em></a>
-            <a><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5zM4 8.5l8 4.5 8-4.5M12 13v7"/></svg>Inventario</a>
+            <a><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5zM4 8.5l8 4.5 8-4.5M12 13v7"/></svg>Inventario<em class="erp-pend">1</em></a>
             <a><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20c1-4 4-5.6 7.5-5.6s6.5 1.6 7.5 5.6"/></svg>Clientes</a>
             <a><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20H7zM14 3.5v4h4M10 12h5M10 16h5"/></svg>Facturas</a>
             <a><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 19c.8-3.2 3-4.6 5.5-4.6s4.7 1.4 5.5 4.6M15 14.6c2.5 0 4.2 1.4 4.8 4.4"/></svg>Equipo</a>
@@ -1520,7 +1526,9 @@
             <div class="erp-f">Mostrando <b class="erp-sw" data-at="1300"><span>5 de 12</span><span>6 de 12</span></b> pedidos</div>
           </div>
         </div>
-        <div class="erp-toast" data-at="5200" data-out="10000"><i>!</i><div><b>Inventario bajo</b><time>Ahora</time><span>Quedan 4 cajas de tornillo 3/8. Ya avisamos al proveedor.</span></div></div>
+        <div class="erp-modal" data-at="5200" data-out="10000">
+          <div><i>!</i><b>Inventario bajo</b><span>Quedan 4 cajas de tornillo 3/8. Se ha hecho un pedido de 20 al proveedor.</span><div class="erp-act"><b>Entendido</b><span>Cancelar pedido</span></div></div>
+        </div>
       </figure>
       <figure class="pn pn--x pn--ig" data-s="int" data-t="Integraciones" aria-hidden="true">
         <figcaption><h4>Integraciones</h4><p>Conectamos WhatsApp, Excel, tus pagos y tu CRM: un pedido entra una vez y aparece en todas partes, sin copiar y pegar.</p></figcaption>
@@ -2089,9 +2097,11 @@ function guion(now) {
   const dt = Math.min(100, now - (guion.prev ?? now)); guion.prev = now;
   const g = guiones.find(g => g.closest('.pn').dataset.s === uso);
   if (g && escena.classList.contains('vis') && !document.hidden) {
-    guion.t = clra.matches ? 1e9 : (guion.t + dt) % +g.dataset.seq;
+    const t = clra.matches ? 1e9 : (guion.t + dt) % +g.dataset.seq;
+    if (t < guion.t) g.dispatchEvent(new Event('vuelta'));
+    guion.t = t;
     for (const { el, at, out } of piezas.get(g)) {
-      const on = clra.matches ? !out.length : at.some((a, i) => guion.t >= a && (out[i] === undefined || guion.t < out[i]));
+      const on = !el.dataset.cerrado && (clra.matches ? !out.length : at.some((a, i) => guion.t >= a && (out[i] === undefined || guion.t < out[i])));
       if (el.classList.contains('ya') !== on) el.classList.toggle('ya', on);
     }
   }
@@ -2099,6 +2109,14 @@ function guion(now) {
 }
 guion.t = 0;
 requestAnimationFrame(guion);
+// Inventario bajo se puede responder: Cancelar pedido deja 1 pendiente en Inventario; Entendido, o no tocar nada, no deja nada
+{
+  const erp = document.querySelector('.erp[data-seq]'), modal = erp.closest('.pn').querySelector('.erp-modal'), pend = erp.querySelector('.erp-pend');
+  const cierra = cancela => { modal.dataset.cerrado = 1; pend.classList.toggle('ya', cancela); };
+  modal.querySelector('.erp-act b').addEventListener('click', () => cierra(false));
+  modal.querySelector('.erp-act span').addEventListener('click', () => cierra(true));
+  erp.addEventListener('vuelta', () => { delete modal.dataset.cerrado; pend.classList.remove('ya'); });
+}
 // Al deslizar la tira a mano, el panel que queda al centro pasa a ser el activo.
 escena.addEventListener('scrollend', () => {
   if (!tira.matches) return;
