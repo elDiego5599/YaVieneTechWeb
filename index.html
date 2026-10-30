@@ -605,11 +605,17 @@
   .erp-new > .erp-r { min-height: 0; height: auto; overflow: hidden; transition: background 1.6s ease; }
   .erp-new > .erp-r > :not(.erp-s) { padding: 11px 0; }
   .pn .erp-new.ya { grid-template-rows: 1fr; } .erp-new.ya > .erp-r { background: rgba(250,204,21,.12); }
-  .pn--x > .erp-toast { position: absolute; z-index: 4; right: 32px; bottom: 32px; display: flex; gap: 12px; align-items: center; width: 304px; padding: 13px 15px; border-radius: 12px;
-    background: #1b1c1f; color: #fff; font-family: Inter, sans-serif; box-shadow: 0 0 0 .5px rgba(255,255,255,.1) inset, 0 24px 40px -16px rgba(17,18,20,.55); opacity: 0; transform: translateY(12px); }
+  .pn--x > .erp-toast { position: absolute; z-index: 4; right: 32px; bottom: 32px; display: flex; gap: 12px; align-items: center; width: 312px; padding: 12px 14px; border-radius: 15px;
+    background: color-mix(in srgb, #facc15 10%, white); color: var(--ink); font-family: Inter, sans-serif; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+    box-shadow: 0 0 0 .5px rgba(249,115,22,.18), 0 24px 44px -18px rgba(249,115,22,.22), 0 2px 8px -2px rgba(17,18,20,.05);
+    opacity: 0; transform: translateY(14px) scale(.95); transform-origin: 100% 100%;
+    transition: opacity .45s cubic-bezier(.2,.8,.2,1), transform .6s cubic-bezier(.3,1.5,.5,1); }
   .pn--x > .erp-toast.ya { opacity: 1; transform: none; }
-  .erp-toast i { flex: none; width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font: 800 13px Inter, sans-serif; font-style: normal; color: #1b1c1f; background: linear-gradient(135deg, #facc15, #f97316); }
-  .erp-toast b { display: block; font-size: 13px; font-weight: 600; } .erp-toast span { font-size: 12px; color: rgba(255,255,255,.66); line-height: 1.4; }
+  .erp-toast i { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font: 800 13px Inter, sans-serif; font-style: normal; color: #1b1c1f; background: linear-gradient(135deg, #facc15, #f97316); box-shadow: 0 0 0 4px rgba(255,255,255,.5), 0 6px 12px -5px rgba(249,115,22,.45); }
+  .erp-toast b { display: block; font-size: 13px; font-weight: 600; }
+  .erp-toast span { display: block; font-size: 12px; color: #6b6e75; line-height: 1.4; margin-top: 2px; }
+  .erp-toast > div { position: relative; min-width: 0; }
+  .erp-toast time { position: absolute; top: 2px; right: 0; font-size: 10.5px; color: #9a9da3; }
 
   /* Integraciones: tarjetas blancas sobre papel cálido y líneas que se encienden, al estilo incident.io */
   .pn--ig { background: #f6f4ef; }
@@ -1514,7 +1520,7 @@
             <div class="erp-f">Mostrando <b class="erp-sw" data-at="1300"><span>5 de 12</span><span>6 de 12</span></b> pedidos</div>
           </div>
         </div>
-        <div class="erp-toast" data-at="5200" data-out="10000"><i>!</i><div><b>Inventario bajo</b><span>Quedan 4 cajas de tornillo 3/8. Ya avisamos al proveedor.</span></div></div>
+        <div class="erp-toast" data-at="5200" data-out="10000"><i>!</i><div><b>Inventario bajo</b><time>Ahora</time><span>Quedan 4 cajas de tornillo 3/8. Ya avisamos al proveedor.</span></div></div>
       </figure>
       <figure class="pn pn--x pn--ig" data-s="int" data-t="Integraciones" aria-hidden="true">
         <figcaption><h4>Integraciones</h4><p>Conectamos WhatsApp, Excel, tus pagos y tu CRM: un pedido entra una vez y aparece en todas partes, sin copiar y pegar.</p></figcaption>
