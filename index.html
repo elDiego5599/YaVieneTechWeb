@@ -465,7 +465,7 @@
   .pn .apps { align-self: stretch; justify-self: stretch; }
   .apps .yv { position: absolute; left: 50%; top: 9%; width: 360px; margin-left: -190px; }
   /* Apps: los dos cuadritos de tienda (Apple y Android) flotando suaves bajo la explicación */
-  .apl-badges { position: absolute; left: 56px; bottom: 48px; display: flex; gap: 14px; }
+  .pn .apl-badges { position: absolute; left: 56px; bottom: 48px; grid-column: auto; grid-row: auto; place-self: auto; display: flex; gap: 14px; }
   .apl-b { width: 58px; height: 58px; border-radius: 16px; background: #fff; display: grid; place-items: center; color: var(--ink);
     box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 16px 30px -18px rgba(17,18,20,.35);
     animation: apl-flo 5.6s cubic-bezier(.45,0,.55,1) infinite; }
