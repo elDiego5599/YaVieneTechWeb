@@ -8,7 +8,7 @@
 <meta name="description" content="Tu idea entra, sale una solución. Software, apps y automatización a la medida.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@200;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@200..800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #2a292e;
@@ -821,11 +821,127 @@
   .more { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); font-weight: 500; }
   .more svg { width: 16px; height: 16px; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
   .more:hover svg { transform: translateX(4px); }
-  /* El mapa real de Barranquilla hace de foto y la app corre encima */
-  .case-media { position: relative; display: grid; place-items: center; aspect-ratio: 1; border-radius: 12px; overflow: hidden; background: #f3f2ef url(assets/ya-mapa.webp) center 46% / cover; }
-  .case-media::before { content: ''; position: absolute; inset: 0; background: radial-gradient(42% 52% at 50% 52%, rgba(243,242,239,.85), rgba(243,242,239,0)); }
-  /* zoom y no width: la pantalla está en px y así encoge entera sin recortar la hoja */
-  .case-media .yv { zoom: .88; }
+  /* El cuadro es la pantalla de Ya Viene: medidas en pt de la app (402 de ancho) escaladas con --u */
+  .case-media { position: relative; aspect-ratio: 1; border-radius: 20px; overflow: hidden; background: #F4F2EE;
+    container-type: inline-size; --u: calc(100cqw / 600); box-shadow: inset 0 0 0 1px rgba(42,41,46,.06);
+    font-family: 'Plus Jakarta Sans', sans-serif; color: #1F2430; letter-spacing: -.01em; }
+  .ya-map { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .ya-st { position: absolute; z-index: 3; top: calc(16 * var(--u)); left: calc(40 * var(--u)); right: calc(36 * var(--u)); height: calc(36 * var(--u));
+    display: flex; justify-content: space-between; align-items: center; font: 600 calc(17 * var(--u)) Inter, sans-serif; letter-spacing: -.02em; color: #111; }
+  .ya-st span { display: flex; gap: calc(6 * var(--u)); align-items: center; }
+  .ya-st svg { height: calc(12 * var(--u)); fill: #111; }
+  /* Isla dinámica: una sola pieza que se estira de reposo a compacta (logo + km) a expandida (el tamaño de la actividad) */
+  .ya-di { position: absolute; z-index: 6; top: calc(14 * var(--u)); left: 50%; width: calc(125 * var(--u)); height: calc(37 * var(--u));
+    transform: translateX(-50%); border-radius: calc(19 * var(--u)); background: #000; overflow: hidden;
+    transition: width .6s cubic-bezier(.32,.72,0,1), height .6s cubic-bezier(.32,.72,0,1), top .6s cubic-bezier(.32,.72,0,1), border-radius .6s cubic-bezier(.32,.72,0,1); }
+  .ya-di.ya-cmp { width: calc(226 * var(--u)); }
+  .ya-di.ya-exp { top: calc(11 * var(--u)); width: calc(374 * var(--u)); border-radius: calc(44 * var(--u)); }
+  .ya-dl, .ya-dc { position: absolute; top: 50%; opacity: 0; transform: translateY(-50%); transition: opacity .25s ease; }
+  .ya-dl { left: calc(8 * var(--u)); width: calc(22 * var(--u)); height: calc(22 * var(--u)); border-radius: 22.5%; }
+  .ya-dc { right: calc(13 * var(--u)); display: flex; align-items: baseline; gap: calc(3 * var(--u)); font-family: ui-rounded, 'SF Pro Rounded', -apple-system, sans-serif; letter-spacing: 0; }
+  .ya-dc b { color: #00A859; font-size: calc(15 * var(--u)); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .ya-dc small { color: #9BA3AF; font-size: calc(11 * var(--u)); font-weight: 600; }
+  .ya-cmp .ya-dl, .ya-cmp .ya-dc { opacity: 1; transition-delay: .22s; }
+  .ya-late { animation: yaLate 1.3s ease-out 2; }
+  @keyframes yaLate { from { box-shadow: 0 0 0 0 rgba(0,168,89,.55); } to { box-shadow: 0 0 0 calc(16 * var(--u)) rgba(0,168,89,0); } }
+  .ya-vib { animation: yaVib .45s linear; }
+  @keyframes yaVib { 0%, 100% { translate: 0; } 12% { translate: calc(-2.2 * var(--u)) 0; } 25% { translate: calc(2 * var(--u)) 0; } 37% { translate: calc(-1.7 * var(--u)) 0; }
+    50% { translate: calc(1.4 * var(--u)) 0; } 62% { translate: calc(-1 * var(--u)) 0; } 75% { translate: calc(.7 * var(--u)) 0; } 87% { translate: calc(-.3 * var(--u)) 0; } }
+  .ya-top { position: absolute; z-index: 2; top: calc(75 * var(--u)); left: calc(50% - 180 * var(--u)); right: calc(50% - 180 * var(--u)); height: calc(58 * var(--u));
+    display: flex; align-items: center; padding: 0 calc(7 * var(--u)) 0 calc(11 * var(--u)); border-radius: calc(29 * var(--u)); background: #fff;
+    box-shadow: 0 calc(6 * var(--u)) calc(18 * var(--u)) rgba(17,24,39,.1); }
+  .ya-top img { width: calc(36 * var(--u)); height: calc(36 * var(--u)); }
+  .ya-top p { flex: 1; margin: 0; text-align: center; line-height: 1.15; }
+  .ya-top small { display: block; color: #065F46; font-size: calc(12 * var(--u)); font-weight: 500; }
+  .ya-top b { display: block; font-size: calc(18 * var(--u)); font-weight: 700; letter-spacing: -.02em; color: #111827; }
+  .ya-top i { width: calc(46 * var(--u)); height: calc(46 * var(--u)); border-radius: 50%; display: grid; place-items: center; background: #F1F4F7; }
+  .ya-top i svg { width: calc(15 * var(--u)); height: calc(15 * var(--u)); stroke: #374151; stroke-width: 2; }
+  .ya-sheet { position: absolute; z-index: 2; overflow: hidden; transition: height .55s cubic-bezier(.32,.72,0,1); left: calc(50% - 180 * var(--u)); right: calc(50% - 180 * var(--u)); bottom: calc(16 * var(--u)); padding: calc(12 * var(--u)) calc(23 * var(--u)) calc(20 * var(--u));
+    border-radius: calc(36 * var(--u)); background: #fff; box-shadow: 0 calc(-4 * var(--u)) calc(30 * var(--u)) rgba(17,24,39,.1); }
+  .ya-sheet::before { content: ''; display: block; width: calc(44 * var(--u)); height: calc(4 * var(--u)); margin: 0 auto calc(16 * var(--u)); border-radius: 9px; background: #E3E5E8; }
+  .ya-card { border: 1px solid #ECEEF1; border-radius: calc(24 * var(--u)); box-shadow: 0 calc(4 * var(--u)) calc(14 * var(--u)) rgba(17,24,39,.04); }
+  .ya-placa { display: flex; justify-content: center; align-items: center; gap: calc(11 * var(--u)); height: calc(43 * var(--u)); border-bottom: 1px solid #ECEEF1; }
+  .ya-placa span { color: #4B5563; font-size: calc(12 * var(--u)); font-weight: 600; letter-spacing: .14em; }
+  .ya-placa b { padding: calc(2 * var(--u)) calc(9 * var(--u)); border: calc(1.6 * var(--u)) solid #111827; border-radius: calc(7 * var(--u)); font-size: calc(14 * var(--u)); font-weight: 600; letter-spacing: .1em; }
+  .ya-km { padding: calc(8 * var(--u)) 0 calc(6 * var(--u)); text-align: center; line-height: 1; }
+  .ya-km strong { display: block; color: #0B7A4E; font-size: calc(50 * var(--u)); font-weight: 300; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  .ya-km span { display: block; margin-top: calc(3 * var(--u)); color: #4B5563; font-size: calc(14.5 * var(--u)); font-weight: 500; }
+  .ya-oc { margin: 0 calc(14 * var(--u)); padding: calc(10 * var(--u)) 0 calc(13 * var(--u)); border-top: 1px solid #ECEEF1; }
+  .ya-oc p { display: flex; justify-content: space-between; align-items: center; margin: 0 0 calc(8 * var(--u)); color: #4B5563; font-size: calc(12.5 * var(--u)); font-weight: 500; }
+  .ya-oc p span { display: flex; align-items: center; gap: calc(6 * var(--u)); }
+  .ya-oc p svg { width: calc(15 * var(--u)); height: calc(15 * var(--u)); fill: #4B5563; }
+  .ya-oc p b { color: #111827; font-size: calc(13.5 * var(--u)); font-weight: 500; }
+  .ya-oc > i { display: block; height: calc(5 * var(--u)); border-radius: 9px; background: #EEF0F3; overflow: hidden; }
+  .ya-oc > i::before { content: ''; display: block; width: var(--oc, 28%); height: 100%; background: #E2BF33; }
+  .ya-btn { display: flex; justify-content: center; align-items: center; gap: calc(11 * var(--u)); height: calc(52 * var(--u)); margin-top: calc(12 * var(--u));
+    border-radius: calc(26 * var(--u)); background: #047857; color: #fff; font-size: calc(16 * var(--u)); font-weight: 800; letter-spacing: -.01em;
+    box-shadow: 0 calc(8 * var(--u)) calc(18 * var(--u)) rgba(4,120,87,.24); }
+  .ya-btn.ya-on { background: #065F46; box-shadow: 0 calc(8 * var(--u)) calc(18 * var(--u)) rgba(6,95,70,.24); }
+  .ya-btn.ya-on i svg { fill: #fff; stroke: #065F46; }
+  .ya-btn i { width: calc(30 * var(--u)); height: calc(30 * var(--u)); border-radius: 50%; display: grid; place-items: center; background: rgba(255,255,255,.18); }
+  .ya-btn i svg { width: calc(16 * var(--u)); height: calc(16 * var(--u)); stroke: #fff; stroke-width: 2.2; fill: none; }
+  /* Actividad en vivo: copia de TarjetaBloqueada en Vistas.swift, mismos pt */
+  .ya-la { position: absolute; z-index: 7; top: calc(11 * var(--u)); left: 50%; width: calc(374 * var(--u)); margin-left: calc(-187 * var(--u));
+    display: flex; flex-direction: column; gap: calc(22 * var(--u)); padding: calc(30 * var(--u)) calc(18 * var(--u)) calc(16 * var(--u)); border-radius: calc(44 * var(--u));
+    background: #000; color: #fff; font-family: -apple-system, 'SF Pro Text', Inter, sans-serif; letter-spacing: 0; --a: 0; --av: .545;
+    opacity: 0; visibility: hidden; filter: blur(calc(8 * var(--u))); transform: scale(.94); transform-origin: 50% 0;
+    transition: opacity .3s ease, filter .35s ease, transform .5s cubic-bezier(.32,.72,0,1), visibility 0s .5s; }
+  .ya-la.ya-ver { opacity: 1; visibility: visible; filter: none; transform: none; transition-delay: .2s, .2s, .12s, 0s; }
+  .ya-cab { display: flex; align-items: center; gap: calc(12 * var(--u)); }
+  .ya-cab img { width: calc(40 * var(--u)); height: calc(40 * var(--u)); border-radius: 22.5%; }
+  .ya-cab p { transition: opacity .2s ease; margin: 0; font-size: calc(25 * var(--u)); font-weight: 600; line-height: 1.2; letter-spacing: -.02em; word-spacing: -.04em; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .ya-cab b { color: #00A859; font-weight: 700; }
+  .ya-pz { display: flex; flex-direction: column; gap: calc(8 * var(--u)); margin-right: calc(3 * var(--u)); }
+  /* inicio 3, fin = ancho - 7; el bus centra en clamp(inicio + 27, avance, fin - 27) */
+  .ya-pista { position: relative; height: calc(34 * var(--u)); --i: calc(3 * var(--u)); --f: calc(100% - 7 * var(--u)); --x: calc(var(--i) + (var(--f) - var(--i)) * var(--a)); }
+  .ya-pista > * { position: absolute; top: 50%; }
+  .ya-carril, .ya-lleno { left: 0; height: calc(6 * var(--u)); margin-top: calc(-3 * var(--u)); border-radius: 9px; }
+  .ya-carril { right: 0; background: rgba(255,255,255,.16); }
+  .ya-lleno { width: max(var(--x), var(--i)); background: #00A859; box-shadow: 0 0 calc(6 * var(--u)) rgba(0,168,89,.5); }
+  .ya-ini { left: 0; width: calc(6 * var(--u)); height: calc(6 * var(--u)); margin-top: calc(-3 * var(--u)); border-radius: 50%; background: #fff; }
+  .ya-cam { left: calc(var(--i) + (var(--f) - var(--i)) * var(--av)); width: calc(16 * var(--u)); height: calc(16 * var(--u)); margin: calc(-8 * var(--u)) 0 0 calc(-8 * var(--u));
+    border-radius: 50%; background: #2A2E35; display: grid; place-items: center; transition: background .4s ease; }
+  .ya-paso .ya-cam { background: #00A859; }
+  .ya-cam svg { width: calc(8 * var(--u)); height: calc(8 * var(--u)); fill: #fff; }
+  .ya-fin { left: var(--f); width: calc(14 * var(--u)); height: calc(14 * var(--u)); margin: calc(-7 * var(--u)) 0 0 calc(-7 * var(--u)); border-radius: 50%; background: #00A859;
+    box-shadow: inset 0 0 0 calc(.5 * var(--u)) #00A859, inset 0 0 0 calc(3 * var(--u)) #fff, 0 0 0 calc(2 * var(--u)) #000, 0 0 0 calc(3 * var(--u)) rgba(0,168,89,.6); }
+  .ya-bus { left: clamp(calc(var(--i) + 27 * var(--u)), var(--x), calc(var(--f) - 27 * var(--u))); width: calc(54 * var(--u)); height: calc(25.4 * var(--u));
+    margin: calc(-24.21 * var(--u)) 0 0 calc(-27 * var(--u)); overflow: visible; }
+  .ya-rot { display: flex; align-items: center; gap: calc(6 * var(--u)); margin-right: calc(-3 * var(--u)); color: #9BA3AF; font-size: calc(15 * var(--u)); line-height: 1.3; }
+  .ya-rot svg { width: calc(12 * var(--u)); height: calc(13 * var(--u)); fill: currentColor; }
+  .ya-rot span:last-child { margin-left: auto; }
+  /* Hoja: cada pieza dice en qué estados vive (data-on); al cambiar, lo que sale se apaga, la hoja cambia de alto y lo nuevo entra */
+  .ya-sheet [hidden] { display: none !important; }
+  .ya-sheet [data-on] { transition: opacity .32s ease .12s; }
+  .ya-sheet .ya-off { opacity: 0; transition-duration: .16s; transition-delay: 0s; }
+  .ya-vacio { display: flex; flex-direction: column; align-items: center; padding: calc(4 * var(--u)) 0 calc(8 * var(--u)); text-align: center; }
+  .ya-vacio i { width: calc(56 * var(--u)); height: calc(56 * var(--u)); margin-bottom: calc(14 * var(--u)); border-radius: calc(18 * var(--u)); display: grid; place-items: center;
+    background: #fff; box-shadow: 0 0 0 1px rgba(20,39,78,.08), 0 calc(4 * var(--u)) calc(14 * var(--u)) rgba(17,24,39,.08); }
+  .ya-vacio i svg { width: calc(44 * var(--u)); height: calc(44 * var(--u)); }
+  .ya-vacio b { color: #0F172A; font-size: calc(18 * var(--u)); font-weight: 700; }
+  .ya-vacio span { margin-top: calc(4 * var(--u)); color: #5E6B82; font-size: calc(15 * var(--u)); }
+  .ya-preg { padding-top: calc(14 * var(--u)); text-align: center; }
+  .ya-preg > b { display: block; color: #0F172A; font-size: calc(18 * var(--u)); font-weight: 700; }
+  .ya-sel { position: relative; height: calc(138 * var(--u)); margin: calc(8 * var(--u)) calc(9 * var(--u)) calc(4 * var(--u)); overflow: hidden; }
+  .ya-sel::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: calc(36 * var(--u)); margin-top: calc(-18 * var(--u)); border-radius: calc(9 * var(--u)); background: rgba(0,168,89,.1); }
+  .ya-sel span { position: absolute; left: 0; right: 0; top: 50%; height: calc(30 * var(--u)); margin-top: calc(-15 * var(--u)); line-height: calc(30 * var(--u));
+    color: #0F172A; font-size: calc(22 * var(--u)); font-weight: 700; font-variant-numeric: tabular-nums; will-change: transform, opacity; }
+  .ya-gu { display: flex; flex-direction: column; margin-top: calc(18 * var(--u)); }
+  .ya-gu b { height: calc(60 * var(--u)); border-radius: calc(30 * var(--u)); display: grid; place-items: center; background: #047857; color: #fff; font-size: calc(16 * var(--u)); font-weight: 800; }
+  .ya-gu span { height: calc(48 * var(--u)); margin-top: calc(4 * var(--u)); display: grid; place-items: center; color: #5E6B82; font-size: calc(15 * var(--u)); font-weight: 600; }
+  .ya-cmb { display: flex; justify-content: center; align-items: center; gap: calc(6 * var(--u)); min-height: calc(48 * var(--u)); padding: calc(4 * var(--u)) calc(12 * var(--u)) 0;
+    color: #5E6B82; font-size: calc(13 * var(--u)); font-weight: 600; }
+  .ya-cmb b { padding: calc(7 * var(--u)) calc(12 * var(--u)); border: 1px solid rgba(20,39,78,.08); border-radius: 99px; background: #F1F5F9; color: #C0392B; font-weight: 600; }
+  .ya-buses, #yaSel { transition: opacity .5s ease; }
+  .ya-halo { opacity: 0; transform-box: fill-box; transform-origin: center; transition: opacity .4s ease; animation: yaRespira 2.4s ease-in-out infinite; }
+  .ya-halo.ya-on { opacity: 1; }
+  @keyframes yaRespira { 50% { transform: scale(1.14); } }
+  /* El dedo que actúa la demo */
+  .ya-dedo { position: absolute; z-index: 9; left: 0; top: 0; width: calc(38 * var(--u)); height: calc(38 * var(--u)); margin: calc(-19 * var(--u)) 0 0 calc(-19 * var(--u));
+    border-radius: 50%; background: rgba(15,23,42,.16); box-shadow: 0 0 0 calc(1.5 * var(--u)) rgba(255,255,255,.9), 0 calc(4 * var(--u)) calc(12 * var(--u)) rgba(15,23,42,.18);
+    opacity: 0; pointer-events: none; transition: opacity .22s ease, scale .14s ease, background .14s ease; }
+  .ya-dedo.ya-ver { opacity: 1; }
+  .ya-dedo.ya-pre { scale: .82; background: rgba(15,23,42,.3); }
   /* Mismo marco de iPhone que YaVieneWeb: la imagen va encima y la pantalla HTML cae en su hueco */
   .yv { position: relative; flex: none; width: 272px; aspect-ratio: 720 / 1469; filter: drop-shadow(0 40px 50px rgba(17,18,20,.28)); }
   .yv > img { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; pointer-events: none; }
@@ -889,30 +1005,6 @@
   .da-tab i { width: 13cqw; height: 13cqw; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, #e8364f, #7b4fd6); color: #fff; box-shadow: 0 2cqw 4cqw -1cqw rgba(123,79,214,.5); }
   .da-tab i svg { width: 6cqw; height: 6cqw; stroke-width: 2.4; }
   .da-tab::after { content: ''; position: absolute; left: 50%; bottom: 2.4cqw; width: 34cqw; height: 1.3cqw; margin-left: -17cqw; border-radius: 1cqw; background: #1d1c20; }
-  .yv .map { position: absolute; inset: 0; width: 100%; height: 100%; }
-  .yv-route { stroke-dasharray: 600; transition: stroke-dashoffset 1.8s cubic-bezier(.65,0,.35,1) .35s; }
-  .js .case-media:not(.seen) .yv-route { stroke-dashoffset: 600; }
-  .yv .st { position: absolute; z-index: 2; top: 14px; left: 30px; right: 26px; display: flex; justify-content: space-between; align-items: center; font: 600 13px/1 Inter, sans-serif; }
-  .yv .st svg { width: 22px; height: 11px; }
-  .yv .q { position: absolute; z-index: 2; top: 52px; left: 14px; right: 14px; height: 40px; display: flex; align-items: center; gap: 8px; padding: 0 14px;
-    border-radius: 14px; background: #fff; box-shadow: 0 6px 16px -8px rgba(17,18,20,.3); color: var(--muted); font-size: 13.5px; font-weight: 500; }
-  .yv .q svg { width: 15px; height: 15px; }
-  .yv .sheet { position: absolute; z-index: 2; left: 8px; right: 8px; bottom: 8px; padding: 10px 18px 20px; border-radius: 28px 28px 38px 38px; background: #fff;
-    box-shadow: 0 -8px 26px -12px rgba(17,18,20,.28); }
-  .yv .sheet::before { content: ''; display: block; width: 36px; height: 4px; margin: 0 auto 14px; border-radius: 2px; background: #dcdde0; }
-  .yv .rt { display: flex; align-items: center; gap: 8px; }
-  .yv .rt > i { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--ink); color: #fff; }
-  .yv .rt > i svg { width: 18px; height: 18px; }
-  .yv .rt b { display: block; font-size: 14px; }
-  .yv .rt small { display: block; white-space: nowrap; margin-top: 1px; color: var(--muted); font-size: 12px; }
-  .yv .live { white-space: nowrap; margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-style: normal; font-size: 11.5px; font-weight: 600; color: #1f9d5c; }
-  .yv .live::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; animation: vivo 2.4s ease-in-out infinite; }
-  @keyframes vivo { 50% { opacity: .35; } }
-  .yv .eta { display: flex; align-items: baseline; gap: 8px; margin-top: 16px; }
-  .yv .eta strong { white-space: nowrap; font-family: Manrope, sans-serif; font-weight: 800; font-size: 38px; line-height: 1; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
-  .yv .eta span { color: var(--muted); font-size: 13.5px; white-space: nowrap; }
-  .yv .bar { height: 6px; margin-top: 14px; border-radius: 3px; background: #eceef1; overflow: hidden; }
-  .yv .bar i { display: block; height: 100%; border-radius: 3px; background: linear-gradient(90deg, #e8364f, #7b4fd6); transform: scaleX(.66); transform-origin: left; }
 
   /* Proceso: acordeón de Pangram. Lienzo pintado a la izquierda con la pantalla del paso abierto, filas a la derecha */
   .proc > header { text-align: left; margin: 0 0 48px; }
@@ -1088,8 +1180,7 @@
     .facts { grid-template-columns: 1fr; gap: 0; }
     .facts div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
     .facts dd { margin: 0; font-size: 16px; text-align: right; }
-    .case-media { aspect-ratio: auto; padding: 40px 0; }
-    .case-media .yv { zoom: .8; }
+    .case-media { aspect-ratio: 600 / 720; }
     .how-art { min-height: 400px; }
     .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .ppl .blk { padding-block: 72px; }
@@ -1440,42 +1531,73 @@
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       </div>
     </div>
-    <div class="case-media rv" style="--d:1" aria-hidden="true">
-      <div class="yv">
-        <img src="assets/marco-iphone.webp" alt="" width="720" height="1469" decoding="async">
-        <div class="yv-scr">
-        <svg class="map" id="yvMap" viewBox="0 0 260 530" preserveAspectRatio="xMidYMid slice">
-          <defs><linearGradient id="yvg" gradientUnits="userSpaceOnUse" x1="200" y1="390" x2="176" y2="130"><stop offset="0" stop-color="#7b4fd6"/><stop offset="1" stop-color="#e8364f"/></linearGradient></defs>
-          <rect width="260" height="530" fill="#eceef1"/>
-          <path d="M206 0C222 54 240 86 260 104V0z" fill="#d6e5f6"/>
-          <rect x="108" y="146" width="76" height="88" rx="16" fill="#d9eedf"/>
-          <g fill="none" stroke="#fff" stroke-linecap="round">
-            <path stroke-width="12" d="M90-10V540M200-10V540M-10 130H270M-10 250H270M-10 370H270"/>
-            <path stroke-width="6" d="M-10 196H90M145 250V370M200 196H270M30 130V250M-10 330L90 290"/>
-          </g>
-          <path d="M200 390V272Q200 250 178 250H112Q90 250 90 228V152Q90 130 112 130H176" fill="none" stroke="#fff" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
-          <path class="yv-route" d="M200 390V272Q200 250 178 250H112Q90 250 90 228V152Q90 130 112 130H176" fill="none" stroke="url(#yvg)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
-          <g fill="#fff" stroke="#2a292e" stroke-width="2"><circle cx="145" cy="250" r="4"/><circle cx="90" cy="190" r="4"/></g>
-          <g transform="translate(176 130)">
-            <circle r="8" fill="#e8364f" opacity=".28"><animate attributeName="r" values="8;22" dur="2.4s" repeatCount="indefinite" calcMode="spline" keyTimes="0;1" keySplines=".2 .8 .2 1"/><animate attributeName="opacity" values=".3;0" dur="2.4s" repeatCount="indefinite"/></circle>
-            <circle r="7" fill="#e8364f" stroke="#fff" stroke-width="3"/>
-          </g>
-          <g>
-            <animateMotion dur="8s" repeatCount="indefinite" calcMode="spline" keyTimes="0;.8;1" keyPoints="0;1;1" keySplines=".45 0 .3 1;0 0 1 1" path="M200 390V272Q200 250 178 250H112Q90 250 90 228V152Q90 130 112 130H148"/>
-            <animate attributeName="opacity" values="1;1;0;0" keyTimes="0;.86;.95;1" dur="8s" repeatCount="indefinite"/>
-            <rect x="-14" y="-14" width="28" height="28" rx="9" fill="#2a292e" stroke="#fff" stroke-width="2"/>
-            <path d="M6 17V6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v11M6 11h12M6 17h12M8 20v-3M16 20v-3" transform="translate(-8 -8) scale(.667)" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </g>
-        </svg>
-        <div class="st"><span>9:41</span><svg viewBox="0 0 22 11" fill="none"><rect x=".5" y=".5" width="18" height="10" rx="3" stroke="currentColor" opacity=".4"/><rect x="2" y="2" width="12" height="7" rx="1.6" fill="currentColor"/><path d="M20.5 4v3" stroke="currentColor" opacity=".4" stroke-linecap="round"/></svg></div>
-        <div class="q"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 18a7 7 0 1 1 0-14 7 7 0 0 1 0 14zM20 20l-4-4"/></svg>¿A dónde vas?</div>
-        <div class="sheet">
-          <div class="rt"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 17V6a3 3 0 0 1 3-3h6a3 3 0 0 1 3 3v11M6 11h12M6 17h12M8 20v-3M16 20v-3"/></svg></i><span><b>Ruta C12</b><small>Prado → Centro</small></span><em class="live">En vivo</em></div>
-          <div class="eta"><strong id="yvEta">2 min</strong><span id="yvMsg">Llega a tu parada</span></div>
-          <div class="bar"><i id="yvBar"></i></div>
-        </div>
+    <div class="case-media rv" style="--d:1" aria-hidden="true" data-s="vacio">
+      <svg class="ya-map" viewBox="186 160 510 510" preserveAspectRatio="xMidYMin slice">
+        <defs>
+          <g id="yaBus"><rect x="-13" y="-6.5" width="26" height="13" rx="6.5" fill="#E86A5E" stroke="#fff" stroke-width="1.6"/><rect x="4" y="-4" width="6" height="8" rx="3" fill="#F3A49B"/></g>
+          <linearGradient id="yaPin" x1="0" y1="4" x2="0" y2="76" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#4ADE80"/><stop offset="1" stop-color="#059669"/></linearGradient>
+          <linearGradient id="yaPinC" x1="31" y1="21" x2="49" y2="39" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#065F46"/><stop offset="1" stop-color="#00A859"/></linearGradient>
+        </defs>
+        <image href="assets/caso-mapa.webp" width="700" height="700"/>
+        <circle cx="440.9" cy="430.3" r="130" fill="#00A859" fill-opacity=".08" stroke="#00A859" stroke-opacity=".38" stroke-width="1.4"/>
+        <path d="M102.2 287.1L160.5 301.5 228 331.8 321.2 375 427.3 423.5 472.8 444.7 600.1 492.5 657.7 531.1 730 579.6" fill="none" stroke="#fff" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+        <path id="yaRuta" d="M102.2 287.1L160.5 301.5 228 331.8 321.2 375 427.3 423.5 472.8 444.7 600.1 492.5 657.7 531.1 730 579.6" fill="none" stroke="#00A859" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+        <g class="ya-buses">
+          <use class="ya-otro" href="#yaBus" transform="translate(216.8 326.8) rotate(24)"/><use class="ya-otro" href="#yaBus" transform="translate(410.5 415.8) rotate(25)"/><use class="ya-otro" href="#yaBus" transform="translate(585.2 486.9) rotate(21)"/>
+          <g id="yaSel"><circle class="ya-halo" r="17" fill="#FFC72C" fill-opacity=".55" stroke="#FFF3C4" stroke-opacity=".9" stroke-width="1.7"/><use href="#yaBus"/></g>
+        </g>
+        <circle id="yaOnda" r="0" fill="none" stroke="#00A859" stroke-width="1.6" stroke-opacity="0"/>
+        <g transform="translate(440.9 430.3) scale(.42) translate(-40 -76)"><path d="M40 76Q10 48 14 30A26 26 0 0 1 66 30Q70 48 40 76Z" fill="url(#yaPin)" style="filter:drop-shadow(0 3px 4px rgba(0,0,0,.25))"/><ellipse cx="40" cy="14" rx="12" ry="4.5" fill="#fff" fill-opacity=".2"/><circle cx="40" cy="30" r="12.5" fill="#fff"/><circle cx="40" cy="30" r="8.5" fill="url(#yaPinC)"/><circle cx="37.5" cy="27" r="2.2" fill="#fff" fill-opacity=".85"/></g>
+      </svg>
+      <div class="ya-st"><b>9:41</b><span><svg viewBox="0 0 18 12"><rect x="0" y="7.5" width="3" height="4.5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.5 6.9a6.4 6.4 0 0 1 9 0l-1.4 1.4a4.4 4.4 0 0 0-6.2 0zM1 4.4a9.9 9.9 0 0 1 14 0l-1.4 1.4a7.9 7.9 0 0 0-11.2 0z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.5" fill="none" stroke="#111" opacity=".35"/><rect x="2.5" y="2.5" width="18" height="7" rx="2"/><path d="M24 4.2v3.6a2 2 0 0 0 0-3.6z" opacity=".4"/></svg></span></div>
+      <div class="ya-di"><img class="ya-dl" src="assets/ya-icono.webp" alt=""><span class="ya-dc"><b>1,8</b><small>km</small></span></div>
+      <div class="ya-la">
+        <div class="ya-cab"><img src="assets/ya-icono.webp" alt=""><p>Está a <b>6,3 km</b> de ti</p></div>
+        <div class="ya-pz">
+          <div class="ya-pista">
+            <i class="ya-carril"></i><i class="ya-lleno"></i><i class="ya-ini"></i>
+            <i class="ya-cam"><svg viewBox="0 0 16 18"><path d="M8 0a1.3 1.3 0 0 1 1.3 1.3v.5A5.4 5.4 0 0 1 13.4 7v3.6l1.9 2.6c.4.6 0 1.3-.7 1.3H1.4c-.7 0-1.1-.7-.7-1.3l1.9-2.6V7a5.4 5.4 0 0 1 4.1-5.2v-.5A1.3 1.3 0 0 1 8 0zM5.6 15.6h4.8a2.4 2.4 0 0 1-4.8 0z"/></svg></i>
+            <i class="ya-fin"></i>
+            <svg class="ya-bus" viewBox="0 0 68 32">
+              <defs>
+                <clipPath id="yaCaja"><path d="M5 3H58A9 9 0 0 1 67 12V23A3 3 0 0 1 64 26H4A3 3 0 0 1 1 23V7A4 4 0 0 1 5 3Z"/></clipPath>
+                <linearGradient id="yaLuz" x1="0" y1="3" x2="0" y2="26" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#fff" stop-opacity=".22"/><stop offset=".45" stop-color="#fff" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></linearGradient>
+                <g id="yaRueda"><circle r="4.5" fill="#2A2E35"/><circle r="2.79" fill="#9BA3AF"/><g fill="#2A2E35"><rect x="-.405" y="-2.6" width=".81" height="2.51" rx=".4"/><rect x="-.405" y="-2.6" width=".81" height="2.51" rx=".4" transform="rotate(72)"/><rect x="-.405" y="-2.6" width=".81" height="2.51" rx=".4" transform="rotate(144)"/><rect x="-.405" y="-2.6" width=".81" height="2.51" rx=".4" transform="rotate(216)"/><rect x="-.405" y="-2.6" width=".81" height="2.51" rx=".4" transform="rotate(288)"/></g><circle r=".99" fill="#2A2E35"/></g>
+              </defs>
+              <path d="M5 3H58A9 9 0 0 1 67 12V23A3 3 0 0 1 64 26H4A3 3 0 0 1 1 23V7A4 4 0 0 1 5 3Z" fill="#E86A5E"/>
+              <path d="M5 3H58A9 9 0 0 1 67 12V23A3 3 0 0 1 64 26H4A3 3 0 0 1 1 23V7A4 4 0 0 1 5 3Z" fill="url(#yaLuz)"/>
+              <g clip-path="url(#yaCaja)">
+                <g fill="#1A1D22"><rect x="5" y="7" width="7" height="8" rx="1.5"/><rect x="14" y="7" width="7" height="8" rx="1.5"/><rect x="23" y="7" width="7" height="8" rx="1.5"/><rect x="32" y="7" width="7" height="8" rx="1.5"/><rect x="41" y="7" width="7" height="8" rx="1.5"/><rect x="50" y="7" width="6" height="16" rx="1.5"/>
+                  <path d="M59.5 6H60A6 6 0 0 1 66 12V17A1 1 0 0 1 65 18H59.5A1.5 1.5 0 0 1 58 16.5V7.5A1.5 1.5 0 0 1 59.5 6Z"/></g>
+                <rect x="52.75" y="7" width=".5" height="16" fill="#E86A5E" opacity=".9"/>
+                <g fill="#fff" fill-opacity=".18"><path d="M9 7h2l-3 8H6z"/><path d="M27 7h2l-3 8h-2z"/><path d="M62 7h2l-3 8h-2z"/></g>
+                <rect x="1" y="17" width="49" height="1.2" fill="#fff" fill-opacity=".55"/>
+                <rect x="64" y="20" width="3" height="2.4" rx="1" fill="#FFF2C2"/><rect x="1" y="19" width="2" height="3" rx=".8" fill="#8C1414"/>
+              </g>
+              <circle cx="14" cy="26" r="6"/><circle cx="54" cy="26" r="6"/>
+              <use class="ya-rueda" href="#yaRueda" x="14" y="26"/><use class="ya-rueda" href="#yaRueda" x="54" y="26"/>
+            </svg>
+          </div>
+          <div class="ya-rot"><svg viewBox="0 0 16 18"><path d="M8 0a1.3 1.3 0 0 1 1.3 1.3v.5A5.4 5.4 0 0 1 13.4 7v3.6l1.9 2.6c.4.6 0 1.3-.7 1.3H1.4c-.7 0-1.1-.7-.7-1.3l1.9-2.6V7a5.4 5.4 0 0 1 4.1-5.2v-.5A1.3 1.3 0 0 1 8 0zM5.6 15.6h4.8a2.4 2.4 0 0 1-4.8 0z"/></svg><span>Te avisamos a 1,0 km</span><span>Tu punto</span></div>
         </div>
       </div>
+      <div class="ya-top"><img src="assets/ya-logo.svg" alt=""><p><small>Ruta activa</small><b>C4 Ruta C4</b></p><i><svg viewBox="0 0 16 16" fill="none" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg></i></div>
+      <div class="ya-sheet">
+        <div class="ya-vacio" data-on="vacio"><i><svg viewBox="-22 -22 44 44"><circle r="17" fill="none" stroke="#E86A5E" stroke-opacity=".22" stroke-width="2"/><use href="#yaBus" transform="scale(1.1)"/></svg></i><b>Toca un bus en el mapa</b><span>Selecciona un bus para darle seguimiento</span></div>
+        <div class="ya-card" data-on="bus rueda activo" hidden>
+          <div class="ya-placa"><span>BUS</span><b>UDS368</b></div>
+          <div class="ya-dato" data-on="bus activo" hidden>
+          <div class="ya-km"><strong>1,8</strong><span>km de ti</span></div>
+          <div class="ya-oc"><p><span><svg viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.6"/><path d="M2 19c.6-3.6 3.4-5.4 7-5.4s6.4 1.8 7 5.4z"/><circle cx="16.5" cy="9" r="2.8"/><path d="M17.4 13.7c2.6.3 4.2 2 4.6 5.3h-4.4c-.2-2-.9-3.9-2.2-5.1z"/></svg>Ocupación aprox.</span><b>28 %</b></p><i></i></div>
+          </div>
+          <div class="ya-preg" data-on="rueda" hidden><b>¿A qué distancia te avisamos?</b><div class="ya-sel"></div></div>
+        </div>
+        <div class="ya-btn" data-on="bus" hidden><i><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15zM10 20.5a2 2 0 0 0 4 0"/></svg></i>Avisarme cuando esté cerca</div>
+        <div class="ya-btn ya-on" data-on="activo" hidden><i><svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9" stroke="none"/><path d="M8.2 12.3l2.6 2.6 5-5.2" fill="none"/></svg></i>Aviso activado</div>
+        <div class="ya-gu" data-on="rueda" hidden><b>Guardar</b><span>Solo esta vez</span></div>
+        <div class="ya-cmb" data-on="activo" hidden><span>Te avisamos a 1,0 km</span><b>Cambiar</b></div>
+      </div>
+      <i class="ya-dedo"></i>
     </div>
   </div>
 </section>
@@ -1927,26 +2049,6 @@ document.querySelectorAll('.rv').forEach(el => enVista.observe(el));
   })));
 }
 
-// Caso Ya Viene: el bus recorre la ruta (SMIL) y la hoja lee el mismo reloj, así minutos, barra y bus nunca se desfasan
-{
-  const mapa = $('yvMap'), eta = $('yvEta'), aviso = $('yvMsg'), barra = $('yvBar');
-  const pinta = t => {
-    const p = Math.min(1, (t % 8) / 6.4), e = p < .5 ? 4 * p ** 3 : 1 - (-2 * p + 2) ** 3 / 2;
-    const txt = p >= 1 ? 'Llegó' : Math.max(1, Math.ceil(3 * (1 - e))) + ' min';
-    if (eta.textContent !== txt) { eta.textContent = txt; aviso.textContent = p >= 1 ? 'En tu parada' : 'Llega a tu parada'; }
-    barra.style.transform = `scaleX(${.04 + .96 * e})`;
-  };
-  if (clra.matches) { mapa.pauseAnimations(); mapa.setCurrentTime(4.6); pinta(4.6); }
-  else {
-    let on = false, corre = false;
-    const tick = () => { if (!on) { corre = false; return; } pinta(mapa.getCurrentTime()); requestAnimationFrame(tick); };
-    new IntersectionObserver(([e]) => {
-      on = e.isIntersecting;
-      if (on) { mapa.unpauseAnimations(); if (!corre) { corre = true; requestAnimationFrame(tick); } } else mapa.pauseAnimations();
-    }).observe(mapa);
-  }
-}
-
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
   ws.act.innerHTML = PASOS_APP.map(([h]) => h).join(''); estado('Publicada', '#3ecf74');
   PASOS_APP.forEach(([, piezas = []]) => piezas.forEach(w => W[w] && put(w)));
@@ -2019,6 +2121,161 @@ void main() {
   function tick(ms) { if (!on) return; draw(ms); requestAnimationFrame(tick); }
   requestAnimationFrame(tick);
 })();
+
+// Caso Ya Viene: la demo se actúa sola. Tocar un bus, pedir aviso, rueda a 1 km, isla dinámica hasta "Tu bus está cerca de ti"
+{
+  const m = document.querySelector('.case-media'), $ = s => m.querySelector(s);
+  const map = $('.ya-map'), ruta = $('#yaRuta'), buses = $('.ya-buses'), sel = $('#yaSel'), halo = $('.ya-halo'), onda = $('#yaOnda');
+  const sheet = $('.ya-sheet'), di = $('.ya-di'), la = $('.ya-la'), dedo = $('.ya-dedo'), rueda = $('.ya-sel');
+  const ocu = $('.ya-oc'), ocuN = $('.ya-oc p b'), titulo = $('.ya-cab p'), cifra = $('.ya-dc b'), km = $('.ya-km strong'), ruedas = la.querySelectorAll('.ya-rueda');
+  const L = ruta.getTotalLength(), K = 130; // 130 de mapa = 1 km: el halo verde es la distancia de aviso
+  const pt = l => ruta.getPointAtLength(Math.max(0, Math.min(l, L)));
+  const cerca = (x, y) => { let b = 0, bd = 1e9; for (let l = 0; l <= L; l++) { const p = pt(l), d = (p.x - x) ** 2 + (p.y - y) ** 2; if (d < bd) { bd = d; b = l; } } return b; };
+  const ubica = (el, l) => { const p = pt(l), q = pt(l + 1), r = pt(l - 1); el.setAttribute('transform', `translate(${p.x} ${p.y}) rotate(${Math.atan2(q.y - r.y, q.x - r.x) * 180 / Math.PI})`); };
+  const Lp = cerca(440.9, 430.3), otros = [...m.querySelectorAll('.ya-otro')], inicio = [[216.8, 326.8], [410.5, 415.8], [585.2, 486.9]].map(p => cerca(...p));
+  const u = () => m.clientWidth / 600;
+
+  // Reloj: solo avanza con el cuadro a la vista
+  let visto = false, sigue = null;
+  const vivo = () => visto ? 0 : new Promise(r => sigue = r);
+  new IntersectionObserver(([e]) => { visto = e.isIntersecting; if (visto && sigue) { sigue(); sigue = null; } }).observe(m);
+  const wait = ms => new Promise(r => setTimeout(r, ms)).then(vivo);
+  const ez = p => p < .5 ? 4 * p * p * p : 1 - (-2 * p + 2) ** 3 / 2, sale = p => 1 - (1 - p) ** 3, lin = p => p;
+  const tw = (ms, f, e = ez) => new Promise(r => { let a; const k = t => { a ??= t; const p = Math.min((t - a) / ms, 1); f(e(p)); p < 1 ? requestAnimationFrame(k) : r(); }; requestAnimationFrame(k); });
+
+  // Los otros buses ruedan despacio por la ruta
+  let pos = [...inicio], t0;
+  const rodar = t => { const dt = Math.min(t - (t0 ?? t), 50) / 1000; t0 = t; if (visto) otros.forEach((o, i) => ubica(o, pos[i] = (pos[i] + dt * 6) % L)); requestAnimationFrame(rodar); };
+
+  // Hoja: cada pieza vive en los estados de su data-on
+  const piezas = [...sheet.querySelectorAll('[data-on]')], en = (p, s) => p.dataset.on.split(' ').includes(s);
+  const pon = s => { m.dataset.s = s; piezas.forEach(p => { p.hidden = !en(p, s); p.classList.remove('ya-off'); }); };
+  const fase = async s => {
+    const was = m.dataset.s, out = piezas.filter(p => en(p, was) && !en(p, s)), inn = piezas.filter(p => !en(p, was) && en(p, s));
+    out.forEach(p => p.classList.add('ya-off'));
+    await wait(170);
+    const h0 = sheet.offsetHeight;
+    out.forEach(p => p.hidden = true); inn.forEach(p => { p.classList.add('ya-off'); p.hidden = false; }); m.dataset.s = s;
+    sheet.style.height = ''; const h1 = sheet.offsetHeight;
+    sheet.style.height = h0 + 'px'; sheet.offsetHeight; sheet.style.height = h1 + 'px';
+    requestAnimationFrame(() => inn.forEach(p => p.classList.remove('ya-off')));
+    await wait(560); sheet.style.height = '';
+  };
+
+  // Rueda de distancia: 500 m a 3 km, cilindro como CupertinoPicker (filas de 40, squeeze 1.45, lupa 1.08)
+  const ops = []; for (let v = 500; v <= 3000; v += 100) ops.push(v < 1000 ? v + ' m' : (v / 1000).toFixed(1).replace('.', ',') + ' km');
+  rueda.innerHTML = ops.map(o => `<span>${o}</span>`).join('');
+  const filas = [...rueda.children];
+  const gira = p => filas.forEach((f, i) => {
+    const a = (i - p) * .42, c = Math.max(0, 1 - Math.abs(i - p) * 1.6);
+    if (Math.abs(a) > 1.45) { f.style.opacity = 0; return; }
+    const g = 1 + .08 * c;
+    f.style.opacity = (.447 + .553 * c) * Math.min(1, Math.cos(a) * 1.6);
+    f.style.transform = `translateY(${66 * u() * Math.sin(a)}px) scale(${g}, ${g * Math.cos(a)})`;
+  });
+
+  // Dedo
+  let fx = 0, fy = 0;
+  const caja = () => m.getBoundingClientRect();
+  const sitio = el => { const r = el.getBoundingClientRect(), b = caja(); return [r.left + r.width / 2 - b.left, r.top + r.height / 2 - b.top]; };
+  const enMapa = p => { const q = new DOMPoint(p.x, p.y).matrixTransform(map.getScreenCTM()), b = caja(); return [q.x - b.left, q.y - b.top]; };
+  const lleva = (x, y) => { fx = x; fy = y; dedo.style.translate = `${x}px ${y}px`; };
+  const toca = async ([x, y], el) => {
+    lleva(x, y); dedo.classList.add('ya-ver'); await wait(180);
+    dedo.classList.add('ya-pre'); el?.animate([{ scale: 1 }, { scale: .96 }, { scale: 1 }], { duration: 320, easing: 'ease-out' });
+    await wait(130); dedo.classList.remove('ya-pre', 'ya-ver'); await wait(100);
+  };
+  const ola = (p, r1, ms) => { onda.setAttribute('cx', p.x); onda.setAttribute('cy', p.y); return tw(ms, k => { onda.setAttribute('r', 4 + (r1 - 4) * k); onda.setAttribute('stroke-opacity', .7 * (1 - k)); }, sale); };
+  const vibra = el => { el.classList.remove('ya-vib'); el.offsetWidth; el.classList.add('ya-vib'); el.addEventListener('animationend', () => el.classList.remove('ya-vib'), { once: true }); };
+
+  // Isla: reposo, compacta o expandida al alto de la actividad
+  const isla = s => {
+    di.classList.toggle('ya-cmp', s === 'cmp'); di.classList.toggle('ya-exp', s === 'exp');
+    di.style.height = s === 'exp' ? la.offsetHeight + 'px' : ''; la.classList.toggle('ya-ver', s === 'exp');
+  };
+
+  // Distancia: mueve todo a la vez, la cifra de la isla, la hoja, la pista de la actividad y el bus del mapa
+  let llego = false;
+  const fmt = d => d.toFixed(1).replace('.', ',');
+  const avance = a => { la.style.setProperty('--a', a); la.classList.toggle('ya-paso', a >= .545); ruedas.forEach(r => r.setAttribute('transform', `rotate(${a * 1600} ${r.getAttribute('x')} ${r.getAttribute('y')})`)); };
+  const dist = d => {
+    const s = fmt(d); cifra.textContent = km.textContent = s;
+    if (!llego) titulo.innerHTML = `Está a <b>${s} km</b> de ti`;
+    avance(d > 1 ? .545 * (1.8 - d) / .8 : 1 - .455 * d);
+    ubica(sel, Lp - K * d);
+  };
+
+  const ocupa = n => { ocu.style.setProperty('--oc', n + '%'); ocuN.textContent = Math.round(n) + ' %'; };
+
+  // A 1 km avisa: "Tu bus está cerca de ti", la isla late y el bus aprieta un poco el paso
+  const llega = () => {
+    llego = true; vt = .27; titulo.style.opacity = 0;
+    setTimeout(() => { titulo.textContent = 'Tu bus está cerca de ti'; titulo.style.opacity = ''; }, 200);
+    vibra(la); di.classList.add('ya-late'); ola(pt(Lp), K, 1400);
+  };
+
+  // Motor: el bus tiene velocidad propia, arranca y frena suave, y se detiene justo en tu punto
+  let d = 1.8, v = 0, vt = 0;
+  const motor = () => new Promise(fin => {
+    let t0;
+    const k = t => {
+      const dt = Math.min(t - (t0 ?? t), 50) / 1000; t0 = t;
+      if (visto) {
+        const tope = Math.sqrt(2 * .14 * d); // frenada a .14 km/s²
+        v += (Math.min(vt, tope) - v) * (1 - Math.exp(-dt * 3));
+        d = Math.max(0, d - v * dt); dist(d);
+        ocupa(28 - 8 * Math.min(1, (1.8 - d) / .12)); // arranca y se baja gente: 28 % a 20 %
+        if (!llego && d <= 1) llega();
+      }
+      d > 0 ? requestAnimationFrame(k) : fin();
+    };
+    requestAnimationFrame(k);
+  });
+
+  const reinicia = () => {
+    llego = false; d = 1.8; v = vt = 0; la.classList.remove('ya-paso'); halo.classList.remove('ya-on'); di.classList.remove('ya-late');
+    pos = [...inicio]; otros.forEach((o, i) => ubica(o, pos[i])); gira(10); dist(1.8); ocupa(28);
+  };
+
+  async function demo() {
+    await vivo();
+    for (;;) {
+      reinicia(); pon('vacio'); buses.style.opacity = sel.style.opacity = 1;
+      await wait(700);
+      // 1. Tocas un bus: halo dorado y la hoja muestra el bus
+      const b = pt(Lp - K * 1.8), U = u();
+      await toca(enMapa(b));
+      halo.classList.add('ya-on'); ola(b, 34, 700);
+      await fase('bus'); await wait(450);
+      // 2. Avisarme
+      const av = $('.ya-btn[data-on="bus"]');
+      await toca(sitio(av), av); await fase('rueda'); await wait(150);
+      // 3. Rueda: arrastras de 1,5 km y suelta con impulso hasta 1,0 km
+      const [rx, ry] = sitio(rueda);
+      lleva(rx, ry - 30 * U); dedo.classList.add('ya-ver'); await wait(180); dedo.classList.add('ya-pre');
+      await tw(480, p => { lleva(rx, ry - 30 * U + 52 * U * p); gira(10 - 2 * p); }, ez);
+      dedo.classList.remove('ya-pre', 'ya-ver');
+      await tw(680, p => gira(8 - 3 * p), sale); await wait(150);
+      // 4. Guardar: "Aviso activado" y el bus arranca, sin cortes hasta tu punto
+      const gu = $('.ya-gu b');
+      await toca(sitio(gu), gu);
+      await fase('activo');
+      vt = .22; const anda = motor();
+      await wait(1000); await fase('vacio');
+      // 5. Llega a la isla sin expandir, luego se expande mientras el bus sigue
+      isla('cmp'); vibra(di); await wait(900);
+      isla('exp');
+      // 6. A 1 km avisa (en el motor) y el bus frena hasta detenerse en tu punto
+      await anda; await wait(1500);
+      // 7. Cierra y vuelve a empezar
+      isla(''); buses.style.opacity = sel.style.opacity = 0; await wait(700);
+    }
+  }
+
+  ubica(sel, Lp - K * 1.8); gira(10);
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) { pon('bus'); halo.classList.add('ya-on'); }
+  else { requestAnimationFrame(rodar); demo(); }
+}
 
 </script>
 </body>
