@@ -841,6 +841,13 @@
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 
   /* Caso Ya Viene: módulo de historia de cliente al estilo incident.io. Texto arriba y abajo a la izquierda, medio cuadrado a la derecha */
+  .case-band { background: radial-gradient(70% 60% at 50% 0%, #2b1f36, transparent 70%), #1a1420; color: #fff; }
+  .case-band .blk { padding-bottom: clamp(56px, 7vw, 96px); }
+  .case-band .lockup svg { color: #fff; }
+  .case-band .lockup i, .case-band .case-txt p, .case-band .facts dt { color: rgba(255,255,255,.6); }
+  .case-band .more, .case-band .facts div { border-color: rgba(255,255,255,.14); }
+  .case-band .car-dots i { background: rgba(255,255,255,.25); }
+  .case-band .car-dots i.on { background: #fff; }
   .case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .case-txt { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding-right: clamp(0px, 6vw, 80px); }
   .lockup { display: flex; align-items: center; gap: 10px; height: 24px; font-family: Manrope, sans-serif; font-size: 16px; letter-spacing: -.02em; white-space: nowrap; }
@@ -1137,10 +1144,8 @@
   .how-row .tx { display: block; padding-top: 10px; color: rgba(42,41,46,.6); font-size: 14px; line-height: 1.625; letter-spacing: -.02em; }
   .how-row .bd em { display: block; padding-top: 8px; font: 600 11px/1.6 ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
 
-  /* Promesas: franja oscura con tarjetas de Pangram, cinta de color arriba e ícono de línea */
-  .ppl { background: radial-gradient(70% 60% at 50% 0%, #2b1f36, transparent 70%), #1a1420; color: #fff; }
+  /* Promesas: tarjetas de Pangram, cinta de color arriba e ícono de línea */
   .ppl .blk { padding-block: 100px; }
-  .ppl h2 span { color: rgba(255,255,255,.5); }
   .pcs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
   .pc { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 348px; padding: 36px; border-radius: 4px;
     background: rgba(52,40,62,.8); transition: transform .7s cubic-bezier(.2,.8,.2,1), background .4s ease; }
@@ -1583,7 +1588,7 @@
   </div>
 </section>
 
-<section class="blk case" id="caso">
+<section class="case-band" id="caso"><div class="blk case">
   <div class="case-grid">
     <div class="case-txt rv">
       <div>
@@ -1690,7 +1695,7 @@
     <video class="vid-m" controls playsinline preload="none"></video>
     <button class="vd-x" type="button" aria-label="Cerrar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
   </div>
-</section>
+</div></section>
 
 <section class="blk proc" id="proceso">
   <header class="rv">
