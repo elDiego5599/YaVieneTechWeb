@@ -373,7 +373,7 @@
   /* Banda de prueba social estilo Mobbin: números grandes con separadores finos, sin cards */
   .proof {
     max-width: 1180px; margin: clamp(56px, 8vw, 100px) auto 0; padding: 0 16px;
-    display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line);
   }
   .proof small { display: block; margin-top: 8px; font-size: 15px; color: var(--muted); }
   .proof b { display: block; font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(28px, 2.5vw, 38px); letter-spacing: -.04em; color: var(--ink); white-space: nowrap; }
@@ -778,7 +778,7 @@
   .spark strong small { display: block; font-family: Inter, sans-serif; font-size: 12px; font-weight: 600; letter-spacing: 0; color: #1fbf6b; margin-top: 4px; }
   @keyframes draw { 0% { stroke-dashoffset: 600; } 60%, 100% { stroke-dashoffset: 0; } }
 
-  @media (max-width: 960px) { .proof { grid-template-columns: repeat(2, 1fr); } .proof div:nth-child(3) { border-left: 0; } .proof div:nth-child(n+3) { border-top: 1px solid var(--line); } }
+  @media (max-width: 960px) { .proof { grid-template-columns: repeat(2, 1fr); } .proof div:nth-child(3) { grid-column: 1 / -1; border-left: 0; } .proof div:nth-child(n+3) { border-top: 1px solid var(--line); } }
   @media (max-width: 640px) { .hub .col:last-child { display: none; } .proof { grid-template-columns: 1fr; } .proof div + div { border-left: 0; border-top: 1px solid var(--line); } .svc { padding: 14px 14px 0; border-radius: 22px; } .pn figcaption { padding: 24px 20px 16px; } .pn.pn--top > :not(figcaption) { margin: 0 16px; } }
 
   @media (max-width: 760px) { .flow { display: none; } }
@@ -1283,8 +1283,7 @@
 <main>
 <section class="proof">
   <div><b>$0</b><small>la propuesta y el precio cerrado antes de empezar</small></div>
-  <div><b>2–4 sem</b><small>tu página web lista y publicada</small></div>
-  <div><b>6–12 sem</b><small>tu app en App Store y Google Play</small></div>
+  <div><b>Un equipo</b><small>el mismo de la idea hasta la publicación, en web o app</small></div>
   <div><b>A tu nombre</b><small>el código y las cuentas, sin amarres</small></div>
 </section>
 
