@@ -951,7 +951,7 @@
   .ya-vacio span { margin-top: calc(4 * var(--u)); color: #5E6B82; font-size: calc(15 * var(--u)); }
   .ya-preg { padding-top: calc(14 * var(--u)); text-align: center; }
   .ya-preg > b { display: block; color: #0F172A; font-size: calc(18 * var(--u)); font-weight: 700; }
-  .ya-sel { position: relative; height: calc(138 * var(--u)); margin: calc(8 * var(--u)) calc(9 * var(--u)) calc(4 * var(--u)); overflow: hidden; }
+  .ya-sel { position: relative; height: calc(96 * var(--u)); margin: calc(8 * var(--u)) calc(9 * var(--u)) calc(4 * var(--u)); overflow: hidden; }
   .ya-sel::before { content: ''; position: absolute; left: 0; right: 0; top: 50%; height: calc(36 * var(--u)); margin-top: calc(-18 * var(--u)); border-radius: calc(9 * var(--u)); background: rgba(0,168,89,.1); }
   .ya-sel span { position: absolute; left: 0; right: 0; top: 50%; height: calc(30 * var(--u)); margin-top: calc(-15 * var(--u)); line-height: calc(30 * var(--u));
     color: #0F172A; font-size: calc(22 * var(--u)); font-weight: 700; font-variant-numeric: tabular-nums; will-change: transform, opacity; }
@@ -2222,9 +2222,9 @@ let congelarMapa = null, mapaLista = false;
   const filas = [...rueda.children];
   const gira = p => filas.forEach((f, i) => {
     const a = (i - p) * .42, c = Math.max(0, 1 - Math.abs(i - p) * 1.6);
-    if (Math.abs(a) > 1.45) { f.style.opacity = 0; return; }
+    if (Math.abs(a) > .55) { f.style.opacity = 0; return; }   // solo centro, uno arriba y uno abajo
     const g = 1 + .08 * c;
-    f.style.opacity = (.447 + .553 * c) * Math.min(1, Math.cos(a) * 1.6);
+    f.style.opacity = (.58 + .42 * c) * Math.min(1, Math.cos(a) * 1.6);
     f.style.transform = `translateY(${66 * u() * Math.sin(a)}px) scale(${g}, ${g * Math.cos(a)})`;
   });
 
@@ -2348,13 +2348,16 @@ let congelarMapa = null, mapaLista = false;
     document.querySelector('.vd-x').focus();
   });
   const vidm = document.querySelector('.vidm'), bd = vidm.querySelector('.vd-bd'), zexe = vidm.querySelector('.vd-x');
+  let ult = null;
   const cierralo = () => { vidm.hidden = true; vidm.querySelector('video').pause(); if (idx() === 1 && bajo) cine.play().catch(() => {}); };
   bd.addEventListener('click', cierralo); zexe.addEventListener('click', cierralo);
   addEventListener('keydown', e => { if (e.key === 'Escape' && !vidm.hidden) cierralo(); });
   document.querySelector('.vid-s').addEventListener('mouseenter', bajaCine);
   const va = () => { const i = idx();
     document.querySelectorAll('.car-dots i').forEach((d, k) => d.classList.toggle('on', k === i));
-    if (i === 1) { bajaCine(); if (congelarMapa) congelarMapa(true); }
+    if (i === ult) return; // solo actuar cuando la vista cambia: los ajustes de asentamiento del navegador no deben volver a congelar
+    ult = i;
+    if (i === 1) { bajaCine(); cine.play().catch(() => {}); if (congelarMapa) congelarMapa(true); }
     else { if (!cine.paused) cine.pause(); if (congelarMapa) congelarMapa(false); }
   };
   car.addEventListener('scroll', va, { passive: true }); va();
