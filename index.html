@@ -582,8 +582,9 @@
   .erp-r > span:nth-child(2) { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .erp-r > span:nth-child(3) { color: #5b5e66; }
   .erp-r > span:nth-child(4) { font-variant-numeric: tabular-nums; }
-  .erp-s { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
-  .erp-s::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent); }
+  .erp-s { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 999px; white-space: nowrap;
+    font-size: 11.5px; font-weight: 500; background: color-mix(in srgb, var(--c) 12%, white); color: color-mix(in srgb, var(--c) 72%, #14151a); }
+  .erp-s::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--c); }
   .erp-sw { display: grid; } .erp-sw > * { grid-area: 1 / 1; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
   .erp-sw > :last-child { opacity: 0; transform: translateY(6px); }
   .erp-sw.ya > :first-child { opacity: 0; transform: translateY(-6px); } .erp-sw.ya > :last-child { opacity: 1; transform: none; }
