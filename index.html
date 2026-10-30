@@ -807,7 +807,7 @@
 
   /* Caso Ya Viene: módulo de historia de cliente al estilo incident.io. Texto arriba y abajo a la izquierda, medio cuadrado a la derecha */
   .case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-  .case-txt { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; padding-right: clamp(0px, 6vw, 80px); }
+  .case-txt { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding-right: clamp(0px, 6vw, 80px); }
   .lockup { display: flex; align-items: center; gap: 10px; height: 24px; font-family: Manrope, sans-serif; font-size: 16px; letter-spacing: -.02em; white-space: nowrap; }
   .lockup img { width: 24px; height: 24px; }
   .lockup svg { width: 30px; height: 16px; color: var(--ink); }
@@ -821,12 +821,13 @@
   .more { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); font-weight: 500; }
   .more svg { width: 16px; height: 16px; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
   .more:hover svg { transform: translateX(4px); }
-  /* Carrusel de la caja izquierda: dos vistas; el teaser del video gira en silencio y el botón lo abre grande con sonido */
-  .car { flex: 1; min-height: 0; display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
-  .car::-webkit-scrollbar { display: none; }
-  @media (prefers-reduced-motion: no-preference) { .car { scroll-behavior: smooth; } }
-  .car-s { flex: 0 0 100%; min-width: 100%; display: flex; flex-direction: column; justify-content: space-between; scroll-snap-align: start; }
-  .vid-s { position: relative; width: 100%; height: 100%; min-height: 260px; border-radius: 20px; overflow: hidden; background: #F4F2EE; box-shadow: inset 0 0 0 1px rgba(42,41,46,.06); }
+  /* Carrusel del cuadro del caso: primera vista el mapa de la app, segunda el video real del panel; el teaser gira en silencio y el botón lo abre grande con sonido */
+  .case-zone { display: flex; flex-direction: column; gap: 16px; }
+  .cm-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .cm-track::-webkit-scrollbar { display: none; }
+  @media (prefers-reduced-motion: no-preference) { .cm-track { scroll-behavior: smooth; } }
+  .cm-s { flex: 0 0 100%; min-width: 100%; position: relative; height: 100%; scroll-snap-align: start; }
+  .vid-s { position: relative; border-radius: 20px; box-shadow: inset 0 0 0 1px rgba(42,41,46,.06); }
   .vid-t { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
   .vid-go { position: absolute; z-index: 2; left: 50%; top: 50%; translate: -50% -50%; display: inline-flex; align-items: center; gap: 9px; height: 48px; padding: 0 22px; border: 0; border-radius: 999px; background: var(--ink); color: #fff; font: 600 15px/1 Manrope, sans-serif; cursor: pointer; box-shadow: 0 16px 34px -14px rgba(17,18,20,.5); transition: scale .12s ease-out; }
   .vid-go:active { scale: .95; }
@@ -1181,8 +1182,6 @@
   @media (max-width: 960px) {
     .case-grid { grid-template-columns: 1fr; gap: 40px; }
     .case-txt { padding-right: 0; }
-    .car { flex: none; }
-    .vid-s { aspect-ratio: 1; }
     .how { grid-template-columns: 1fr; }
     .how-art { min-height: 440px; }
     .pcs { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
@@ -1209,7 +1208,6 @@
     .facts div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
     .facts dd { margin: 0; font-size: 16px; text-align: right; }
     .case-media { aspect-ratio: 600 / 720; }
-    .vid-s { aspect-ratio: 600 / 720; }
     .how-art { min-height: 400px; }
     .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .ppl .blk { padding-block: 72px; }
@@ -1544,35 +1542,25 @@
 <section class="blk case" id="caso">
   <div class="case-grid">
     <div class="case-txt rv">
-      <div class="car">
-        <div class="car-s">
-          <div>
-            <div class="lockup"><img src="assets/ya-logo.svg" alt="" width="24" height="24"><b>Ya Viene</b><i>×</i><svg aria-hidden="true"><use href="#estela"/></svg><b>Ya Viene Tech</b></div>
-            <h2>Barranquilla ya sabe cuándo llega su bus.</h2>
-            <p>Ya Viene nació de un problema de todos los días: esperar el bus sin saber nada. La diseñamos, la programamos y la publicamos nosotros. Es la prueba de lo que podemos hacer por tu negocio.</p>
-          </div>
-          <div>
-            <dl class="facts">
-              <div><dt>Plataformas</dt><dd>iOS + Android.</dd></div>
-              <div><dt>Ubicación</dt><dd>En vivo.</dd></div>
-              <div><dt>Diseño y código</dt><dd>100% nuestro.</dd></div>
-            </dl>
-            <a class="more" href="https://yavienetech.com" target="_blank" rel="noopener">Conoce Ya Viene
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
-          </div>
-        </div>
-        <div class="car-s vid-s">
-          <video class="vid-t" src="assets/ya-viene-control-v3.mp4" preload="metadata" autoplay muted loop playsinline></video>
-          <button class="vid-go" type="button" aria-haspopup="dialog"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.6 3.1v9.8c0 .6.6 1 1.1.6l7.4-4.9c.5-.3.5-1 0-1.2L5.7 2.5c-.5-.3-1.1.1-1.1.6z"/></svg> Ver video <b>0:50</b></button>
-        </div>
+      <div>
+        <div class="lockup"><img src="assets/ya-logo.svg" alt="" width="24" height="24"><b>Ya Viene</b><i>×</i><svg aria-hidden="true"><use href="#estela"/></svg><b>Ya Viene Tech</b></div>
+        <h2>Barranquilla ya sabe cuándo llega su bus.</h2>
+        <p>Ya Viene nació de un problema de todos los días: esperar el bus sin saber nada. La diseñamos, la programamos y la publicamos nosotros. Es la prueba de lo que podemos hacer por tu negocio.</p>
       </div>
-      <div class="ctl-car">
-        <button class="car-btn car-prev" type="button" aria-label="Vista anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 7 10l5.5 6"/></svg></button>
-        <span class="car-dots"><i class="on"></i><i></i></span>
-        <button class="car-btn car-next" type="button" aria-label="Vista siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4 13 10l-5.5 6"/></svg></button>
+      <div>
+        <dl class="facts">
+          <div><dt>Plataformas</dt><dd>iOS + Android.</dd></div>
+          <div><dt>Ubicación</dt><dd>En vivo.</dd></div>
+          <div><dt>Diseño y código</dt><dd>100% nuestro.</dd></div>
+        </dl>
+        <a class="more" href="https://yavienetech.com" target="_blank" rel="noopener">Conoce Ya Viene
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
       </div>
     </div>
-    <div class="case-media rv" style="--d:1" aria-hidden="true" data-s="vacio">
+    <div class="case-zone rv" style="--d:1">
+    <div class="case-media" data-s="vacio">
+      <div class="cm-track">
+        <div class="cm-s" aria-hidden="true">
       <svg class="ya-map" viewBox="186 160 510 510" preserveAspectRatio="xMidYMin slice">
         <defs>
           <g id="yaBus"><rect x="-13" y="-6.5" width="26" height="13" rx="6.5" fill="#E86A5E" stroke="#fff" stroke-width="1.6"/><rect x="4" y="-4" width="6" height="8" rx="3" fill="#F3A49B"/></g>
@@ -1639,6 +1627,18 @@
         <div class="ya-cmb" data-on="activo" hidden><span>Te avisamos a 1,0 km.</span><b>Cambiar</b></div>
       </div>
       <i class="ya-dedo"></i>
+        </div>
+        <div class="cm-s vid-s">
+          <video class="vid-t" src="assets/ya-viene-control-v3.mp4" preload="metadata" autoplay muted loop playsinline></video>
+          <button class="vid-go" type="button" aria-haspopup="dialog"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.6 3.1v9.8c0 .6.6 1 1.1.6l7.4-4.9c.5-.3.5-1 0-1.2L5.7 2.5c-.5-.3-1.1.1-1.1.6z"/></svg> Ver video <b>0:50</b></button>
+        </div>
+      </div>
+    </div>
+    <div class="ctl-car">
+      <button class="car-btn car-prev" type="button" aria-label="Vista anterior"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.5 4 7 10l5.5 6"/></svg></button>
+      <span class="car-dots"><i class="on"></i><i></i></span>
+      <button class="car-btn car-next" type="button" aria-label="Vista siguiente"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.5 4 13 10l-5.5 6"/></svg></button>
+    </div>
     </div>
   </div>
   <div class="vidm" hidden role="dialog" aria-modal="true" aria-label="Video real del panel de control de Ya Viene">
@@ -2323,19 +2323,17 @@ void main() {
   else { requestAnimationFrame(rodar); demo(); }
 }
 
-// Carrusel del caso: dos vistas; el botón abre el video grande con su sonido
+// Carrusel del cuadro del caso: dos vistas; el botón abre el video grande con su sonido
 {
-  const car = document.querySelector('.car');
+  const car = document.querySelector('.cm-track');
   const idx = () => Math.round(car.scrollLeft / car.clientWidth);
   const va = () => document.querySelectorAll('.car-dots i').forEach((d, k) => d.classList.toggle('on', k === idx()));
   car.addEventListener('scroll', va, { passive: true }); va();
-  const brinca = d => car.children[Math.max(0, Math.min(idx() + d, car.children.length - 1))]
-    .scrollIntoView({ behavior: clra.matches ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
-  document.querySelector('.car-prev').addEventListener('click', () => brinca(-1));
-  document.querySelector('.car-next').addEventListener('click', () => brinca(1));
-  document.querySelectorAll('.car-dots i').forEach((d, k) => d.addEventListener('click', () => {
-    car.children[k].scrollIntoView({ behavior: clra.matches ? 'auto' : 'smooth', inline: 'start', block: 'nearest' });
-  }));
+  const ve = i => { const led = Math.max(0, Math.min(i, car.children.length - 1));
+    car.scrollTo({ left: led * car.clientWidth, behavior: clra.matches ? 'auto' : 'smooth' }); };
+  document.querySelector('.car-prev').addEventListener('click', () => ve(idx() - 1));
+  document.querySelector('.car-next').addEventListener('click', () => ve(idx() + 1));
+  document.querySelectorAll('.car-dots i').forEach((d, k) => d.addEventListener('click', () => ve(k)));
   const vidm = document.querySelector('.vidm'), cine = vidm.querySelector('video');
   const cierralo = () => { vidm.hidden = true; cine.pause(); };
   document.querySelector('.vid-go').addEventListener('click', () => {
