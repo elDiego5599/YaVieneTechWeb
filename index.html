@@ -383,17 +383,21 @@
   .services h2 span { display: block; color: var(--muted); }
   .services h2 { text-wrap: balance; }
   .services > header p { color: var(--muted); font-size: 18px; line-height: 1.5; }
-  /* Soluciones: un escenario iluminado desde arriba (luz que cae y suelo más oscuro) con la hoja
-     blanca adentro. A la izquierda los 6 puntos; a la derecha la explicación y su artefacto. */
-  /* Cada punto pinta el suelo con su propio degradado; los colores se funden al cambiar */
+  /* Soluciones: una charola. El cuadro grande guarda el degradado por dentro (el escenario)
+     y la hoja blanca descansa adentro, retirada de los bordes, con degradado alrededor.
+     A la izquierda los 6 puntos; a la derecha la explicación y su artefacto. */
+  /* Cada punto cambia la luz con su propio color; los colores se funden al cambiar */
   @property --g1 { syntax: '<color>'; inherits: true; initial-value: #f59e5b; }
   @property --g2 { syntax: '<color>'; inherits: true; initial-value: #f0607a; }
   @property --g3 { syntax: '<color>'; inherits: true; initial-value: #d77bd0; }
   @property --g4 { syntax: '<color>'; inherits: true; initial-value: #8b5cf6; }
   .svc {
-    position: relative; border-radius: 28px; padding: 0 clamp(28px, 3.4vw, 48px) clamp(48px, 5vw, 72px); overflow: hidden;
+    position: relative; border-radius: 28px; overflow: hidden;
+    /* Aire alrededor de la hoja: abajo y lados. Arriba no: la hoja sale cortada desde el borde,
+       como el celular del mockup que se corta con el cuadro que lo contiene */
+    padding: 0 clamp(18px, 2.4vw, 34px) clamp(26px, 3vw, 44px);
     --g1: #f59e5b; --g2: #f0607a; --g3: #d77bd0; --g4: #8b5cf6;
-    /* La hoja entra cortada por arriba y se apoya abajo sobre un suelo iluminado */
+    /* Escenario: luz de color que sube del piso, cielo grisáceo arriba */
     background:
       radial-gradient(30% 22% at 50% 100%, rgba(255,255,255,.95) 0%, rgba(255,255,255,0) 100%),
       radial-gradient(40% 32% at 20% 100%, color-mix(in srgb, var(--g1) 55%, transparent) 0%, transparent 100%),
@@ -401,9 +405,12 @@
       radial-gradient(40% 34% at 62% 100%, color-mix(in srgb, var(--g3) 50%, transparent) 0%, transparent 100%),
       radial-gradient(42% 34% at 82% 100%, color-mix(in srgb, var(--g4) 55%, transparent) 0%, transparent 100%),
       linear-gradient(#e6e3e8 0%, #eeebef 55%, #f6f4f5 100%);
-    box-shadow: inset 0 0 0 1px var(--line);
     transition: --g1 .9s ease, --g2 .9s ease, --g3 .9s ease, --g4 .9s ease;
   }
+  /* El borde del cuadro grande pasa por ENCIMA: la hoja sale deslizando detrás del marco,
+     como una foto detrás del passepartout. Así el marco nunca se corta */
+  .svc::before { content: ''; position: absolute; inset: 0; border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--line); pointer-events: none; z-index: 5; }
   .svc[data-s="web"]  { --g1: #a3e635; --g2: #22c55e; --g3: #14b8a6; --g4: #06b6d4; }
   .svc[data-s="dark"] { --g1: #38bdf8; --g2: #2563eb; --g3: #4f46e5; --g4: #1e3a8a; }
   .svc[data-s="sys"]  { --g1: #facc15; --g2: #f59e0b; --g3: #f97316; --g4: #dc2626; }
@@ -412,8 +419,10 @@
   .view {
     position: relative; display: grid; grid-template-columns: minmax(0, 380px) minmax(0, 1fr); height: 620px;
     border-radius: 0 0 18px 18px; background: #fff; overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 2px 0 rgba(255,255,255,.9), 0 46px 70px -30px rgba(17,18,20,.34), 0 18px 28px -16px rgba(17,18,20,.18),
-      -90px 40px 120px -50px color-mix(in srgb, var(--g2) 50%, transparent), 90px 40px 120px -50px color-mix(in srgb, var(--g4) 50%, transparent);
+    /* Sombra cortita: la hoja se apoya dentro; el cuadro grande la recorta, nunca flota sobre la página */
+    box-shadow: 0 0 0 1px rgba(17,18,20,.05),
+      0 2px 5px rgba(17,18,20,.05), 0 16px 30px -16px rgba(17,18,20,.26),
+      -40px 14px 56px -30px color-mix(in srgb, var(--g2) 42%, transparent), 40px 14px 56px -30px color-mix(in srgb, var(--g4) 42%, transparent);
   }
   /* Borde inferior encendido: la luz de color rebota en el canto de la hoja */
   .view::after { content: ''; position: absolute; z-index: 9; left: 8%; right: 8%; bottom: 0; height: 1px; pointer-events: none;
@@ -779,7 +788,7 @@
   @keyframes draw { 0% { stroke-dashoffset: 600; } 60%, 100% { stroke-dashoffset: 0; } }
 
   @media (max-width: 960px) { .proof { grid-template-columns: repeat(2, 1fr); } .proof div:nth-child(3) { grid-column: 1 / -1; border-left: 0; } .proof div:nth-child(n+3) { border-top: 1px solid var(--line); } }
-  @media (max-width: 640px) { .hub .col:last-child { display: none; } .proof { grid-template-columns: 1fr; } .proof div + div { border-left: 0; border-top: 1px solid var(--line); } .svc { padding: 14px 14px 0; border-radius: 22px; } .pn figcaption { padding: 24px 20px 16px; } .pn.pn--top > :not(figcaption) { margin: 0 16px; } }
+  @media (max-width: 640px) { .hub .col:last-child { display: none; } .proof { grid-template-columns: 1fr; } .proof div + div { border-left: 0; border-top: 1px solid var(--line); } .svc { padding: 0 10px 16px; border-radius: 22px; } .pn figcaption { padding: 24px 20px 16px; } .pn.pn--top > :not(figcaption) { margin: 0 16px; } }
 
   @media (max-width: 760px) { .flow { display: none; } }
   @media (max-width: 760px) {
