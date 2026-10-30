@@ -471,146 +471,172 @@
   /* Piezas con guion: aparecen cuando el guion les marca la hora */
   .pn [data-at] { transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .5s cubic-bezier(.2,.8,.2,1); }
 
-  /* Automatización: chat de WhatsApp que agenda solo */
-  .wa-app { display: flex; flex-direction: column; height: 100%; background: #efeae2; }
-  .wa-head { flex: none; background: #fff; box-shadow: 0 1px 0 rgba(0,0,0,.06); }
-  .wa-head .da-st { color: #111; }
-  .wa-head .da-st svg { fill: #111; stroke: none; }
-  .wa-head .da-st svg .bo { fill: none; stroke: #111; stroke-width: 1; opacity: .4; }
-  .wa-bar { display: flex; align-items: center; gap: 2.6cqw; padding: 1.4cqw 4.5cqw 3.4cqw 3cqw; }
-  .wa-bar > svg { width: 5.4cqw; height: 5.4cqw; color: #1d1c20; flex: none; }
-  .wa-bar > svg:first-child { width: 6cqw; height: 6cqw; }
-  .wa-bar > div { flex: 1; display: grid; min-width: 0; }
-  .wa-bar b { font: 700 4.3cqw/1.2 Inter, sans-serif; color: #111; }
-  .wa-bar small { grid-area: 2 / 1; font-size: 3.2cqw; color: #6b7178; transition: opacity .3s ease; }
-  .wa-bar .wa-ty { color: #16a34a; opacity: 0; transform: none; }
-  .wa-bar .wa-ty.ya { opacity: 1; }
-  .wa-bar div:has(.wa-ty.ya) .wa-on { opacity: 0; }
-  .wa-av { flex: none; width: 9.4cqw; height: 9.4cqw; border-radius: 50%; display: grid; place-items: center; color: #fff; font: 700 3.4cqw Inter, sans-serif;
-    background: linear-gradient(135deg, #38bdf8, #2563eb); }
-  .wa-chat { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: flex-end; gap: 1.8cqw; padding: 3.6cqw 3.6cqw 0; overflow: hidden; }
-  .wa-day { align-self: center; padding: 1cqw 3cqw; border-radius: 2cqw; background: rgba(255,255,255,.85); font-size: 3cqw; color: #6b7178; margin-bottom: auto; }
-  .wa-m { position: relative; max-width: 78%; padding: 2.2cqw 3cqw 2.4cqw; border-radius: 3.4cqw; font: 400 3.75cqw/1.38 Inter, sans-serif; color: #111b21; box-shadow: 0 .3cqw .4cqw rgba(0,0,0,.08); }
-  .wa-m time { float: right; margin: 1.4cqw -.6cqw -1cqw 2.4cqw; font-size: 2.7cqw; color: #667781; }
-  .wa-m time i { font-style: normal; color: #53bdeb; letter-spacing: -.12em; }
-  .wa-m.me { align-self: flex-end; background: #d9fdd3; border-top-right-radius: 1cqw; }
-  .wa-m.bot { align-self: flex-start; background: #fff; border-top-left-radius: 1cqw; }
-  .wa-grp { display: grid; gap: 1cqw; justify-items: start; }
-  .wa-grp .wa-m { max-width: 82%; }
-  .wa-opt { width: 64%; padding: 2.2cqw; border-radius: 2.6cqw; background: #fff; text-align: center; font: 600 3.6cqw Inter, sans-serif; color: #2563eb; box-shadow: 0 .3cqw .4cqw rgba(0,0,0,.08); transition: background .4s ease, color .4s ease !important; }
-  .wa-grp .wa-opt.ya { background: #2563eb; color: #fff; }
-  .wa-dots { align-self: flex-start; gap: 1.1cqw; padding: 3.2cqw 3.6cqw; border-radius: 3.4cqw; border-top-left-radius: 1cqw; background: #fff; }
-  .wa-dots i { width: 1.7cqw; height: 1.7cqw; border-radius: 50%; background: #9aa3a9; animation: wadot 1.2s ease-in-out infinite; }
-  .wa-dots i:nth-child(2) { animation-delay: .15s; } .wa-dots i:nth-child(3) { animation-delay: .3s; }
-  @keyframes wadot { 0%, 60%, 100% { opacity: .35; transform: none; } 30% { opacity: 1; transform: translateY(-.6cqw); } }
-  .wa-chat > [data-at] { display: none; }
-  .wa-chat > [data-at].ya { display: block; animation: wain .5s cubic-bezier(.2,.8,.2,1) both; }
-  .wa-chat > .wa-dots.ya { display: flex; } .wa-chat > .wa-grp.ya { display: grid; }
-  @keyframes wain { from { opacity: 0; transform: translateY(3cqw) scale(.97); } }
-  .wa-type { flex: none; display: flex; gap: 2cqw; align-items: center; padding: 2.6cqw 3.6cqw 9cqw; }
-  /* El teléfono queda cortado por abajo: la barra de escribir sube hasta donde se ve */
-  .wa .wa-type { padding-bottom: 50cqw; }
-  .wa-type span { flex: 1; padding: 2.6cqw 4cqw; border-radius: 6cqw; background: #fff; font: 400 3.6cqw Inter, sans-serif; color: #8696a0; }
-  .wa-type i { width: 10cqw; height: 10cqw; border-radius: 50%; background: #2563eb; display: grid; place-items: center; color: #fff; }
-  .wa-type svg { width: 5cqw; height: 5cqw; }
-  .wa-cal, .wa-rem { position: absolute; z-index: 6; display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,.92);
-    -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%);
-    box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 24px 40px -18px rgba(17,18,20,.35); opacity: 0; transform: translateY(14px) scale(.97); }
-  .wa-cal.ya, .wa-rem.ya { opacity: 1; transform: none; }
-  .wa-cal { left: -6px; top: 54%; width: 250px; }
-  .wa-rem { left: 14px; top: calc(54% + 92px); font: 600 12.5px/1.3 Inter, sans-serif; padding: 11px 14px; border-radius: 14px; }
-  .wa-cal i, .wa-rem i { flex: none; width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; color: #fff; background: linear-gradient(135deg, #4f46e5, #2563eb); }
-  .wa-rem i { width: 28px; height: 28px; border-radius: 9px; background: linear-gradient(135deg, #38bdf8, #2563eb); }
-  .wa-cal svg, .wa-rem svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .wa-rem svg { width: 15px; height: 15px; }
-  .wa-cal div { display: grid; gap: 2px; font-family: Inter, sans-serif; }
-  .wa-cal small { font-size: 11px; color: var(--muted); }
-  .wa-cal b { font: 700 15px/1.25 Manrope, sans-serif; letter-spacing: -.02em; }
-  .wa-cal span { font-size: 12px; color: var(--muted); }
+  /* Paneles 3 a 6: el artefacto ocupa todo el escenario, como en las páginas de producto de Linear, incident.io y Profound */
+  .pn--x { display: block; overflow: hidden; }
+  .pn--x > :not(figcaption) { place-self: normal; }
+  .pn--x figcaption { position: relative; z-index: 3; padding: 44px 56px 0; }
+  .pn--x figcaption p { max-width: 60ch; }
 
-  /* Sistemas: el sistema de pedidos de una ferretería, al estilo Linear */
-  .pn .browser.erp, .pn .browser.ds { background: #fff; position: relative; }
-  .erp .top, .ds .top { align-items: center; }
-  .erp .top span, .ds .top span { flex: 1; margin: 0 28px 0 18px; padding: 3px 0; border-radius: 6px; background: #f1f2f4; font: 500 10.5px Inter, sans-serif; color: var(--muted); text-align: center; }
-  .erp svg, .ds svg:not(.ds-ch), .ig i svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .erp-in { display: grid; grid-template-columns: 172px minmax(0, 1fr); height: 352px; font-family: Inter, sans-serif; }
-  .erp-side { display: grid; align-content: start; gap: 2px; padding: 12px 10px; background: #f8f8f9; box-shadow: 1px 0 0 var(--line); }
-  .erp-ws { display: flex; align-items: center; gap: 8px; padding: 4px 8px 12px; font-size: 12.5px; font-weight: 700; }
-  .erp-ws b { width: 22px; height: 22px; border-radius: 7px; display: grid; place-items: center; color: #fff; font-size: 11px; background: linear-gradient(135deg, #facc15, #f97316); }
-  .erp-side a { display: flex; align-items: center; gap: 9px; padding: 7px 8px; border-radius: 8px; font-size: 12px; color: #55575e; }
+  /* Automatización: tablero de citas y la conversación flotando encima, en el modo oscuro de Linear */
+  .pn--dk { background: #08090a; }
+  .pn--dk h4 { color: #f7f8f8; }
+  .pn--dk figcaption { width: calc(100% - min(372px, 44%) - 32px); padding-right: 32px; }
+  .pn--dk figcaption p { color: #8a8f98; }
+  .ln-i { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .pn--x > .ln-board { position: absolute; left: 56px; top: 236px; display: grid; grid-template-columns: repeat(3, 252px); gap: 12px; font-family: Inter, sans-serif;
+    -webkit-mask-image: linear-gradient(#000 50%, transparent 92%); mask-image: linear-gradient(#000 50%, transparent 92%); }
+  .ln-col header { display: flex; align-items: center; gap: 8px; height: 34px; padding: 0 10px; font-size: 13px; font-weight: 500; color: #d0d6e0; }
+  .ln-col header svg { width: 14px; height: 14px; flex: none; }
+  .ln-cnt { display: grid; color: #62666d; } .ln-cnt > i { grid-area: 1 / 1; font-style: normal; transition: opacity .4s ease, transform .4s cubic-bezier(.2,.8,.2,1); }
+  .ln-cnt > i:last-child { opacity: 0; transform: translateY(5px); }
+  .ln-cnt.ya > i:first-child { opacity: 0; transform: translateY(-5px); } .ln-cnt.ya > i:last-child { opacity: 1; transform: none; }
+  .ln-card { margin-bottom: 8px; padding: 9px 12px 12px; border-radius: 9px; background: #0f1011; border: .5px solid rgba(255,255,255,.08); }
+  .ln-card p { display: flex; align-items: center; gap: 8px; height: 18px; font-size: 11px; color: #62666d; }
+  .ln-card p small { font-size: 11px; color: #8a8f98; }
+  .ln-card u { margin-left: auto; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; text-decoration: none; font-size: 8px; font-weight: 600; color: #fff; background: var(--c); }
+  .ln-card b { display: flex; gap: 8px; margin-top: 5px; font-size: 13px; font-weight: 500; line-height: 1.38; color: #e2e4e9; }
+  .ln-card b svg { width: 14px; height: 14px; flex: none; margin-top: 2px; }
+  .ln-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .ln-tags em { display: inline-flex; align-items: center; gap: 6px; height: 22px; padding: 0 8px; border-radius: 6px; border: .5px solid rgba(255,255,255,.1); font: normal 500 11.5px Inter, sans-serif; color: #8a8f98; white-space: nowrap; }
+  .ln-tags em::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--c); }
+  .ln-tags .ln-rem { opacity: 0; transform: translateY(4px); } .ln-tags .ln-rem.ya { opacity: 1; transform: none; }
+  .pn .ln-new { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .7s cubic-bezier(.2,.8,.2,1); }
+  .ln-new > div { min-height: 0; overflow: hidden; }
+  .pn .ln-new.ya { grid-template-rows: 1fr; }
+  .ln-new.ya .ln-card { animation: lnglow 3s ease both; }
+  @keyframes lnglow { 0%, 40% { border-color: rgba(113,124,230,.9); box-shadow: 0 0 0 1px rgba(113,124,230,.35), 0 0 28px rgba(113,124,230,.22); } }
+  .pn--x > .ln-thread { position: absolute; z-index: 4; right: 32px; top: 40px; bottom: 40px; width: min(372px, 44%); display: flex; flex-direction: column; overflow: hidden;
+    border-radius: 16px; background: #141516; border: .5px solid rgba(255,255,255,.1); font-family: Inter, sans-serif;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 0 0 1px rgba(0,0,0,.5), 0 44px 80px -24px rgba(0,0,0,.9); }
+  .ln-hd { flex: none; display: flex; align-items: center; gap: 10px; padding: 14px 16px; box-shadow: 0 1px 0 rgba(0,0,0,.4), 0 .5px 0 rgba(255,255,255,.07); }
+  .ln-hd > i { flex: none; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff; background: #25d366; }
+  .ln-hd > i svg { width: 17px; height: 17px; }
+  .ln-hd > div { flex: 1; min-width: 0; display: grid; }
+  .ln-hd b { font-size: 14px; font-weight: 600; color: #f7f8f8; }
+  .ln-hd span { font-size: 12px; color: #62666d; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ln-hd > small { display: grid; font-size: 12px; text-align: right; }
+  .ln-hd > small > * { grid-area: 1 / 1; transition: opacity .3s ease; }
+  .ln-hd .ln-on { color: #62666d; } .ln-hd .ln-ty { color: #4cb782; opacity: 0; transform: none; }
+  .ln-hd .ln-ty.ya { opacity: 1; } .ln-hd small:has(.ln-ty.ya) .ln-on { opacity: 0; }
+  .ln-msgs { flex: 1; min-height: 0; display: flex; flex-direction: column; gap: 18px; padding: 18px 16px; overflow: hidden; }
+  .ln-msgs > [data-at] { display: none; }
+  .ln-msgs > .ya { display: flex; animation: lnin .5s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes lnin { from { opacity: 0; transform: translateY(8px); } }
+  .ln-m { gap: 10px; }
+  .ln-av { flex: none; width: 24px; height: 24px; border-radius: 50%; display: grid; place-items: center; font: normal 600 9px Inter, sans-serif; color: #fff; background: var(--c); }
+  .ln-av.ln-bot { border-radius: 7px; background: linear-gradient(135deg, #e8364f, #7b4fd6); }
+  .ln-bot svg { width: 15px; height: 8px; fill: currentColor; }
+  .ln-m > div { flex: 1; min-width: 0; }
+  .ln-m p { display: flex; align-items: center; gap: 7px; height: 24px; font-size: 13px; }
+  .ln-m p b { font-weight: 600; color: #f7f8f8; }
+  .ln-m p time { font-size: 12px; color: #62666d; }
+  .ln-m p em { font: normal 500 11px Inter, sans-serif; color: #8a8f98; padding: 2px 6px; border-radius: 5px; border: .5px solid rgba(255,255,255,.14); }
+  .ln-m > div > span { display: block; margin-top: 1px; font-size: 14px; line-height: 1.5; color: #d0d6e0; }
+  .ln-m > div > span b { font-weight: 600; color: #f7f8f8; }
+  .ln-opts { display: flex; gap: 6px; margin-top: 10px; }
+  .pn .ln-opts u { white-space: nowrap; text-decoration: none; padding: 6px 10px; border-radius: 6px; border: .5px solid rgba(255,255,255,.12); background: #1c1d1f; font-size: 12.5px; font-weight: 500; color: #d0d6e0;
+    transition: background .4s ease, color .4s ease, border-color .4s ease; }
+  .pn .ln-opts u.ya { background: #5e6ad2; border-color: #717ce6; color: #fff; }
+  .ln-dots { display: inline-flex; gap: 4px; margin-left: 2px; }
+  .ln-dots i { width: 5px; height: 5px; border-radius: 50%; background: #8a8f98; animation: lndot 1.2s ease-in-out infinite; }
+  .ln-dots i:nth-child(2) { animation-delay: .15s; } .ln-dots i:nth-child(3) { animation-delay: .3s; }
+  @keyframes lndot { 0%, 60%, 100% { opacity: .3; } 30% { opacity: 1; } }
+  .ln-cmp { flex: none; display: flex; align-items: center; justify-content: space-between; margin: 0 12px 12px; padding: 12px 12px 12px 14px; border-radius: 10px;
+    background: #0f1011; border: .5px solid rgba(255,255,255,.08); font-size: 13px; color: #62666d; }
+  .ln-cmp i { width: 24px; height: 24px; border-radius: 6px; display: grid; place-items: center; background: #1c1d1f; color: #8a8f98; }
+  .ln-cmp svg { width: 13px; height: 13px; }
+
+  /* Sistemas: el sistema de pedidos como app de escritorio clara al estilo Linear, sin barra de navegador */
+  .erp svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .pn--x > .erp { position: absolute; left: 56px; right: 0; top: 204px; bottom: 0; display: grid; grid-template-columns: 184px minmax(0, 1fr); padding-top: 8px;
+    border-top-left-radius: 14px; background: #f4f4f5; font-family: Inter, sans-serif;
+    box-shadow: 0 0 0 1px rgba(17,18,20,.08), 0 34px 60px -26px rgba(17,18,20,.3); }
+  .erp-side { display: grid; align-content: start; gap: 1px; padding: 6px 10px; }
+  .erp-ws { display: flex; align-items: center; gap: 8px; padding: 2px 8px 14px; font-size: 13px; font-weight: 600; }
+  .erp-ws b { width: 20px; height: 20px; border-radius: 6px; display: grid; place-items: center; color: #fff; font-size: 10.5px; background: linear-gradient(135deg, #facc15, #f97316); }
+  .erp-side a { display: flex; align-items: center; gap: 9px; height: 30px; padding: 0 8px; border-radius: 7px; font-size: 13px; color: #5b5e66; }
   .erp-side a svg { width: 15px; height: 15px; flex: none; }
-  .erp-side a.on { background: #ececef; color: var(--ink); font-weight: 600; }
-  .erp-side em { margin-left: auto; font-style: normal; font-size: 10.5px; color: var(--muted); }
-  .erp-main { min-width: 0; padding: 14px 18px 0; overflow: hidden; }
-  .erp-main header { display: flex; align-items: center; gap: 18px; padding-bottom: 12px; }
-  .erp-main h5 { font: 700 16px Manrope, sans-serif; letter-spacing: -.02em; }
-  .erp-tabs { display: flex; gap: 14px; font-size: 11.5px; color: var(--muted); white-space: nowrap; }
-  .erp-tabs .on { color: var(--ink); font-weight: 600; box-shadow: 0 2px 0 var(--ink); padding-bottom: 3px; }
-  .erp-main header > b { margin-left: auto; padding: 6px 11px; border-radius: 8px; background: var(--ink); color: #fff; font-size: 11px; font-weight: 600; white-space: nowrap; }
-  .erp-r, .erp-h { display: grid; grid-template-columns: 56px minmax(0, 1.6fr) 70px 98px 120px 64px; align-items: center; gap: 10px; padding: 0 8px; font-size: 12px; }
-  .erp-h { height: 30px; font-size: 10.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .04em; box-shadow: 0 1px 0 var(--line); }
-  .erp-r { height: 38px; box-shadow: 0 1px 0 rgba(17,18,20,.06); }
-  .erp-r > span:first-child { font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 11px; color: var(--muted); }
-  .erp-r > span:nth-child(2) { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .erp-side a.on { background: rgba(17,18,20,.06); color: var(--ink); font-weight: 500; }
+  .erp-side em { margin-left: auto; font-style: normal; font-size: 11.5px; color: #8a8d93; }
+  .erp-main { min-width: 0; padding: 0 32px 0 24px; overflow: hidden; background: #fff; border-top-left-radius: 10px; box-shadow: 0 0 0 .5px rgba(17,18,20,.12); }
+  .erp-main header { display: flex; align-items: center; gap: 14px; height: 56px; box-shadow: 0 1px 0 rgba(17,18,20,.07); }
+  .erp-main h5 { font-size: 14px; font-weight: 600; }
+  .erp-tabs { display: flex; gap: 6px; white-space: nowrap; }
+  .erp-tabs span { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 6px; border: .5px solid rgba(17,18,20,.14); font-size: 12px; color: #5b5e66; }
+  .erp-tabs .on { background: #f1f1f3; color: var(--ink); font-weight: 600; }
+  .erp-main header > b { margin-left: auto; display: inline-flex; align-items: center; height: 28px; padding: 0 12px; border-radius: 7px; background: var(--ink); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; }
+  .erp-r, .erp-h { display: grid; grid-template-columns: 52px minmax(0, 1fr) 40px 92px 124px 40px; align-items: center; gap: 12px; padding: 0 8px; font-size: 13px; }
+  .erp-h { height: 36px; font-size: 12px; font-weight: 500; color: #8a8d93; box-shadow: 0 1px 0 rgba(17,18,20,.07); }
+  .erp-r { height: 44px; box-shadow: 0 1px 0 rgba(17,18,20,.05); }
+  .erp-r > span:first-child { font-size: 12.5px; font-variant-numeric: tabular-nums; color: #8a8d93; }
+  .erp-r > span:nth-child(2) { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .erp-r > span:nth-child(3) { color: #5b5e66; }
   .erp-r > span:nth-child(4) { font-variant-numeric: tabular-nums; }
-  .erp-s { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .erp-s { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
   .erp-s::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 18%, transparent); }
   .erp-sw { display: grid; } .erp-sw > * { grid-area: 1 / 1; transition: opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1); }
   .erp-sw > :last-child { opacity: 0; transform: translateY(6px); }
   .erp-sw.ya > :first-child { opacity: 0; transform: translateY(-6px); } .erp-sw.ya > :last-child { opacity: 1; transform: none; }
-  .erp-r u { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; text-decoration: none; font-size: 9.5px; font-weight: 700; color: #fff; background: var(--c); }
-  .erp-new { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .7s cubic-bezier(.2,.8,.2,1) !important; }
+  .erp-r u { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; text-decoration: none; font-size: 9px; font-weight: 600; color: #fff; background: var(--c); }
+  .pn .erp-new { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .7s cubic-bezier(.2,.8,.2,1); }
   .erp-new > .erp-r { min-height: 0; height: auto; overflow: hidden; transition: background 1.6s ease; }
-  .erp-new > .erp-r > * { padding: 9px 0; }
-  .erp-new.ya { grid-template-rows: 1fr; } .erp-new.ya > .erp-r { background: rgba(250,204,21,.12); }
-  .erp-toast { position: absolute; right: 16px; bottom: 16px; display: flex; gap: 11px; align-items: center; width: 290px; padding: 12px 14px; border-radius: 14px; background: #1a1b1f; color: #fff; font-family: Inter, sans-serif;
-    box-shadow: 0 20px 34px -14px rgba(17,18,20,.5); opacity: 0; transform: translateY(12px); }
-  .erp-toast.ya { opacity: 1; transform: none; }
-  .erp-toast i { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font: 800 13px Inter, sans-serif; font-style: normal; color: #1a1b1f; background: linear-gradient(135deg, #facc15, #f97316); }
-  .erp-toast b { display: block; font-size: 12px; } .erp-toast span { font-size: 11px; color: rgba(255,255,255,.7); line-height: 1.35; }
+  .erp-new > .erp-r > * { padding: 11px 0; }
+  .pn .erp-new.ya { grid-template-rows: 1fr; } .erp-new.ya > .erp-r { background: rgba(250,204,21,.12); }
+  .pn--x > .erp-toast { position: absolute; z-index: 4; right: 32px; bottom: 32px; display: flex; gap: 12px; align-items: center; width: 304px; padding: 13px 15px; border-radius: 12px;
+    background: #1b1c1f; color: #fff; font-family: Inter, sans-serif; box-shadow: 0 0 0 .5px rgba(255,255,255,.1) inset, 0 24px 40px -16px rgba(17,18,20,.55); opacity: 0; transform: translateY(12px); }
+  .pn--x > .erp-toast.ya { opacity: 1; transform: none; }
+  .erp-toast i { flex: none; width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; font: 800 13px Inter, sans-serif; font-style: normal; color: #1b1c1f; background: linear-gradient(135deg, #facc15, #f97316); }
+  .erp-toast b { display: block; font-size: 13px; font-weight: 600; } .erp-toast span { font-size: 12px; color: rgba(255,255,255,.66); line-height: 1.4; }
 
-  /* Integraciones: un pedido de WhatsApp llega a pagos, CRM y Excel a la vez */
-  .ig { display: grid; grid-template-columns: minmax(0, 1fr) 54px auto 80px minmax(0, 1.15fr); align-items: center; font-family: Inter, sans-serif; }
-  .ig-in, .ig-c { background: #fff; border-radius: 16px; box-shadow: 0 0 0 1px var(--line), 0 18px 34px -22px rgba(17,18,20,.35); opacity: 0; transform: translateY(10px); }
+  /* Integraciones: tarjetas blancas sobre papel cálido y líneas que se encienden, al estilo incident.io */
+  .pn--ig { background: #f6f4ef; }
+  .ig svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .pn--x > .ig { position: absolute; left: 56px; right: 56px; top: 220px; bottom: 40px; display: grid; grid-template-columns: minmax(0, 1fr) 56px 76px 72px minmax(0, 1.3fr); align-items: center; font-family: Inter, sans-serif; }
+  .ig-in, .ig-c { background: #fff; border-radius: 12px; border: 1px solid #ebe6dc; box-shadow: 0 1px 2px rgba(41,30,10,.04), 0 14px 30px -18px rgba(41,30,10,.2); opacity: 0; transform: translateY(10px); }
   .ig-in.ya, .ig-c.ya { opacity: 1; transform: none; }
-  .ig-in { padding: 14px 16px 16px; }
-  .ig-in header { display: flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 600; color: var(--muted); }
-  .ig-in header time { margin-left: auto; font-weight: 500; font-size: 11px; }
-  .ig i { flex: none; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; background: var(--c); color: #fff; font: 800 12px Inter, sans-serif; font-style: normal; }
+  .ig-in { padding: 16px 18px 18px; }
+  .ig-in header { display: flex; align-items: center; gap: 9px; font-size: 13px; font-weight: 500; color: #6b665c; }
+  .ig-in header time { margin-left: auto; font-size: 12px; color: #9a9488; }
+  .ig i { flex: none; width: 26px; height: 26px; border-radius: 7px; display: grid; place-items: center; background: var(--c); color: #fff; font: 800 12px Inter, sans-serif; font-style: normal; }
   .ig i svg { width: 15px; height: 15px; }
-  .ig-in > b { display: block; margin-top: 12px; font-size: 13px; }
-  .ig-in p { margin-top: 6px; padding: 10px 12px; border-radius: 12px; border-top-left-radius: 4px; background: #f0faf3; font-size: 13px; line-height: 1.45; color: #22262b; }
-  .ig-l, .ig-fan { display: block; width: 100%; overflow: visible; }
-  .ig-l { height: 10px; } .ig-fan { height: 252px; }
-  .ig-l path, .ig-fan path { fill: none; stroke: #34d399; stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .7s cubic-bezier(.6,0,.3,1); }
-  .ig-fan path:nth-child(2) { stroke: #22d3ee; transition-delay: .08s; } .ig-fan path:nth-child(3) { stroke: #60a5fa; transition-delay: .16s; }
-  .ig-l.ya path, .ig-fan.ya path { stroke-dashoffset: 0; }
+  .ig-in > b { display: block; margin-top: 14px; font-size: 14px; font-weight: 600; }
+  .ig-in p { margin-top: 6px; padding: 10px 12px; border-radius: 4px 10px 10px 10px; background: #f3f1ec; font-size: 14px; line-height: 1.45; color: #2a292e; }
+  .ig-l, .ig-fan { display: block; overflow: visible; }
+  .ig-l path, .ig-fan path { fill: none; stroke: #d9d2c5; stroke-width: 1.5; }
+  .ig-l .go, .ig-fan .go { stroke: #0d9488; stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .8s cubic-bezier(.6,0,.3,1); }
+  .ig-fan .go:nth-of-type(5) { transition-delay: .08s; } .ig-fan .go:nth-of-type(6) { transition-delay: .16s; }
+  .ig-l.ya .go, .ig-fan.ya .go { stroke-dashoffset: 0; }
   .ig-core { display: grid; justify-items: center; gap: 8px; }
-  .ig-core span { width: 64px; height: 64px; border-radius: 20px; display: grid; place-items: center; color: #fff; background: var(--ink); transition: box-shadow .8s ease; box-shadow: 0 0 0 0 rgba(52,211,153,0); }
-  .ig-core.ya span { box-shadow: 0 0 0 10px rgba(52,211,153,.14), 0 0 34px rgba(34,211,238,.35); }
-  .ig-core svg { width: 36px; height: 20px; fill: currentColor; }
-  .ig-core small { font-size: 11px; font-weight: 600; color: var(--muted); }
-  .ig-out { display: grid; grid-template-rows: repeat(3, 76px); gap: 12px; }
-  .ig-c { display: flex; align-items: center; gap: 12px; padding: 0 16px; }
-  .ig-c > div { flex: 1; min-width: 0; display: grid; gap: 1px; }
-  .ig-c small { font-size: 10.5px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-  .ig-c b { font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-c span { font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-c em { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; color: #fff; background: #22c55e; transform: scale(0); transition: transform .45s cubic-bezier(.2,.8,.2,1) .35s; }
+  .ig-core span { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; color: #fff; background: var(--ink); transition: box-shadow .8s ease; box-shadow: 0 0 0 0 rgba(13,148,136,0); }
+  .ig-core.ya span { box-shadow: 0 0 0 8px rgba(13,148,136,.1), 0 14px 30px -10px rgba(13,148,136,.45); }
+  .ig-core svg { width: 34px; height: 18px; fill: currentColor; stroke: none; }
+  .ig-core small { font-size: 12px; font-weight: 500; color: #6b665c; }
+  .ig-out { display: grid; grid-template-rows: repeat(3, 92px); gap: 16px; }
+  .ig-c { display: flex; align-items: center; gap: 14px; padding: 0 18px; }
+  .ig-c > div { flex: 1; min-width: 0; display: grid; gap: 2px; }
+  .ig-c small { font-size: 12px; font-weight: 500; color: #9a9488; }
+  .ig-c b { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-c span { font-size: 13px; color: #6b665c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-c em { flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 11px; color: #fff; background: #16a34a; transform: scale(0); transition: transform .45s cubic-bezier(.2,.8,.2,1) .35s; }
   .ig-c.ya em { transform: none; }
 
-  /* Datos: tablero de ventas al estilo Stripe */
-  .ds-in { display: grid; grid-template-columns: minmax(0, 1fr) 230px; height: 352px; font-family: Inter, sans-serif; }
-  .ds-main { padding: 18px 22px 14px; min-width: 0; display: flex; flex-direction: column; }
-  .ds-hd { display: flex; justify-content: space-between; align-items: center; font-size: 12.5px; font-weight: 600; color: var(--muted); }
-  .ds-hd em { display: flex; align-items: center; gap: 4px; font-style: normal; padding: 5px 9px; border-radius: 8px; box-shadow: 0 0 0 1px var(--line); color: var(--ink); font-size: 11.5px; }
-  .ds-hd svg { width: 13px; height: 13px; }
-  .ds-n { margin-top: 6px; font: 800 38px/1.05 Manrope, sans-serif; letter-spacing: -.04em; font-variant-numeric: tabular-nums; }
-  .ds-d { margin-top: 6px; font-size: 12.5px; color: var(--muted); }
-  .ds-d b { color: #0d9488; }
-  .ds-cw { position: relative; flex: 1; min-height: 0; margin-top: 14px; }
+  /* Datos: rejilla de líneas finas con guías punteadas al estilo Profound, sin tarjetas ni sombras */
+  .pn--ds::before, .pn--ds::after { content: ''; position: absolute; top: 0; bottom: 0; border-left: 1px dashed rgba(17,18,20,.13); }
+  .pn--ds::before { left: 32px; } .pn--ds::after { right: 32px; }
+  .ds svg:not(.ds-ch) { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+  .pn--x > .ds { position: absolute; left: 32px; right: 32px; top: 204px; bottom: 0; display: grid; grid-template-columns: minmax(0, 1fr) 272px; font-family: Inter, sans-serif; }
+  .ds::before { content: ''; position: absolute; left: -32px; right: -32px; top: 0; border-top: 1px solid var(--line); }
+  .ds-lb { font: 500 11px/1.2 ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .08em; text-transform: uppercase; color: #85888e; }
+  .ds-main { min-width: 0; display: flex; flex-direction: column; padding: 22px 24px 18px; border-right: 1px solid var(--line); }
+  .ds-hd { display: flex; justify-content: space-between; align-items: center; }
+  .ds-hd em { display: flex; align-items: center; gap: 4px; font-style: normal; padding: 5px 7px 5px 9px; border: 1px solid var(--line); color: var(--ink); }
+  .ds-hd svg { width: 12px; height: 12px; }
+  .ds-n { margin-top: 16px; font: 700 52px/1 Manrope, sans-serif; letter-spacing: -.045em; font-variant-numeric: tabular-nums; }
+  .ds-d { margin-top: 10px; font-size: 13px; color: var(--muted); }
+  .ds-d b { font-weight: 600; color: #0d9488; }
+  .ds-cw { position: relative; flex: 1; min-height: 0; margin-top: 18px; }
   .ds-ch { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
-  .ds-g { fill: none; stroke: rgba(17,18,20,.07); stroke-width: 1; vector-effect: non-scaling-stroke; }
+  .ds-g { fill: none; stroke: rgba(17,18,20,.07); stroke-width: 1; stroke-dasharray: 3 4; vector-effect: non-scaling-stroke; }
   .ds-y { fill: none; stroke: #c7cad1; stroke-width: 1.6; stroke-dasharray: 4 4; vector-effect: non-scaling-stroke; }
   .ds-l { fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; }
   .ds-a { opacity: 0; }
@@ -621,37 +647,44 @@
   @keyframes dsfade { to { opacity: 1; } }
   @keyframes dsping { 0% { box-shadow: 0 0 0 0 rgba(14,165,233,.45); } 100% { box-shadow: 0 0 0 12px rgba(14,165,233,0); } }
   .ds-dot { position: absolute; left: 80%; top: 23.08%; width: 12px; height: 12px; margin: -6px; border-radius: 50%; background: #0ea5e9; border: 2px solid #fff; opacity: 0; }
-  .ds-x { display: flex; justify-content: space-between; margin-top: 8px; font-size: 10.5px; color: var(--muted); }
-  .ds-side { display: grid; align-content: start; padding: 10px 18px; box-shadow: -1px 0 0 var(--line); }
-  .ds-k { display: grid; grid-template-columns: 1fr auto; align-items: baseline; padding: 11px 0; box-shadow: 0 1px 0 var(--line); }
-  .ds-k small { grid-column: 1 / -1; font-size: 11.5px; color: var(--muted); }
-  .ds-k b { font: 700 19px Manrope, sans-serif; letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
-  .ds-k em { font-style: normal; font-size: 11.5px; font-weight: 600; color: #0d9488; }
-  .ds-top { padding-top: 12px; display: grid; gap: 7px; }
-  .ds-top small { font-size: 11.5px; color: var(--muted); }
-  .ds-top p { position: relative; display: flex; justify-content: space-between; padding: 6px 9px; font-size: 11.5px; border-radius: 7px; overflow: hidden; }
-  .ds-top p::before { content: ''; position: absolute; inset: 0 auto 0 0; width: calc(var(--v) * 100%); background: linear-gradient(90deg, rgba(234,179,8,.22), rgba(249,115,22,.18)); border-radius: 7px; transform-origin: left; transform: scaleX(0); }
+  .ds-x { display: flex; justify-content: space-between; margin-top: 10px; }
+  .ds-side { display: grid; grid-template-rows: repeat(3, 76px) auto; align-content: start; }
+  .ds-k { display: grid; grid-template-columns: 1fr auto; align-content: center; align-items: baseline; row-gap: 8px; padding: 0 24px; border-bottom: 1px solid var(--line); }
+  .ds-k .ds-lb { grid-column: 1 / -1; }
+  .ds-k b { font: 700 22px/1 Manrope, sans-serif; letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
+  .ds-k em { font-style: normal; font-size: 12.5px; font-weight: 600; color: #0d9488; }
+  .ds-top { display: grid; gap: 6px; padding: 18px 24px; }
+  .ds-top .ds-lb { margin-bottom: 6px; }
+  .ds-top p { position: relative; display: flex; justify-content: space-between; padding: 7px 10px; font-size: 13px; }
+  .ds-top p b { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .ds-top p::before { content: ''; position: absolute; inset: 0 auto 0 0; width: calc(var(--v) * 100%); background: rgba(234,179,8,.16); box-shadow: inset 2px 0 0 #eab308; transform-origin: left; transform: scaleX(0); }
   .pn.on .ds-top p::before { animation: dsbar 1s cubic-bezier(.2,.8,.2,1) .5s forwards; }
   .pn.on .ds-top p:nth-of-type(2)::before { animation-delay: .62s; } .pn.on .ds-top p:nth-of-type(3)::before { animation-delay: .74s; }
   @keyframes dsbar { to { transform: none; } }
   .ds-top p > * { position: relative; }
 
   @media (max-width: 960px) {
-    .wa-cal { left: 8px; top: auto; bottom: 28px; width: 196px; padding: 10px 11px; gap: 10px; border-radius: 15px; }
-    .wa-cal i { width: 32px; height: 32px; border-radius: 10px; }
-    .wa-cal small { font-size: 10px; } .wa-cal b { font-size: 13px; } .wa-cal span { font-size: 11px; }
-    .wa-rem { display: none; }
-    .erp-in, .ds-in { height: 330px; }
+    .pn--x figcaption, .pn--dk figcaption { width: auto; padding: 28px 24px 0; }
+    .pn--x > .ln-board { display: none; }
+    .pn--x > .ln-thread { left: 16px; right: 16px; width: auto; top: 224px; bottom: 0; border-radius: 16px 16px 0 0; }
+    .ln-msgs { justify-content: flex-end; -webkit-mask-image: linear-gradient(transparent, #000 36px); mask-image: linear-gradient(transparent, #000 36px); }
+    .ln-hd > small { display: none; }
+    .pn--x > .erp { left: 16px; top: 224px; grid-template-columns: minmax(0, 1fr); padding-top: 0; }
+    .erp-side { display: none; } .erp-main { border-top-left-radius: 14px; padding: 0 16px; }
+    .pn--x > .erp-toast { left: 16px; right: 16px; bottom: 16px; width: auto; }
+    .pn--x > .ig { left: 16px; right: 16px; top: 224px; bottom: 16px; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 10px; }
+    .ig-l, .ig-fan, .ig-core { display: none; }
+    .ig-out { grid-template-rows: repeat(3, 58px); gap: 8px; } .ig-c { padding: 0 14px; gap: 12px; } .ig-c small { display: none; } .ig-c b { font-size: 13.5px; } .ig-in { padding: 13px 15px; } .ig-in > b { margin-top: 10px; } .ig-in p { font-size: 13px; }
+    .pn--ds::before, .pn--ds::after { display: none; }
+    .pn--x > .ds { left: 0; right: 0; top: 224px; grid-template-columns: minmax(0, 1fr); }
+    .ds-main { border-right: 0; } .ds-side { display: none; }
   }
   @media (max-width: 640px) {
-    .erp-in { grid-template-columns: 1fr; } .erp-side { display: none; }
+    .pn--x figcaption, .pn--dk figcaption { padding: 24px 20px 0; }
     .erp-tabs, .erp-main header > b { display: none; }
-    .erp-r, .erp-h { grid-template-columns: 46px minmax(0, 1fr) 98px; }
-    .erp-r > :nth-child(3), .erp-r > :nth-child(4), .erp-r > :nth-child(6), .erp-h > :nth-child(3), .erp-h > :nth-child(4), .erp-h > :nth-child(6) { display: none; }
-    .erp-toast { left: 12px; right: 12px; width: auto; }
-    .ds-in { grid-template-columns: 1fr; } .ds-side { display: none; } .ds-n { font-size: 30px; }
-    .ig { grid-template-columns: 1fr; gap: 10px; } .ig-l, .ig-fan, .ig-core { display: none; }
-    .ig-out { grid-template-rows: repeat(3, 62px); gap: 8px; } .ig-in { padding: 12px 14px; } .ig-in p { font-size: 12px; }
+    .erp-r, .erp-h { grid-template-columns: minmax(0, 1fr) 118px; }
+    .erp-r > :not(:nth-child(2), :nth-child(5)), .erp-h > :not(:nth-child(2), :nth-child(5)) { display: none; }
+    .ds-n { font-size: 40px; }
   }
   @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before { animation-duration: .01s; animation-delay: 0s; } }
   .pn .browser.shop { background: #fff; }
@@ -1195,72 +1228,95 @@
           </div>
         </div>
       </figure>
-      <figure class="pn" data-s="dark" data-t="Automatización" aria-hidden="true">
+      <figure class="pn pn--x pn--dk" data-s="dark" data-t="Automatización" aria-hidden="true">
         <figcaption><h4>Automatización</h4><p>Las tareas repetitivas se hacen solas: tu negocio responde, agenda y recuerda por WhatsApp mientras tú atiendes lo importante.</p></figcaption>
-        <div class="apps wa">
-          <div class="yv">
-            <img src="assets/marco-iphone.webp" alt="" width="720" height="1469" decoding="async">
-            <div class="yv-scr">
-              <div class="da wa-app" data-seq="14000">
-                <div class="wa-head">
-                  <div class="da-st"><b>9:41</b><span><svg viewBox="0 0 18 12"><rect x="0" y="7.5" width="3" height="4.5" rx="1"/><rect x="5" y="5" width="3" height="7" rx="1"/><rect x="10" y="2.5" width="3" height="9.5" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg><svg viewBox="0 0 16 12"><path d="M8 11.5 5.6 9a3.4 3.4 0 0 1 4.8 0zM3.5 6.9a6.4 6.4 0 0 1 9 0l-1.4 1.4a4.4 4.4 0 0 0-6.2 0zM1 4.4a9.9 9.9 0 0 1 14 0l-1.4 1.4a7.9 7.9 0 0 0-11.2 0z"/></svg><svg viewBox="0 0 26 12"><rect x=".5" y=".5" width="22" height="11" rx="3.5" class="bo"/><rect x="2.5" y="2.5" width="18" height="7" rx="2"/><path d="M24 4.2v3.6a2 2 0 0 0 0-3.6z"/></svg></span></div>
-                  <div class="wa-bar"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg><span class="wa-av">CS</span>
-                    <div><b>Clínica Sonrisa</b><small class="wa-on">en línea</small><small class="wa-ty" data-at="1400 5600" data-out="2800 7000">escribiendo…</small></div>
-                    <svg viewBox="0 0 24 24"><rect x="3" y="7" width="12" height="10" rx="2.5"/><path d="m15 11 6-3.5v9L15 13"/></svg><svg viewBox="0 0 24 24"><path d="M6.5 4h3l1.5 4-2 1.3a10 10 0 0 0 5.7 5.7L16 13l4 1.5v3A2.5 2.5 0 0 1 17.3 20 15 15 0 0 1 4 6.7 2.5 2.5 0 0 1 6.5 4z"/></svg></div>
-                </div>
-                <div class="wa-chat">
-                  <span class="wa-day">Hoy</span>
-                  <p class="wa-m me" data-at="500">Hola 👋 ¿tienen cita para mañana?<time>9:12 <i>✓✓</i></time></p>
-                  <p class="wa-dots" data-at="1400" data-out="2800"><i></i><i></i><i></i></p>
-                  <div class="wa-grp" data-at="2800">
-                    <p class="wa-m bot">¡Hola, Laura! Mañana tengo estos horarios libres:<time>9:12</time></p>
-                    <span class="wa-opt">9:00 am</span><span class="wa-opt" data-at="4300">11:30 am</span><span class="wa-opt">4:00 pm</span>
-                  </div>
-                  <p class="wa-m me" data-at="4700">11:30 am<time>9:13 <i>✓✓</i></time></p>
-                  <p class="wa-dots" data-at="5600" data-out="7000"><i></i><i></i><i></i></p>
-                  <p class="wa-m bot" data-at="7000">Listo ✅ Quedaste agendada mañana a las <b>11:30 am</b> con la Dra. Ríos. Te escribo una hora antes para recordarte.<time>9:13</time></p>
-                </div>
-                <div class="wa-type"><span>Mensaje</span><i><svg viewBox="0 0 24 24"><path d="M12 4a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V7a3 3 0 0 1 3-3zM6 11.5a6 6 0 0 0 12 0M12 17.5V20"/></svg></i></div>
-              </div>
+        <div class="ln-board">
+          <div class="ln-col">
+            <header><svg class="ln-i" viewBox="0 0 14 14" style="color:#f2c94c"><circle cx="7" cy="7" r="5.6"/><path d="M7 3.2a3.8 3.8 0 0 1 0 7.6z" fill="currentColor" stroke="none"/></svg>Agendadas mañana<span class="ln-cnt" data-at="7900"><i>2</i><i>3</i></span></header>
+            <div class="ln-new" data-at="7900"><div><div class="ln-card">
+              <p><span>CS-128</span><small>Agendado solo en tu calendario</small></p>
+              <b><svg class="ln-i" viewBox="0 0 14 14" style="color:#f2c94c"><circle cx="7" cy="7" r="5.6"/><path d="M7 3.2a3.8 3.8 0 0 1 0 7.6z" fill="currentColor" stroke="none"/></svg>Laura Gómez, limpieza dental</b>
+              <div class="ln-tags"><em style="--c:#5e6ad2">Mié 30 oct, 11:30 am</em><em class="ln-rem" data-at="8700" style="--c:#f2c94c">Recordatorio 10:30 am</em></div>
+            </div></div></div>
+            <div class="ln-card">
+              <p><span>CS-127</span><u style="--c:#4ea7fc">DR</u></p>
+              <b><svg class="ln-i" viewBox="0 0 14 14" style="color:#f2c94c"><circle cx="7" cy="7" r="5.6"/><path d="M7 3.2a3.8 3.8 0 0 1 0 7.6z" fill="currentColor" stroke="none"/></svg>Andrés Ruiz, control de ortodoncia</b>
+              <div class="ln-tags"><em style="--c:#5e6ad2">9:00 am</em><em style="--c:#4ea7fc">Dra. Ríos</em></div>
+            </div>
+            <div class="ln-card">
+              <p><span>CS-125</span><u style="--c:#4cb782">DM</u></p>
+              <b><svg class="ln-i" viewBox="0 0 14 14" style="color:#f2c94c"><circle cx="7" cy="7" r="5.6"/><path d="M7 3.2a3.8 3.8 0 0 1 0 7.6z" fill="currentColor" stroke="none"/></svg>Camila Ortiz, valoración</b>
+              <div class="ln-tags"><em style="--c:#5e6ad2">4:00 pm</em><em style="--c:#4cb782">Dr. Mejía</em></div>
             </div>
           </div>
-          <div class="wa-cal" data-at="7900" data-dad=".wa-app">
-            <i><svg viewBox="0 0 24 24"><rect x="4" y="5.5" width="16" height="14.5" rx="3"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/></svg></i>
-            <div><small>Agendado solo en tu calendario</small><b>Mié 30 oct, 11:30 am</b><span>Laura Gómez, limpieza dental</span></div>
+          <div class="ln-col">
+            <header><svg class="ln-i" viewBox="0 0 14 14" style="color:#8a8f98"><circle cx="7" cy="7" r="5.6" stroke-dasharray="2.2 2"/></svg>Por confirmar<span class="ln-cnt"><i>2</i></span></header>
+            <div class="ln-card">
+              <p><span>CS-126</span><u style="--c:#4ea7fc">DR</u></p>
+              <b><svg class="ln-i" viewBox="0 0 14 14" style="color:#8a8f98"><circle cx="7" cy="7" r="5.6" stroke-dasharray="2.2 2"/></svg>Mateo Herrera, blanqueamiento</b>
+              <div class="ln-tags"><em style="--c:#5e6ad2">Jue 31 oct, 3:00 pm</em></div>
+            </div>
+            <div class="ln-card">
+              <p><span>CS-124</span><u style="--c:#4cb782">DM</u></p>
+              <b><svg class="ln-i" viewBox="0 0 14 14" style="color:#8a8f98"><circle cx="7" cy="7" r="5.6" stroke-dasharray="2.2 2"/></svg>Sofía Vargas, revisión</b>
+              <div class="ln-tags"><em style="--c:#5e6ad2">Vie 1 nov, 10:00 am</em></div>
+            </div>
           </div>
-          <div class="wa-rem" data-at="8700" data-dad=".wa-app"><i><svg viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 1.5h-15zM10 20.5a2 2 0 0 0 4 0"/></svg></i>Recordatorio programado para las 10:30 am</div>
+          <div class="ln-col">
+            <header><svg class="ln-i" viewBox="0 0 14 14" style="color:#5e6ad2"><circle cx="7" cy="7" r="6.2" fill="currentColor" stroke="none"/><path d="m4.6 7.1 1.6 1.6 3.2-3.3" stroke="#fff"/></svg>Recordadas<span class="ln-cnt"><i>4</i></span></header>
+            <div class="ln-card">
+              <p><span>CS-121</span><u style="--c:#4ea7fc">DR</u></p>
+              <b><svg class="ln-i" viewBox="0 0 14 14" style="color:#5e6ad2"><circle cx="7" cy="7" r="6.2" fill="currentColor" stroke="none"/><path d="m4.6 7.1 1.6 1.6 3.2-3.3" stroke="#fff"/></svg>Valentina Rojas, limpieza dental</b>
+              <div class="ln-tags"><em style="--c:#4cb782">Confirmó por WhatsApp</em></div>
+            </div>
+          </div>
+        </div>
+        <div class="ln-thread" data-seq="14000">
+          <div class="ln-hd">
+            <i><svg class="ln-i" viewBox="0 0 24 24"><path d="M5 19.5 6 16a7.5 7.5 0 1 1 3 2.6z"/></svg></i>
+            <div><b>Laura Gómez</b><span>WhatsApp de Clínica Sonrisa</span></div>
+            <small><span class="ln-on">en línea</span><span class="ln-ty" data-at="1400 5600" data-out="2800 7000">escribiendo…</span></small>
+          </div>
+          <div class="ln-msgs">
+            <div class="ln-m" data-at="500"><i class="ln-av" style="--c:#4ea7fc">LG</i><div><p><b>Laura Gómez</b><time>9:12</time></p><span>Hola 👋 ¿tienen cita para mañana?</span></div></div>
+            <div class="ln-m" data-at="1400" data-out="2800"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><span class="ln-dots"><i></i><i></i><i></i></span></p></div></div>
+            <div class="ln-m" data-at="2800"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><em>Automático</em><time>9:12</time></p><span>¡Hola, Laura! Mañana tengo estos horarios libres:</span>
+              <div class="ln-opts"><u>9:00 am</u><u data-at="4300">11:30 am</u><u>4:00 pm</u></div></div></div>
+            <div class="ln-m" data-at="4700"><i class="ln-av" style="--c:#4ea7fc">LG</i><div><p><b>Laura Gómez</b><time>9:13</time></p><span>11:30 am</span></div></div>
+            <div class="ln-m" data-at="5600" data-out="7000"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><span class="ln-dots"><i></i><i></i><i></i></span></p></div></div>
+            <div class="ln-m" data-at="7000"><i class="ln-av ln-bot"><svg><use href="#estela"/></svg></i><div><p><b>Clínica Sonrisa</b><em>Automático</em><time>9:13</time></p><span>Listo ✅ Quedaste agendada mañana a las <b>11:30 am</b> con la Dra. Ríos. Te escribo una hora antes para recordarte.</span></div></div>
+          </div>
+          <div class="ln-cmp">Responder…<i><svg class="ln-i" viewBox="0 0 16 16"><path d="M8 13V3M3.5 7.5 8 3l4.5 4.5"/></svg></i></div>
         </div>
       </figure>
-      <figure class="pn pn--top" data-s="sys" data-t="Sistemas a la medida" aria-hidden="true">
+      <figure class="pn pn--x" data-s="sys" data-t="Sistemas a la medida" aria-hidden="true">
         <figcaption><h4>Sistemas a la medida</h4><p>Pedidos, inventario, facturas y accesos para tu equipo, en un sistema hecho para cómo trabaja tu negocio.</p></figcaption>
-        <div class="browser erp" data-seq="11000"><div class="top"><i></i><i></i><i></i><span>roble.app/pedidos</span></div>
-          <div class="erp-in">
-            <aside class="erp-side">
-              <div class="erp-ws"><b>R</b>Ferretería Roble</div>
-              <a><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"/></svg>Inicio</a>
-              <a class="on"><svg viewBox="0 0 24 24"><path d="M6 4h12v16l-3-2-3 2-3-2-3 2zM9 9h6M9 13h4"/></svg>Pedidos<em>12</em></a>
-              <a><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5zM4 8.5l8 4.5 8-4.5M12 13v7"/></svg>Inventario</a>
-              <a><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20c1-4 4-5.6 7.5-5.6s6.5 1.6 7.5 5.6"/></svg>Clientes</a>
-              <a><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20H7zM14 3.5v4h4M10 12h5M10 16h5"/></svg>Facturas</a>
-              <a><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 19c.8-3.2 3-4.6 5.5-4.6s4.7 1.4 5.5 4.6M15 14.6c2.5 0 4.2 1.4 4.8 4.4"/></svg>Equipo</a>
-            </aside>
-            <div class="erp-main">
-              <header><h5>Pedidos</h5><div class="erp-tabs"><span class="on">Todos</span><span>Por despachar</span><span>En camino</span><span>Entregados</span></div><b>+ Nuevo pedido</b></header>
-              <div class="erp-t">
-                <div class="erp-h"><span>Pedido</span><span>Cliente</span><span>Productos</span><span>Total</span><span>Estado</span><span>Encargado</span></div>
-                <div class="erp-new" data-at="1300"><div class="erp-r"><span>#1048</span><span>Constructora Mar</span><span>25</span><span>$3.180.000</span><span class="erp-s" style="--c:#8b5cf6">Nuevo</span><span><u style="--c:#f59e0b">DM</u></span></div></div>
-                <div class="erp-r"><span>#1047</span><span>Obras Caribe SAS</span><span>18</span><span>$2.340.000</span><span class="erp-s" style="--c:#f59e0b">Por despachar</span><span><u style="--c:#ef4444">AL</u></span></div>
-                <div class="erp-r"><span>#1046</span><span>Juan Pérez</span><span>3</span><span>$186.000</span><span class="erp-sw" data-at="3600"><span class="erp-s" style="--c:#f59e0b">Por despachar</span><span class="erp-s" style="--c:#3b82f6">En camino</span></span><span><u style="--c:#f97316">KR</u></span></div>
-                <div class="erp-r"><span>#1045</span><span>Inmobiliaria Norte</span><span>42</span><span>$5.910.000</span><span class="erp-s" style="--c:#3b82f6">En camino</span><span><u style="--c:#f59e0b">DM</u></span></div>
-                <div class="erp-r"><span>#1044</span><span>María Torres</span><span>1</span><span>$64.000</span><span class="erp-s" style="--c:#22c55e">Entregado</span><span><u style="--c:#f97316">KR</u></span></div>
-                <div class="erp-r"><span>#1043</span><span>Taller El Pino</span><span>7</span><span>$412.500</span><span class="erp-s" style="--c:#22c55e">Entregado</span><span><u style="--c:#ef4444">AL</u></span></div>
-              </div>
+        <div class="erp" data-seq="11000">
+          <aside class="erp-side">
+            <div class="erp-ws"><b>R</b>Ferretería Roble</div>
+            <a><svg viewBox="0 0 24 24"><path d="M4 10.5 12 4l8 6.5V20h-5v-6H9v6H4z"/></svg>Inicio</a>
+            <a class="on"><svg viewBox="0 0 24 24"><path d="M6 4h12v16l-3-2-3 2-3-2-3 2zM9 9h6M9 13h4"/></svg>Pedidos<em>12</em></a>
+            <a><svg viewBox="0 0 24 24"><path d="M4 8.5 12 4l8 4.5v7L12 20l-8-4.5zM4 8.5l8 4.5 8-4.5M12 13v7"/></svg>Inventario</a>
+            <a><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20c1-4 4-5.6 7.5-5.6s6.5 1.6 7.5 5.6"/></svg>Clientes</a>
+            <a><svg viewBox="0 0 24 24"><path d="M7 3.5h7l4 4V20H7zM14 3.5v4h4M10 12h5M10 16h5"/></svg>Facturas</a>
+            <a><svg viewBox="0 0 24 24"><circle cx="9" cy="9" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3.5 19c.8-3.2 3-4.6 5.5-4.6s4.7 1.4 5.5 4.6M15 14.6c2.5 0 4.2 1.4 4.8 4.4"/></svg>Equipo</a>
+          </aside>
+          <div class="erp-main">
+            <header><h5>Pedidos</h5><div class="erp-tabs"><span class="on">Todos</span><span>Por despachar</span><span>En camino</span><span>Entregados</span></div><b>+ Nuevo pedido</b></header>
+            <div class="erp-t">
+              <div class="erp-h"><span>Pedido</span><span>Cliente</span><span>Prod.</span><span>Total</span><span>Estado</span><span></span></div>
+              <div class="erp-new" data-at="1300"><div class="erp-r"><span>#1048</span><span>Constructora Mar</span><span>25</span><span>$3.180.000</span><span class="erp-s" style="--c:#8b5cf6">Nuevo</span><span><u style="--c:#f59e0b">DM</u></span></div></div>
+              <div class="erp-r"><span>#1047</span><span>Obras Caribe SAS</span><span>18</span><span>$2.340.000</span><span class="erp-s" style="--c:#f59e0b">Por despachar</span><span><u style="--c:#ef4444">AL</u></span></div>
+              <div class="erp-r"><span>#1046</span><span>Juan Pérez</span><span>3</span><span>$186.000</span><span class="erp-sw" data-at="3600"><span class="erp-s" style="--c:#f59e0b">Por despachar</span><span class="erp-s" style="--c:#3b82f6">En camino</span></span><span><u style="--c:#f97316">KR</u></span></div>
+              <div class="erp-r"><span>#1045</span><span>Inmobiliaria Norte</span><span>42</span><span>$5.910.000</span><span class="erp-s" style="--c:#3b82f6">En camino</span><span><u style="--c:#f59e0b">DM</u></span></div>
+              <div class="erp-r"><span>#1044</span><span>María Torres</span><span>1</span><span>$64.000</span><span class="erp-s" style="--c:#22c55e">Entregado</span><span><u style="--c:#f97316">KR</u></span></div>
+              <div class="erp-r"><span>#1043</span><span>Taller El Pino</span><span>7</span><span>$412.500</span><span class="erp-s" style="--c:#22c55e">Entregado</span><span><u style="--c:#ef4444">AL</u></span></div>
             </div>
           </div>
-          <div class="erp-toast" data-at="5200" data-out="10000"><i>!</i><div><b>Inventario bajo</b><span>Quedan 4 cajas de tornillo 3/8. Ya avisamos al proveedor.</span></div></div>
         </div>
+        <div class="erp-toast" data-at="5200" data-out="10000"><i>!</i><div><b>Inventario bajo</b><span>Quedan 4 cajas de tornillo 3/8. Ya avisamos al proveedor.</span></div></div>
       </figure>
-      <figure class="pn pn--top" data-s="int" data-t="Integraciones" aria-hidden="true">
+      <figure class="pn pn--x pn--ig" data-s="int" data-t="Integraciones" aria-hidden="true">
         <figcaption><h4>Integraciones</h4><p>Conectamos WhatsApp, Excel, tus pagos y tu CRM: un pedido entra una vez y aparece en todas partes, sin copiar y pegar.</p></figcaption>
         <div class="ig" data-seq="10000">
           <div class="ig-in" data-at="300">
@@ -1268,41 +1324,42 @@
             <b>Laura Gómez</b>
             <p>Hola, quiero 2 chaquetas de jean talla M. Ya te pagué por Nequi 🙌</p>
           </div>
-          <svg class="ig-l" data-at="1000" viewBox="0 0 100 10" preserveAspectRatio="none"><path d="M0 5H100" pathLength="1"/></svg>
+          <svg class="ig-l" data-at="1000" width="56" height="12" viewBox="0 0 56 12"><path d="M0 6H56"/><path class="go" pathLength="1" d="M0 6H56"/></svg>
           <div class="ig-core" data-at="1600"><span><svg><use href="#estela"/></svg></span><small>Ya Viene</small></div>
-          <svg class="ig-fan" data-at="2100" viewBox="0 0 100 252" preserveAspectRatio="none"><path d="M0 126C55 126 45 38 100 38" pathLength="1"/><path d="M0 126H100" pathLength="1"/><path d="M0 126C55 126 45 214 100 214" pathLength="1"/></svg>
+          <svg class="ig-fan" data-at="2100" width="72" height="308" viewBox="0 0 72 308">
+            <path d="M0 154H28a8 8 0 0 0 8-8V54a8 8 0 0 1 8-8H72"/><path d="M0 154H72"/><path d="M0 154H28a8 8 0 0 1 8 8V254a8 8 0 0 0 8 8H72"/>
+            <path class="go" pathLength="1" d="M0 154H28a8 8 0 0 0 8-8V54a8 8 0 0 1 8-8H72"/><path class="go" pathLength="1" d="M0 154H72"/><path class="go" pathLength="1" d="M0 154H28a8 8 0 0 1 8 8V254a8 8 0 0 0 8 8H72"/>
+          </svg>
           <div class="ig-out">
             <div class="ig-c" data-at="2700"><i style="--c:#7c3aed">N</i><div><small>Pagos</small><b>Pago recibido por Nequi</b><span>$260.000 de Laura Gómez</span></div><em>✓</em></div>
             <div class="ig-c" data-at="3200"><i style="--c:#3b82f6"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8"/><path d="M4.5 20c1-4 4-5.6 7.5-5.6s6.5 1.6 7.5 5.6"/></svg></i><div><small>Tu CRM</small><b>Laura Gómez, cliente nuevo</b><span>Pedido #1048 creado</span></div><em>✓</em></div>
-            <div class="ig-c" data-at="3700"><i style="--c:#16a34a"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9.5h16M4 14.5h16M10 4v16"/></svg></i><div><small>Excel</small><b>Fila agregada en Ventas octubre</b><span>2 chaquetas, talla M, $260.000</span></div><em>✓</em></div>
+            <div class="ig-c" data-at="3700"><i style="--c:#16a34a"><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9.5h16M4 14.5h16M10 4v16"/></svg></i><div><small>Excel</small><b>Nueva fila en Ventas octubre</b><span>2 chaquetas, talla M, $260.000</span></div><em>✓</em></div>
           </div>
         </div>
       </figure>
-      <figure class="pn pn--top" data-s="data" data-t="Datos y reportes" aria-hidden="true">
+      <figure class="pn pn--x pn--ds" data-s="data" data-t="Datos y reportes" aria-hidden="true">
         <figcaption><h4>Datos y reportes</h4><p>Ventas en tiempo real y reportes automáticos, desde el celular o el computador. Decide con números, no con corazonadas.</p></figcaption>
-        <div class="browser ds"><div class="top"><i></i><i></i><i></i><span>panel.tunegocio.co</span></div>
-          <div class="ds-in">
-            <div class="ds-main">
-              <div class="ds-hd"><span>Ventas brutas</span><em>Hoy<svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></em></div>
-              <strong class="ds-n">$4.218.300</strong>
-              <p class="ds-d"><b>+18,4%</b> vs. ayer a esta hora</p>
-              <div class="ds-cw"><svg class="ds-ch" viewBox="0 0 400 130" preserveAspectRatio="none"><defs><linearGradient id="dsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0ea5e9" stop-opacity=".25"/><stop offset="1" stop-color="#0ea5e9" stop-opacity="0"/></linearGradient><linearGradient id="dsl" x1="0" x2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
-                <path class="ds-g" d="M0 32.5H400M0 65H400M0 97.5H400"/>
-                <path class="ds-y" d="M0 118C30 116 50 108 80 106S130 96 160 92 210 84 240 76 290 70 320 62"/>
-                <path class="ds-a" d="M0 120C30 117 50 104 80 100S130 84 160 80 210 60 240 54 290 38 320 30V130H0z" fill="url(#dsg)"/>
-                <path class="ds-l" pathLength="1" d="M0 120C30 117 50 104 80 100S130 84 160 80 210 60 240 54 290 38 320 30" stroke="url(#dsl)"/>
-              </svg><i class="ds-dot"></i></div>
-              <div class="ds-x"><span>6 am</span><span>9 am</span><span>12 m</span><span>3 pm</span><span>Ahora</span><span></span></div>
-            </div>
-            <div class="ds-side">
-              <div class="ds-k"><small>Pedidos</small><b>126</b><em>+12</em></div>
-              <div class="ds-k"><small>Ticket promedio</small><b>$33.480</b><em>+4%</em></div>
-              <div class="ds-k"><small>Clientes nuevos</small><b>18</b><em>+6</em></div>
-              <div class="ds-top"><small>Más vendidos</small>
-                <p style="--v:1"><span>Chaqueta de jean</span><b>42</b></p>
-                <p style="--v:.74"><span>Camiseta salvia</span><b>31</b></p>
-                <p style="--v:.57"><span>Tenis blancos</span><b>24</b></p>
-              </div>
+        <div class="ds">
+          <div class="ds-main">
+            <div class="ds-hd"><span class="ds-lb">Ventas brutas</span><em class="ds-lb">Hoy<svg viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></svg></em></div>
+            <strong class="ds-n">$4.218.300</strong>
+            <p class="ds-d"><b>+18,4%</b> vs. ayer a esta hora</p>
+            <div class="ds-cw"><svg class="ds-ch" viewBox="0 0 400 130" preserveAspectRatio="none"><defs><linearGradient id="dsg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0ea5e9" stop-opacity=".22"/><stop offset="1" stop-color="#0ea5e9" stop-opacity="0"/></linearGradient><linearGradient id="dsl" x1="0" x2="1"><stop offset="0" stop-color="#14b8a6"/><stop offset="1" stop-color="#0ea5e9"/></linearGradient></defs>
+              <path class="ds-g" d="M0 32.5H400M0 65H400M0 97.5H400"/>
+              <path class="ds-y" d="M0 118C30 116 50 108 80 106S130 96 160 92 210 84 240 76 290 70 320 62"/>
+              <path class="ds-a" d="M0 120C30 117 50 104 80 100S130 84 160 80 210 60 240 54 290 38 320 30V130H0z" fill="url(#dsg)"/>
+              <path class="ds-l" pathLength="1" d="M0 120C30 117 50 104 80 100S130 84 160 80 210 60 240 54 290 38 320 30" stroke="url(#dsl)"/>
+            </svg><i class="ds-dot"></i></div>
+            <div class="ds-x ds-lb"><span>6 am</span><span>9 am</span><span>12 m</span><span>3 pm</span><span>Ahora</span><span></span></div>
+          </div>
+          <div class="ds-side">
+            <div class="ds-k"><small class="ds-lb">Pedidos</small><b>126</b><em>+12</em></div>
+            <div class="ds-k"><small class="ds-lb">Ticket promedio</small><b>$33.480</b><em>+4%</em></div>
+            <div class="ds-k"><small class="ds-lb">Clientes nuevos</small><b>18</b><em>+6</em></div>
+            <div class="ds-top"><small class="ds-lb">Más vendidos</small>
+              <p style="--v:1"><span>Chaqueta de jean</span><b>42</b></p>
+              <p style="--v:.74"><span>Camiseta salvia</span><b>31</b></p>
+              <p style="--v:.57"><span>Tenis blancos</span><b>24</b></p>
             </div>
           </div>
         </div>
