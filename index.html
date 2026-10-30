@@ -862,7 +862,7 @@
   .lockup i { font-style: normal; color: var(--muted); margin: 0 4px; }
   .case h2 { margin-top: 32px; font-size: clamp(32px, 3.8vw, 48px); font-weight: 700; line-height: 1.15; letter-spacing: -.035em; }
   .case-txt p { margin-top: 20px; color: var(--muted); font-size: 19px; line-height: 1.45; max-width: 46ch; }
-  .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
+  .facts { display: flex; justify-content: space-between; gap: 16px; margin: 0; }
   .facts dt { font-size: 16px; color: var(--muted); }
   .facts dd { margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.4; letter-spacing: -.02em; }
   .more { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); font-weight: 500; font-size: 18px; }
@@ -1154,7 +1154,12 @@
   .pcs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
   /* Tarjetas al estilo Bevel: cielo claro arriba que se tiñe abajo, título grande y una pieza de la promesa asomando desde el borde inferior */
   .pc { position: relative; display: flex; flex-direction: column; min-height: 620px; padding: 40px 40px 0; border-radius: 28px; overflow: hidden; color: var(--ink);
-    background: linear-gradient(180deg, #eef2f8 0%, #eef2f8 42%, var(--t) 100%); transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+    background:
+      radial-gradient(34% 22% at 50% 100%, rgba(255,255,255,.9), transparent),
+      radial-gradient(75% 58% at 12% 104%, color-mix(in srgb, var(--a) 70%, transparent), transparent 70%),
+      radial-gradient(75% 58% at 90% 104%, color-mix(in srgb, var(--b) 65%, transparent), transparent 70%),
+      radial-gradient(90% 40% at 50% 100%, color-mix(in srgb, var(--a) 22%, transparent), transparent),
+      linear-gradient(180deg, #f3f2f5 0%, #efedf1 60%, #f6f4f6 100%); transition: transform .7s cubic-bezier(.2,.8,.2,1); }
   .pc:hover { transform: translateY(-4px); }
   .pc::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--line); pointer-events: none; z-index: 5; }
   .pc h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 36px; line-height: 1.1; letter-spacing: -.04em; }
@@ -1292,7 +1297,7 @@
     footer .legal { grid-column: 1 / -1; order: 9; }
   }
   @media (max-width: 600px) {
-    .facts { grid-template-columns: 1fr; gap: 0; }
+    .facts { flex-direction: column; gap: 0; }
     .facts div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
     .facts dd { margin: 0; font-size: 18px; text-align: right; }
     .case-media { aspect-ratio: 600 / 720; }
@@ -1797,7 +1802,7 @@
   <div class="blk">
     <header class="rv"><h2 id="pplT">Tres promesas. <span>Las cumplimos todas.</span></h2></header>
     <div class="pcs">
-      <article class="pc rv" style="--d:0;--t:#f9d9cf">
+      <article class="pc rv" style="--d:0;--a:#f59e5b;--b:#f0607a">
         <div><h3>Rápido de verdad</h3><p>Avances reales cada semana, no reuniones eternas. No esperas meses para ver algo.</p></div>
         <div class="pc-art" aria-hidden="true">
           <div class="pc-pan"><small>Tu proyecto</small><b>Entregas de cada semana</b>
@@ -1805,7 +1810,7 @@
           <div class="pc-fl" style="right:3%;bottom:16px"><small>Próxima demo</small><strong>Viernes</strong><em style="color:#e8603c">En tu celular</em></div>
         </div>
       </article>
-      <article class="pc rv" style="--d:1;--t:#cdc6f4">
+      <article class="pc rv" style="--d:1;--a:#8b5cf6;--b:#38bdf8">
         <div><h3>Hecho a mano</h3><p>Nada de plantillas. Cada pantalla se diseña para tu negocio y para la gente que lo usa.</p></div>
         <div class="pc-art" aria-hidden="true">
           <div class="pc-pan cv"><small>Diseño</small><b>Tu app, pantalla por pantalla</b>
@@ -1814,7 +1819,7 @@
           <div class="pc-fl" style="right:4%;bottom:22px"><small>Tu marca</small><div class="sw"><i style="--k:#e8364f"></i><i style="--k:#8f7cf0"></i><i style="--k:#12a150"></i><i style="--k:#111214"></i></div></div>
         </div>
       </article>
-      <article class="pc rv" style="--d:2;--t:#c7ebc4">
+      <article class="pc rv" style="--d:2;--a:#34d399;--b:#a3e635">
         <div><h3>Tuyo para siempre</h3><p>El código, el diseño y las cuentas quedan a tu nombre. Sin amarres ni mensualidades obligatorias.</p></div>
         <div class="pc-art" aria-hidden="true">
           <div class="pc-pan"><small>Propietario</small><b>Tu empresa</b>
