@@ -90,18 +90,6 @@
     nav { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1px rgba(17,18,20,.4); }
     .flag { background: #2f2e34; }
   }
-  /* Chip flotante de WhatsApp: entra después del hero y se retira cuando el cierre ya pide la conversación */
-  .waflot {
-    position: fixed; right: 24px; bottom: 24px; z-index: 150; display: inline-flex; align-items: center; gap: 10px;
-    background: var(--ink-2); color: #eef1f6; font-weight: 600; font-size: 16px; padding: 14px 22px; border-radius: 999px;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 1px 2px rgba(17,18,20,.2), 0 8px 18px -6px rgba(17,18,20,.35);
-    opacity: 0; transform: translateY(16px); pointer-events: none;
-    transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .5s cubic-bezier(.2,.8,.2,1);
-  }
-  .waflot.on { opacity: 1; transform: none; pointer-events: auto; }
-  .waflot i { width: 10px; height: 10px; border-radius: 50%; background: #22c55e; box-shadow: 0 0 0 3px rgba(34,197,94,.18); }
-  @media (max-width: 640px) { .waflot { right: 16px; bottom: 16px; padding: 12px 18px; font-size: 15px; } }
-
   .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; padding: 12px 0; border-radius: 12px; }
   .brand svg { width: 48px; height: 25px; }
   .brand span { font-family: Manrope, sans-serif; font-size: 25px; letter-spacing: -.02em; white-space: nowrap; }
@@ -1751,8 +1739,6 @@
   </footer>
 </div>
 
-<a class="waflot" id="waflot" href="https://wa.me/573004438626" target="_blank" rel="noopener"><i></i>Escríbenos</a>
-
 <script>
 document.getElementById('contactForm').addEventListener('submit', e => {
   e.preventDefault();
@@ -1770,15 +1756,6 @@ document.documentElement.classList.add('js'); // las tarjetas del bento solo se 
   };
   addEventListener('resize', pon);
   addEventListener('scroll', pon, { passive: true }); pon();
-}
-// El chip de WhatsApp entra después del primer pantallazo y se retira cuando el cierre ya pide la conversación
-{
-  const wa = document.getElementById('waflot');
-  const mira = () => wa.classList.toggle('on', scrollY > innerHeight * .8 && !wa.classList.contains('off'));
-  addEventListener('scroll', mira, { passive: true });
-  addEventListener('resize', mira);
-  new IntersectionObserver(es => { es.forEach(e => wa.classList.toggle('off', e.isIntersecting)); mira(); }, { threshold: .05 }).observe(document.getElementById('contacto'));
-  mira();
 }
 // Ida y vuelta: un problema/idea/propuesta entra a la pantalla y sale la solución que construimos.
 const pairs = [
