@@ -1152,13 +1152,50 @@
   /* Promesas: tarjetas de Pangram, cinta de color arriba e ícono de línea */
   .ppl .blk { padding-block: 100px; }
   .pcs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-  .pc { position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 40px; min-height: 348px; padding: 36px; border-radius: 4px;
-    background: rgba(52,40,62,.8); transition: transform .7s cubic-bezier(.2,.8,.2,1), background .4s ease; }
-  .pc:hover { transform: translateY(-4px) rotate(var(--r)); background: rgba(62,48,74,.85); }
-  .pc::before { content: ''; position: absolute; top: 0; left: 36px; width: 11px; height: 23px; background: var(--c); clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 74%, 0 100%); }
-  .pc svg { width: 56px; height: 56px; color: rgba(255,255,255,.8); fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
-  .pc h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 24px; line-height: 1.1; letter-spacing: -.02em; }
-  .pc p { margin-top: 10px; color: rgba(255,255,255,.8); font-size: 14px; line-height: 1.5; letter-spacing: -.02em; }
+  /* Tarjetas al estilo Bevel: cielo claro arriba que se tiñe abajo, título grande y una pieza de la promesa asomando desde el borde inferior */
+  .pc { position: relative; display: flex; flex-direction: column; min-height: 620px; padding: 40px 40px 0; border-radius: 28px; overflow: hidden; color: var(--ink);
+    background: linear-gradient(180deg, #eef2f8 0%, #eef2f8 42%, var(--t) 100%); transition: transform .7s cubic-bezier(.2,.8,.2,1); }
+  .pc:hover { transform: translateY(-4px); }
+  .pc h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 36px; line-height: 1.1; letter-spacing: -.04em; }
+  .pc > div > p { margin-top: 12px; color: #6b6f78; font-size: 19px; line-height: 1.45; letter-spacing: -.01em; }
+  .pc-art { position: relative; margin-top: auto; height: 320px; font-family: Inter, sans-serif; letter-spacing: -.01em; }
+  .pc-pan { position: absolute; left: 6%; right: 6%; top: 24px; bottom: -24px; padding: 20px; border-radius: 22px 22px 0 0; background: #fff;
+    box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 30px 60px -30px rgba(17,18,20,.35); }
+  .pc-pan > small, .pc-fl small { display: block; font-size: 13px; color: #8a8e97; }
+  .pc-pan > b { display: block; margin: 2px 0 14px; font: 700 17px/1.2 Manrope, sans-serif; }
+  .pc-fl { position: absolute; z-index: 2; padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
+    box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 24px 40px -18px rgba(17,18,20,.35); }
+  .pc-fl strong { display: block; margin-top: 4px; font: 700 26px/1 Manrope, sans-serif; letter-spacing: -.03em; }
+  .pc-fl em { display: block; margin-top: 6px; font-style: normal; font-size: 13px; font-weight: 600; }
+  /* Rápido: entregas de cada semana */
+  .wk, .own { list-style: none; margin: 0; padding: 0; }
+  .wk { display: grid; gap: 10px; }
+  .wk li, .own li { white-space: nowrap; }
+  .wk li { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px; font-size: 14px; }
+  .wk i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #e8f7ee; color: #12a150; font: 700 12px/1 Inter, sans-serif; font-style: normal; }
+  .wk li span { color: #8a8e97; font-size: 12px; }
+  .wk li.now i { background: #fdeae4; color: #e8603c; }
+  .wk .bar { grid-column: 2 / -1; height: 6px; border-radius: 6px; background: #f1f1f3; overflow: hidden; }
+  .wk .bar::after { content: ''; display: block; width: 64%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #f6a58a, #e8603c); }
+  /* Hecho a mano: lienzo de diseño */
+  .pc-pan.cv { background: #1d1e24; color: #fff; }
+  .pc-pan.cv > small { color: rgba(255,255,255,.5); }
+  .cv-fr { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .cv-fr span { height: 112px; border-radius: 12px; background: #2a2b33; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); position: relative; overflow: hidden; }
+  .cv-fr span::before { content: ''; position: absolute; left: 10px; right: 10px; top: 12px; height: 26px; border-radius: 7px; background: var(--k); opacity: .9; }
+  .cv-fr span::after { content: ''; position: absolute; left: 10px; right: 26px; top: 48px; height: 6px; border-radius: 6px; background: rgba(255,255,255,.25); box-shadow: 0 12px 0 rgba(255,255,255,.14), -0px 24px 0 rgba(255,255,255,.14); }
+  .cv-fr span.sel { box-shadow: inset 0 0 0 2px #8f7cf0; }
+  .cv-cur { position: absolute; z-index: 3; left: 56%; top: 150px; display: flex; align-items: flex-start; gap: 2px; }
+  .cv-cur svg { width: 18px; height: 18px; fill: #8f7cf0; stroke: #fff; stroke-width: 1.4; }
+  .cv-cur b { margin-top: 14px; padding: 4px 9px; border-radius: 8px; background: #8f7cf0; color: #fff; font-size: 12px; font-weight: 600; }
+  .sw { display: flex; gap: 6px; margin-top: 8px; }
+  .sw i { width: 22px; height: 22px; border-radius: 50%; background: var(--k); box-shadow: inset 0 0 0 1px rgba(17,18,20,.08); }
+  /* Tuyo: todo a tu nombre */
+  .own { display: grid; gap: 0; }
+  .own li { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-top: 1px solid #f0f0f2; font-size: 14px; }
+  .own li:first-child { border-top: 0; }
+  .own li span { display: inline-flex; align-items: center; gap: 6px; color: #12a150; font-size: 13px; font-weight: 600; }
+  .own li span::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
 
   /* Con qué construimos: retícula de líneas finas al estilo Profound, etiquetas en mono y cruces en las esquinas */
   .stk { padding-bottom: 8px; }
@@ -1235,7 +1272,7 @@
     .how { grid-template-columns: 1fr; }
     .how-art { min-height: 440px; }
     .pcs { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
-    .pc { min-height: 0; }
+    .pc { min-height: 580px; }
     .tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .faq-grid { grid-template-columns: 1fr; }
     .faq-grid > header { position: static; }
@@ -1261,7 +1298,9 @@
     .how-art { min-height: 400px; }
     .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .ppl .blk { padding-block: 72px; }
-    .pc { padding: 32px 28px; }
+    .pc { padding: 32px 24px 0; }
+    .pc h3 { font-size: 30px; }
+    .pc > div > p { font-size: 17px; }
   }
   /* Press instantáneo en pointer-down, no al soltar (§1): escala sola, sin pisar el transform inline de los botones magnéticos */
   .btn:active, nav .links a:active, .flag:active { scale: .96; }
@@ -1757,17 +1796,30 @@
   <div class="blk">
     <header class="rv"><h2 id="pplT">Tres promesas. <span>Las cumplimos todas.</span></h2></header>
     <div class="pcs">
-      <article class="pc rv" style="--d:0;--c:#e8364f;--r:-1.2deg">
-        <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M6 20h18M2 28h20M8 36h14"/><circle cx="38" cy="28" r="14"/><path d="M38 20v8l5 3"/></svg>
+      <article class="pc rv" style="--d:0;--t:#f9d9cf">
         <div><h3>Rápido de verdad</h3><p>Avances reales cada semana, no reuniones eternas. No esperas meses para ver algo.</p></div>
+        <div class="pc-art" aria-hidden="true">
+          <div class="pc-pan"><small>Tu proyecto</small><b>Entregas de cada semana</b>
+            <ul class="wk"><li><i>✓</i>Diseño de pantallas<span>Semana 1</span></li><li><i>✓</i>Mapa y registro<span>Semana 2</span></li><li class="now"><i>3</i>Pagos en la app<span>Semana 3</span><div class="bar"></div></li><li><i style="background:#f1f1f3;color:#8a8e97">4</i>Publicación<span>Semana 4</span></li></ul></div>
+          <div class="pc-fl" style="right:3%;bottom:16px"><small>Próxima demo</small><strong>Viernes</strong><em style="color:#e8603c">En tu celular</em></div>
+        </div>
       </article>
-      <article class="pc rv" style="--d:1;--c:#c63e86;--r:1deg">
-        <svg viewBox="0 0 56 56" aria-hidden="true"><path d="M8 46c6-14 12-18 18-10s12 4 16-6 4-16 6-20"/><path d="M42 8l6 2-2 6"/><rect x="6" y="8" width="16" height="12" rx="3" stroke-dasharray="3 3"/></svg>
+      <article class="pc rv" style="--d:1;--t:#cdc6f4">
         <div><h3>Hecho a mano</h3><p>Nada de plantillas. Cada pantalla se diseña para tu negocio y para la gente que lo usa.</p></div>
+        <div class="pc-art" aria-hidden="true">
+          <div class="pc-pan cv"><small>Diseño</small><b>Tu app, pantalla por pantalla</b>
+            <div class="cv-fr"><span style="--k:#e8364f"></span><span class="sel" style="--k:#8f7cf0"></span><span style="--k:#12a150"></span></div></div>
+          <div class="cv-cur"><svg viewBox="0 0 20 20"><path d="M3 2l13 7-6 1.6L7 17z"/></svg><b>Ya Viene Tech</b></div>
+          <div class="pc-fl" style="right:4%;bottom:22px"><small>Tu marca</small><div class="sw"><i style="--k:#e8364f"></i><i style="--k:#8f7cf0"></i><i style="--k:#12a150"></i><i style="--k:#111214"></i></div></div>
+        </div>
       </article>
-      <article class="pc rv" style="--d:2;--c:#7b4fd6;--r:-.8deg">
-        <svg viewBox="0 0 56 56" aria-hidden="true"><circle cx="18" cy="28" r="10"/><circle cx="18" cy="28" r="3.5"/><path d="M28 28h22M42 28v7M48 28v5"/></svg>
+      <article class="pc rv" style="--d:2;--t:#c7ebc4">
         <div><h3>Tuyo para siempre</h3><p>El código, el diseño y las cuentas quedan a tu nombre. Sin amarres ni mensualidades obligatorias.</p></div>
+        <div class="pc-art" aria-hidden="true">
+          <div class="pc-pan"><small>Propietario</small><b>Tu empresa</b>
+            <ul class="own"><li>Código fuente<span>A tu nombre</span></li><li>App Store<span>A tu nombre</span></li><li>Google Play<span>A tu nombre</span></li><li>Dominio<span>A tu nombre</span></li></ul></div>
+          <div class="pc-fl" style="right:3%;bottom:16px"><small>Mensualidad obligatoria</small><strong>$0</strong><em style="color:#12a150">Sin amarres</em></div>
+        </div>
       </article>
     </div>
   </div>
