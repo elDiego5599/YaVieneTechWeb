@@ -850,17 +850,17 @@
   .case-band .car-dots i.on { background: #fff; }
   .case-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .case-txt { display: flex; flex-direction: column; justify-content: space-between; gap: 48px; padding-right: clamp(0px, 6vw, 80px); }
-  .lockup { display: flex; align-items: center; gap: 10px; height: 24px; font-family: Manrope, sans-serif; font-size: 16px; letter-spacing: -.02em; white-space: nowrap; }
+  .lockup { display: flex; align-items: center; gap: 10px; height: 24px; font-family: Manrope, sans-serif; font-size: 18px; letter-spacing: -.02em; white-space: nowrap; }
   .lockup img { width: 24px; height: 24px; }
   .lockup svg { width: 30px; height: 16px; color: var(--ink); }
   .lockup b { font-weight: 800; }
   .lockup i { font-style: normal; color: var(--muted); margin: 0 4px; }
-  .case h2 { margin-top: 32px; font-size: clamp(28px, 3vw, 36px); font-weight: 700; line-height: 1.15; letter-spacing: -.035em; }
-  .case-txt p { margin-top: 16px; color: var(--muted); font-size: 16px; line-height: 1.4; max-width: 46ch; }
+  .case h2 { margin-top: 32px; font-size: clamp(32px, 3.8vw, 48px); font-weight: 700; line-height: 1.15; letter-spacing: -.035em; }
+  .case-txt p { margin-top: 20px; color: var(--muted); font-size: 19px; line-height: 1.45; max-width: 46ch; }
   .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
-  .facts dt { font-size: 14px; color: var(--muted); }
-  .facts dd { margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 700; font-size: 18px; line-height: 1.4; letter-spacing: -.02em; }
-  .more { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); font-weight: 500; }
+  .facts dt { font-size: 16px; color: var(--muted); }
+  .facts dd { margin: 4px 0 0; font-family: Manrope, sans-serif; font-weight: 700; font-size: 22px; line-height: 1.4; letter-spacing: -.02em; }
+  .more { display: flex; align-items: center; gap: 8px; width: 100%; margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--line); font-weight: 500; font-size: 18px; }
   .more svg { width: 16px; height: 16px; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
   .more:hover svg { transform: translateX(4px); }
   /* Carrusel del cuadro del caso: primera vista el mapa de la app, segunda el video real del panel; el teaser gira en silencio y el botón lo abre grande con sonido */
@@ -1251,7 +1251,7 @@
   @media (max-width: 600px) {
     .facts { grid-template-columns: 1fr; gap: 0; }
     .facts div { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 12px 0; border-top: 1px solid var(--line); }
-    .facts dd { margin: 0; font-size: 16px; text-align: right; }
+    .facts dd { margin: 0; font-size: 18px; text-align: right; }
     .case-media { aspect-ratio: 600 / 720; }
     .how-art { min-height: 400px; }
     .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
