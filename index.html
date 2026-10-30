@@ -1156,6 +1156,7 @@
   .pc { position: relative; display: flex; flex-direction: column; min-height: 620px; padding: 40px 40px 0; border-radius: 28px; overflow: hidden; color: var(--ink);
     background: linear-gradient(180deg, #eef2f8 0%, #eef2f8 42%, var(--t) 100%); transition: transform .7s cubic-bezier(.2,.8,.2,1); }
   .pc:hover { transform: translateY(-4px); }
+  .pc::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--line); pointer-events: none; z-index: 5; }
   .pc h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 36px; line-height: 1.1; letter-spacing: -.04em; }
   .pc > div > p { margin-top: 12px; color: #6b6f78; font-size: 19px; line-height: 1.45; letter-spacing: -.01em; }
   .pc-art { position: relative; margin-top: auto; height: 320px; font-family: Inter, sans-serif; letter-spacing: -.01em; }
@@ -1823,16 +1824,6 @@
       </article>
     </div>
   </div>
-</section>
-
-<section class="blk stk" aria-label="Con qué construimos">
-  <div class="stk-hd rv"><span class="mono">Con qué construimos</span><span class="mono">12 herramientas</span></div>
-  <ul class="tools rv" style="--d:1">
-    <li><small>Móvil</small><b>Flutter</b></li><li><small>iOS</small><b>Swift</b></li><li><small>Android</small><b>Kotlin</b></li>
-    <li><small>Web</small><b>React</b></li><li><small>Web</small><b>Next.js</b></li><li><small>Servidor</small><b>Node.js</b></li>
-    <li><small>Lenguaje</small><b>TypeScript</b></li><li><small>Datos</small><b>Supabase</b></li><li><small>Datos</small><b>Firebase</b></li>
-    <li><small>Datos</small><b>PostgreSQL</b></li><li><small>Nube</small><b>Google Cloud</b></li><li><small>Mensajes</small><b>WhatsApp API</b></li>
-  </ul>
 </section>
 
 <section class="blk faq" id="preguntas">
