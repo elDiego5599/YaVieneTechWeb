@@ -823,7 +823,7 @@
   .more:hover svg { transform: translateX(4px); }
   /* Carrusel del cuadro del caso: primera vista el mapa de la app, segunda el video real del panel; el teaser gira en silencio y el botón lo abre grande con sonido */
   .case-zone { display: flex; flex-direction: column; gap: 16px; }
-  .cm-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .cm-track { display: flex; height: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; overflow-anchor: none; }
   .cm-track::-webkit-scrollbar { display: none; }
   @media (prefers-reduced-motion: no-preference) { .cm-track { scroll-behavior: smooth; } }
   .cm-s { flex: 0 0 100%; min-width: 100%; position: relative; height: 100%; scroll-snap-align: start; }
@@ -834,7 +834,9 @@
   .vid-go svg { width: 13px; height: 13px; }
   .vid-go b { font-weight: 500; color: rgba(255,255,255,.6); }
   .ctl-car { display: flex; align-items: center; justify-content: center; gap: 14px; }
-  .car-btn { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: var(--ink); color: #fff; cursor: pointer; transition: scale .12s ease-out; }
+  .car-btn { width: 44px; height: 44px; display: grid; place-items: center; border: 0; border-radius: 50%; background: #fff; color: var(--ink); box-shadow: 0 4px 14px -6px rgba(17,18,20,.3); cursor: pointer; opacity: 0; transition: opacity .25s ease, scale .12s ease-out; }
+  .case-zone:hover .car-btn, .case-zone:focus-within .car-btn { opacity: 1; }
+  @media (hover: none) { .car-btn { opacity: 1; } }
   .car-btn:active { scale: .94; }
   .car-btn svg { width: 17px; height: 17px; }
   .car-dots { display: flex; gap: 6px; }
@@ -1629,7 +1631,7 @@
       <i class="ya-dedo"></i>
         </div>
         <div class="cm-s vid-s">
-          <video class="vid-t" src="assets/ya-viene-control-v3.mp4" preload="metadata" autoplay muted loop playsinline></video>
+          <video class="vid-t" preload="none" muted loop playsinline></video>
           <button class="vid-go" type="button" aria-haspopup="dialog"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.6 3.1v9.8c0 .6.6 1 1.1.6l7.4-4.9c.5-.3.5-1 0-1.2L5.7 2.5c-.5-.3-1.1.1-1.1.6z"/></svg> Ver video <b>0:50</b></button>
         </div>
       </div>
@@ -1643,7 +1645,7 @@
   </div>
   <div class="vidm" hidden role="dialog" aria-modal="true" aria-label="Video real del panel de control de Ya Viene">
     <div class="vd-bd"></div>
-    <video class="vid-m" src="assets/ya-viene-control-v3.mp4" controls playsinline></video>
+    <video class="vid-m" controls playsinline preload="none"></video>
     <button class="vd-x" type="button" aria-label="Cerrar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
   </div>
 </section>
@@ -2168,6 +2170,9 @@ void main() {
   requestAnimationFrame(tick);
 })();
 
+// Puente carrusel -> demo del caso: al pisar el video, la maqueta se congela en su paso actual
+let congelarMapa = null, mapaLista = false;
+
 // Caso Ya Viene: la demo se actúa sola. Tocar un bus, pedir aviso, rueda a 1 km, isla dinámica hasta "Tu bus está cerca de ti"
 {
   const m = document.querySelector('.case-media'), $ = s => m.querySelector(s);
@@ -2182,9 +2187,12 @@ void main() {
   const u = () => m.clientWidth / 600;
 
   // Reloj: solo avanza con el cuadro a la vista
-  let visto = false, sigue = null;
+  let visto = false, sigue = null, mapaVisto = false;
   const vivo = () => visto ? 0 : new Promise(r => sigue = r);
-  new IntersectionObserver(([e]) => { visto = e.isIntersecting; if (visto && sigue) { sigue(); sigue = null; } }).observe(m);
+  new IntersectionObserver(([e]) => { mapaVisto = e.isIntersecting; visto = mapaVisto && !mapaLista;
+    if (visto && sigue) { sigue(); sigue = null; } }).observe(m);
+  congelarMapa = ON => { mapaLista = ON; visto = mapaVisto && !ON;
+    if (visto && sigue) { sigue(); sigue = null; } };
   const wait = ms => new Promise(r => setTimeout(r, ms)).then(vivo);
   const ez = p => p < .5 ? 4 * p * p * p : 1 - (-2 * p + 2) ** 3 / 2, sale = p => 1 - (1 - p) ** 3, lin = p => p;
   const tw = (ms, f, e = ez) => new Promise(r => { let a; const k = t => { a ??= t; const p = Math.min((t - a) / ms, 1); f(e(p)); p < 1 ? requestAnimationFrame(k) : r(); }; requestAnimationFrame(k); });
@@ -2323,26 +2331,38 @@ void main() {
   else { requestAnimationFrame(rodar); demo(); }
 }
 
-// Carrusel del cuadro del caso: dos vistas; el botón abre el video grande con su sonido
+// Carrusel del cuadro del caso: dos vistas; el video solo baja cuando el usuario va tras él, y mientras está adelante la maqueta queda congelada
 {
   const car = document.querySelector('.cm-track');
   const idx = () => Math.round(car.scrollLeft / car.clientWidth);
-  const va = () => document.querySelectorAll('.car-dots i').forEach((d, k) => d.classList.toggle('on', k === idx()));
+  const U = 'assets/ya-viene-control-v3.mp4';
+  let bajo = false;
+  const cine = document.querySelector('.vid-t'), go = document.querySelector('.vid-go');
+  const bajaCine = () => { if (bajo) return; bajo = true; cine.src = U; cine.play().catch(() => {}); };
+  go.addEventListener('click', () => {
+    bajaCine(); // por si llega directo al grande sin haber pisado el cuadro
+    document.querySelector('.vidm').hidden = false;
+    const mv = document.querySelector('.vidm video');
+    mv.src = U; mv.muted = false; mv.addEventListener('loadedmetadata', () => { mv.currentTime = 0; }, { once: true }); mv.play().catch(() => {});
+    cine.pause();
+    document.querySelector('.vd-x').focus();
+  });
+  const vidm = document.querySelector('.vidm'), bd = vidm.querySelector('.vd-bd'), zexe = vidm.querySelector('.vd-x');
+  const cierralo = () => { vidm.hidden = true; vidm.querySelector('video').pause(); if (idx() === 1 && bajo) cine.play().catch(() => {}); };
+  bd.addEventListener('click', cierralo); zexe.addEventListener('click', cierralo);
+  addEventListener('keydown', e => { if (e.key === 'Escape' && !vidm.hidden) cierralo(); });
+  document.querySelector('.vid-s').addEventListener('mouseenter', bajaCine);
+  const va = () => { const i = idx();
+    document.querySelectorAll('.car-dots i').forEach((d, k) => d.classList.toggle('on', k === i));
+    if (i === 1) { bajaCine(); if (congelarMapa) congelarMapa(true); }
+    else { if (!cine.paused) cine.pause(); if (congelarMapa) congelarMapa(false); }
+  };
   car.addEventListener('scroll', va, { passive: true }); va();
   const ve = i => { const led = Math.max(0, Math.min(i, car.children.length - 1));
     car.scrollTo({ left: led * car.clientWidth, behavior: clra.matches ? 'auto' : 'smooth' }); };
   document.querySelector('.car-prev').addEventListener('click', () => ve(idx() - 1));
   document.querySelector('.car-next').addEventListener('click', () => ve(idx() + 1));
   document.querySelectorAll('.car-dots i').forEach((d, k) => d.addEventListener('click', () => ve(k)));
-  const vidm = document.querySelector('.vidm'), cine = vidm.querySelector('video');
-  const cierralo = () => { vidm.hidden = true; cine.pause(); };
-  document.querySelector('.vid-go').addEventListener('click', () => {
-    vidm.hidden = false; cine.muted = false; cine.currentTime = 0; cine.play().catch(() => {});
-    vidm.querySelector('.vd-x').focus();
-  });
-  vidm.querySelector('.vd-bd').addEventListener('click', cierralo);
-  vidm.querySelector('.vd-x').addEventListener('click', cierralo);
-  addEventListener('keydown', e => { if (e.key === 'Escape' && !vidm.hidden) cierralo(); });
 }
 
 </script>
