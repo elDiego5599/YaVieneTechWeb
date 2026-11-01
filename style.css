@@ -620,13 +620,17 @@
   .ig-cap--r::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #0d9488; }
   .ig-cap.ya { opacity: 1; transform: none; }
   .ig-l, .ig-fan { display: block; overflow: visible; }
-  .ig-l path, .ig-fan path { fill: none; stroke: #d9dbde; stroke-width: 1.5; }
+  .ig-l path, .ig-fan path { fill: none; stroke: #e4e5e8; stroke-width: 1.5; stroke-linecap: round; }
   .ig-l .go, .ig-fan .go { stroke: #0d9488; stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .8s cubic-bezier(.6,0,.3,1); }
   .ig-fan .go:nth-of-type(5) { transition-delay: .1s; } .ig-fan .go:nth-of-type(6) { transition-delay: .2s; }
   .ig-l.ya .go, .ig-fan.ya .go { stroke-dashoffset: 0; }
   .ig-core { grid-column: 3; grid-row: 2; justify-self: center; display: grid; justify-items: center; gap: 10px; }
   .ig-core span { width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; color: #fff; background: var(--ink); transition: box-shadow .7s ease; box-shadow: 0 1px 2px rgba(17,18,20,.1), 0 20px 44px -24px rgba(17,18,20,.32); }
   .ig-core.ya span { box-shadow: 0 0 0 9px rgba(13,148,136,.09), 0 22px 44px -16px rgba(13,148,136,.4); }
+  .ig-core span { position: relative; }
+  .ig-core span::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid rgba(13,148,136,.45); opacity: 0; pointer-events: none; }
+  .ig-core.ya span::after { animation: ig-halo 1.6s cubic-bezier(.22,1,.36,1) .5s both; }
+  @keyframes ig-halo { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.45); } }
   .ig-core svg { width: 40px; height: 22px; fill: currentColor; stroke: none; }
   .ig-core b { font: 600 13px/1 Inter, sans-serif; color: var(--ink); white-space: nowrap; }
   .ig-ph { position: relative; grid-column: 1; grid-row: 2; justify-self: end; align-self: end; width: 236px; margin-bottom: -150px; aspect-ratio: 720 / 1469; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
@@ -634,29 +638,39 @@
   .ig-ph > img { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 26px 30px rgba(17,18,20,.24)); }
   .ig-scr { position: absolute; left: 5.1%; top: 2.2%; width: 89.8%; height: 95.57%; border-radius: 14.4% / 6.62%; overflow: hidden; background: #efeae2; container-type: inline-size; }
   .ig-scr::before { content: ''; position: absolute; z-index: 4; top: 3cqw; left: 50%; width: 30cqw; height: 8.8cqw; border-radius: 5cqw; background: #111214; transform: translateX(-50%); }
-  .ig-out { grid-column: 5; grid-row: 2; display: grid; grid-template-rows: repeat(3, 94px); gap: 12px; }
-  .ig-w { display: grid; grid-template-rows: auto minmax(0, 1fr) auto; min-height: 0; background: #fff; border: 1px solid var(--line); border-radius: 11px; box-shadow: var(--shadow); overflow: hidden; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
+  .ig-out { grid-column: 5; grid-row: 2; display: grid; gap: 14px; align-content: center; }
+  /* Las tres apps como notificaciones de calidad: icono con brillo, nombre, hora y un check que se dibuja */
+  .ig-w { position: relative; padding: 12px 14px 13px; border-radius: 16px; background: #fff; border: 1px solid rgba(17,18,20,.07);
+    box-shadow: 0 1px 2px rgba(17,18,20,.04), 0 14px 32px -14px rgba(17,18,20,.2);
+    opacity: 0; transform: translateY(10px) scale(.97); transform-origin: 0 50%; transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.22,1,.36,1); }
   .ig-w.ya { opacity: 1; transform: none; }
-  .ig-w-bar { display: flex; align-items: center; gap: 4px; padding: 7px 10px; background: #f6f7f8; box-shadow: 0 1px 0 var(--line); }
-  .ig-w-bar i { width: 6px; height: 6px; border-radius: 50%; background: #dcdde0; }
-  .ig-w-bar span { margin-left: 7px; font-size: 10.5px; font-weight: 500; color: #85888e; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-w > div { position: relative; display: flex; align-items: center; gap: 10px; padding: 8px 12px; min-width: 0; align-self: center; }
-  .ig-w > div i { flex: none; width: 22px; height: 22px; border-radius: 6px; display: grid; place-items: center; background: var(--c); color: #fff; font: 800 10px Inter, sans-serif; font-style: normal; }
-  .ig-w > div i svg { width: 13px; height: 13px; }
-  .ig-w > div > div { flex: 1; min-width: 0; display: grid; gap: 1px; }
-  .ig-w > div b { font-size: 12.5px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-w > div span { font-size: 11px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-w > div em { flex: none; width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-style: normal; color: #fff; background: #16a34a; transform: scale(0); transition: transform .3s cubic-bezier(.2,.8,.2,1) .32s; }
-  .ig-w:nth-of-type(2) em { transition-delay: .44s; }
-  .ig-w.ya em { transform: none; }
-  .ig-w > small { padding: 0 12px 8px; font: 500 8.5px/1.2 ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .06em; text-transform: uppercase; color: #a5a8ad; }
-  .ig-t { align-self: center; display: grid; gap: 4px; padding: 8px 12px; min-width: 0; }
-  .ig-t div { display: grid; grid-template-columns: 42px minmax(0, 1fr) auto; gap: 8px; padding: 5px 8px; border-radius: 6px; font-size: 11px; color: #6b7280; }
+  .ig-w-hd { display: flex; align-items: center; gap: 8px; min-width: 0; }
+  .ig-w-hd b { font-size: 12px; font-weight: 600; letter-spacing: -.01em; }
+  .ig-w-hd span { font-size: 12px; color: #9a9da3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-w-hd time { margin-left: auto; font-size: 11px; color: #a5a8ad; }
+  .ig-ic { flex: none; width: 22px; height: 22px; border-radius: 6.5px; display: grid; place-items: center; color: #fff; font: 800 11px/1 Inter, sans-serif; font-style: normal;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 .5px rgba(0,0,0,.12), 0 2px 6px -2px rgba(17,18,20,.3); }
+  .ig-ic svg { width: 13px; height: 13px; stroke-width: 2.1; }
+  .ig-ic--nq { background: linear-gradient(150deg, #f0349a, #8a1d8f 55%, #3a0f5e); }
+  .ig-ic--crm { background: linear-gradient(150deg, #7aa7ff, #4f46e5); }
+  .ig-ic--xl { background: linear-gradient(150deg, #34c27a, #107c41); }
+  .ig-w-bd { display: flex; align-items: center; gap: 12px; margin-top: 9px; padding-left: 30px; }
+  .ig-w-bd > div { flex: 1; min-width: 0; display: grid; gap: 2px; }
+  .ig-w-bd b { font-size: 13.5px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-w-bd span { font-size: 12px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig .ig-ok { flex: none; width: 20px; height: 20px; stroke: none; transform: scale(.4); opacity: 0; transition: transform .5s cubic-bezier(.3,1.35,.5,1) .35s, opacity .25s ease .35s; }
+  .ig-ok circle { fill: #16a34a; }
+  .ig-ok path { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .4s cubic-bezier(.6,0,.3,1) .6s; }
+  .ig-w.ya .ig-ok { transform: none; opacity: 1; }
+  .ig-w.ya .ig-ok path { stroke-dashoffset: 0; }
+  /* Excel: la fila nueva abre su espacio y se ilumina */
+  .ig-t { display: grid; margin-top: 9px; padding-left: 30px; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .ig-t > div:first-child, .ig-t .new > div { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; padding: 5px 8px; border-radius: 7px; color: #8a8d93; }
   .ig-t span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-t .new { position: relative; background: #ecfdf5; box-shadow: inset 2px 0 0 #16a34a; color: var(--ink); }
-  .ig-t .new span { font-weight: 500; }
-  .ig-t .new em { position: absolute; right: 6px; width: 14px; height: 14px; border-radius: 50%; display: grid; place-items: center; font-size: 8px; font-style: normal; color: #fff; background: #16a34a; transform: scale(0); transition: transform .3s cubic-bezier(.2,.8,.2,1) .44s; }
-  .ig-w.ya .new em { transform: none; }
+  .ig-t .new { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.22,1,.36,1) .45s; }
+  .ig-t .new > div { min-height: 0; overflow: hidden; padding-block: 0; margin-top: 3px; color: var(--ink); font-weight: 500; background: #ecfdf3; box-shadow: inset 2px 0 0 #16a34a; transition: padding .55s cubic-bezier(.22,1,.36,1) .45s; }
+  .ig-w.ya .ig-t .new { grid-template-rows: 1fr; }
+  .ig-w.ya .ig-t .new > div { padding-block: 5px; }
   /* Banda de portátiles angostos: mismo guion con conectores y tipografía más compactos */
   @media (min-width: 961px) and (max-width: 1300px) {
     .pn--x > .ig { left: 20px; right: 20px; grid-template-columns: minmax(0, .8fr) 40px 104px 40px minmax(0, 1.2fr); }
@@ -665,8 +679,7 @@
     .ig-ph { width: 200px; margin-bottom: -125px; }
     .ig-core span { width: 80px; height: 80px; border-radius: 21px; }
     .ig-core svg { width: 38px; height: 21px; }
-    .ig-w > div b { font-size: 12px; }
-    .ig-w > div span { font-size: 10.4px; }
+    .ig-w-bd b { font-size: 12.5px; } .ig-w-bd span, .ig-t { font-size: 11px; }
   }
   /* Chat del iPhone: Ya Viene Tech responde, cobra y confirma solo; todo en cqw para escalar con el teléfono */
   .wa { display: flex; flex-direction: column; background: #efeae2; }
@@ -694,11 +707,12 @@
   .wa-yv { display: flex; align-items: center; gap: 1.56cqw; margin-bottom: 0.78cqw; font-size: 3.9cqw; font-weight: 600; color: #0d9488; }
   .wa-yv svg { width: 6.5cqw; height: 3.64cqw; fill: currentColor; stroke: none; }
   .wa-pay { display: flex; align-items: center; gap: 3.12cqw; padding: 3.12cqw 3.64cqw; }
-  .wa-pay i { flex: none; width: 9.88cqw; height: 9.88cqw; border-radius: 2.6cqw; display: grid; place-items: center; background: #7c3aed; color: #fff; font: 800 4.68cqw Inter, sans-serif; font-style: normal; }
+  .wa-pay i { flex: none; width: 9.88cqw; height: 9.88cqw; border-radius: 2.6cqw; display: grid; place-items: center; background: linear-gradient(150deg, #f0349a, #8a1d8f 55%, #3a0f5e); box-shadow: inset 0 1px 0 rgba(255,255,255,.28); color: #fff; font: 800 4.68cqw Inter, sans-serif; font-style: normal; }
   .wa-pay div { flex: 1; min-width: 0; display: grid; }
   .wa-pay b { font-size: 4.94cqw; } .wa-pay span { font-size: 4.29cqw; color: #4b5563; white-space: nowrap; }
   .wa-pay em { flex: none; padding: 1.56cqw 3.38cqw; border-radius: 99px; background: #7c3aed; color: #fff; font-size: 4.16cqw; font-weight: 600; font-style: normal; }
-  .wa-pay--ok em { width: 7.02cqw; height: 7.02cqw; padding: 0; display: grid; place-items: center; background: #16a34a; font-size: 3.9cqw; }
+  .wa-pay--ok em { width: 7.02cqw; height: 7.02cqw; padding: 0; display: grid; place-items: center; background: #16a34a; }
+  .wa-pay--ok em svg { width: 5cqw; height: 5cqw; fill: none; stroke: #fff; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
   .wa-ty > p { display: flex; gap: 1.56cqw; width: max-content; padding: 3.9cqw 4.42cqw; margin-left: auto; background: #d9fdd3; border-top-right-radius: 1.04cqw; }
   .wa-ty i { width: 2.34cqw; height: 2.34cqw; border-radius: 50%; background: #5f8f62; animation: wa-ty 1.1s ease-in-out infinite; }
   .wa-ty i:nth-child(2) { animation-delay: .15s; } .wa-ty i:nth-child(3) { animation-delay: .3s; }
@@ -789,8 +803,12 @@
     .pn--x > .erp-modal { inset: 224px 0 0 16px; }
     .pn--x > .ig { left: 16px; right: 16px; top: 224px; bottom: 16px; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 10px; }
     .ig-l, .ig-fan, .ig-core, .ig-hd { display: none; }
-    .ig-ph { margin-bottom: 0; align-self: auto; justify-self: center; }
-    .ig-out { grid-template-rows: repeat(3, auto); gap: 8px; } .ig-w > div { padding: 6px 12px; } .ig-w > small { display: none; }
+    /* En móvil el chat ocupa la escena y las tres apps llegan encima, como notificaciones */
+    .pn--x > .ig { grid-template-rows: minmax(0, 1fr); }
+    .ig-ph { grid-column: 1; grid-row: 1; width: 200px; margin-bottom: 0; align-self: start; justify-self: center; }
+    .ig-out { grid-column: 1; grid-row: 1; align-self: end; position: relative; z-index: 6; grid-template-rows: repeat(3, auto); gap: 8px; }
+    .ig-w { padding: 10px 12px 11px; box-shadow: 0 1px 2px rgba(17,18,20,.05), 0 18px 36px -14px rgba(17,18,20,.32); transform: translateY(16px) scale(.97); }
+    .ig-w-bd, .ig-t { margin-top: 6px; } .ig-t > div:first-child { display: none; } .ig-t .new > div { margin-top: 0; }
     .pn--ds::before, .pn--ds::after { display: none; }
     .pn--x > .ds { left: 0; right: 0; top: 224px; grid-template-columns: minmax(0, 1fr); }
     .ds-tb span { display: none; }
@@ -804,7 +822,7 @@
     .erp-r > :not(:nth-child(2), :nth-child(5)), .erp-h > :not(:nth-child(2), :nth-child(5)) { display: none; }
     .ds-n { font-size: 40px; }
   }
-  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-cap { opacity: 1 !important; transform: none !important; } .ig-w em, .ig-t .new em { transform: none !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-cap { opacity: 1 !important; transform: none !important; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
   .pn .browser.shop { background: #fff; }
   .shop .top { align-items: center; }
   .shop .top span { flex: 1; margin: 0 28px 0 18px; padding: 3px 0; border-radius: 6px; background: #f1f2f4; font: 500 10.5px Inter, sans-serif; color: var(--muted); text-align: center; }
