@@ -697,11 +697,11 @@
   .wa-chat { flex: 1; min-height: 0; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 3.9cqw 4.55cqw 1.3cqw; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12cqw); mask-image: linear-gradient(to bottom, transparent, #000 12cqw); }
   .wa-day { align-self: center; margin: 0 0 3.12cqw; flex: none; padding: 1.04cqw 3.38cqw; border-radius: 2.6cqw; background: #fff; font-size: 4.16cqw; color: #6b7280; box-shadow: 0 .5px 0 rgba(17,18,20,.1); }
   /* Cada mensaje abre su espacio suave y aparece encima, sin saltos */
-  .wa .wa-m { --e: cubic-bezier(.45,0,.2,1); flex: none; display: grid; grid-template-rows: 0fr; margin-bottom: 0; opacity: 0; transform: translateY(2.6cqw) scale(.92); filter: blur(2px); transition: grid-template-rows .8s var(--e), margin-bottom .8s var(--e), opacity .5s ease .15s, transform .8s var(--e) .1s, filter .5s ease .15s; }
-  .wa-m > * { min-height: 0; overflow: hidden; transition: padding .8s var(--e); }
+  .wa .wa-m { --e: cubic-bezier(.25,.9,.3,1); flex: none; display: grid; grid-template-rows: 0fr; margin-bottom: 0; opacity: 0; transform: scale(.86); transition: grid-template-rows .42s var(--e), margin-bottom .42s var(--e), opacity .22s ease, transform .42s var(--e); }
+  .wa-m > * { min-height: 0; overflow: hidden; transition: padding .42s var(--e); }
   .wa-m:not(.ya) > * { padding-top: 0; padding-bottom: 0; }
-  .wa-m.ya { grid-template-rows: 1fr; margin-bottom: 2.08cqw; opacity: 1; transform: none; filter: none; }
-  .wa .wa-ty:not(.ya) { transition: grid-template-rows .8s var(--e), margin-bottom .8s var(--e), opacity .3s ease, transform .5s ease, filter .3s ease; }
+  .wa-m.ya { grid-template-rows: 1fr; margin-bottom: 2.08cqw; opacity: 1; transform: none; }
+  .wa .wa-ty:not(.ya) { transition: grid-template-rows .32s var(--e), margin-bottom .32s var(--e), opacity .15s ease, transform .32s var(--e); }
   .wa-m.in { transform-origin: 0 100%; } .wa-m.out { transform-origin: 100% 100%; }
   .wa-m > p, .wa-pay { margin: 0; max-width: 80%; padding: 2.34cqw 3.38cqw 1.82cqw; border-radius: 4.16cqw; font-size: 4.94cqw; line-height: 1.36; letter-spacing: -.01em; color: #111b21; box-shadow: 0 1px .5px rgba(11,20,26,.13); }
   .wa-m.in > p, .wa-m.in .wa-pay { background: #fff; border-top-left-radius: 1.04cqw; }
