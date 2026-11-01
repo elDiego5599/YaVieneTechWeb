@@ -329,7 +329,7 @@ if (ig) {
     const s = r(ig.querySelector('.ig-out')), x1 = s.left - o.left + 24, xs = Math.round((cx + lado + s.left - o.left) / 2), rad = 12;
     ig.querySelectorAll('.ig-w').forEach((w, i) => {
       const y1 = s.top - o.top + w.offsetTop + w.offsetHeight / 2, dy = y1 - y, k = Math.sign(dy), q = Math.min(rad, Math.abs(dy) / 2);
-      pon(ramas[i + 1], Math.abs(dy) < 2 ? `M${cx} ${y}H${x1}`
+      pon(ramas[i + 1], Math.abs(dy) < 28 ? `M${cx} ${y}H${x1}`
         : `M${cx} ${y}H${xs - q}Q${xs} ${y} ${xs} ${y + k * q}V${y1 - k * q}Q${xs} ${y1} ${xs + q} ${y1}H${x1}`);
     });
   };
