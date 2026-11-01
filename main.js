@@ -318,18 +318,19 @@ requestAnimationFrame(guion);
 // Integraciones: las ramas salen del chat, pasan por Ya Viene Tech y llegan al centro de cada app; se recalculan al cambiar el tamaño
 const ig = document.querySelector('.ig');
 if (ig) {
-  const wire = ig.querySelector('.ig-wire'), rutas = wire.querySelectorAll('path'), puntos = wire.querySelectorAll('circle');
+  const ramas = [...ig.querySelectorAll('.ig-r')];
+  const pon = (g, d, x, y) => { g.querySelectorAll('path').forEach(p => p.setAttribute('d', d)); const c = g.querySelector('circle'); if (c) { c.setAttribute('cx', x); c.setAttribute('cy', y); } };
   const trazar = () => {
     const o = ig.getBoundingClientRect(), r = el => el.getBoundingClientRect(), nucleo = r(ig.querySelector('.ig-core span'));
     if (!nucleo.width) return;
-    const y = nucleo.top + nucleo.height / 2 - o.top, x0 = r(ig.querySelector('.ig-scr')).right - o.left, xa = nucleo.left - o.left - 10, xb = nucleo.right - o.left + 10;
-    rutas[0].setAttribute('d', `M${x0} ${y}H${xa}`);
-    puntos[0].setAttribute('cx', xa); puntos[0].setAttribute('cy', y);
+    // el núcleo entra escalado: se usa su caja sin escala (centro igual, lado fijo)
+    const cx = nucleo.left + nucleo.width / 2 - o.left, lado = ig.querySelector('.ig-core span').offsetWidth / 2;
+    const y = nucleo.top + nucleo.height / 2 - o.top, x0 = r(ig.querySelector('.ig-scr')).right - o.left, xa = cx - lado - 12, xb = cx + lado + 12;
+    pon(ramas[0], `M${x0} ${y}H${xa}`);
     const s = r(ig.querySelector('.ig-out'));
     ig.querySelectorAll('.ig-w').forEach((w, i) => {
-      const x1 = s.left - o.left - 8, y1 = s.top - o.top + w.offsetTop + w.offsetHeight / 2, m = (x1 - xb) / 2;
-      rutas[i + 1].setAttribute('d', `M${xb} ${y}C${xb + m} ${y} ${x1 - m} ${y1} ${x1} ${y1}`);
-      puntos[i + 1].setAttribute('cx', x1); puntos[i + 1].setAttribute('cy', y1);
+      const x1 = s.left - o.left - 10, y1 = s.top - o.top + w.offsetTop + w.offsetHeight / 2, m = (x1 - xb) * .55;
+      pon(ramas[i + 1], `M${xb} ${y}C${xb + m} ${y} ${x1 - m} ${y1} ${x1} ${y1}`, x1, y1);
     });
   };
   const ro = new ResizeObserver(trazar); ro.observe(ig); ig.querySelectorAll('.ig-w').forEach(w => ro.observe(w));

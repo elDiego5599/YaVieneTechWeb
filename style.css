@@ -616,17 +616,23 @@
   .pn--x > .ig { position: absolute; left: 56px; right: 56px; top: 220px; bottom: 40px; display: grid; grid-template-columns: minmax(0, 1fr) 52px 120px 52px minmax(0, 1.5fr); grid-template-rows: minmax(0, 1fr); align-items: center; font-family: Inter, sans-serif; }
   /* Ramas: se calculan con JS desde el chat hasta cada app y se dibujan cuando el pedido pasa por Ya Viene Tech */
   .ig .ig-wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
-  .ig-wire path { fill: none; stroke: #0d9488; stroke-width: 1.75; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset .9s cubic-bezier(.65,0,.35,1), opacity .3s ease; }
-  .ig-wire path.ya { stroke-dashoffset: 0; opacity: .55; }
-  .ig-wire circle { fill: #0d9488; stroke: #fff; stroke-width: 2; opacity: 0; transform: scale(0); transform-box: fill-box; transform-origin: center; transition: opacity .3s ease .75s, transform .45s cubic-bezier(.3,1.4,.5,1) .75s; }
-  .ig-wire circle.ya { opacity: 1; transform: none; }
-  .ig-core { position: relative; z-index: 1; grid-column: 3; grid-row: 1; justify-self: center; display: grid; justify-items: center; gap: 10px; }
-  .ig-core span { width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; color: #fff; background: var(--ink); transition: box-shadow .7s ease; box-shadow: 0 1px 2px rgba(17,18,20,.1), 0 20px 44px -24px rgba(17,18,20,.32); }
-  .ig-core.ya span { box-shadow: 0 0 0 9px rgba(13,148,136,.09), 0 22px 44px -16px rgba(13,148,136,.4); }
-  .ig-core span { position: relative; }
-  .ig-core span::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 1.5px solid rgba(13,148,136,.45); opacity: 0; pointer-events: none; }
-  .ig-core.ya span::after { animation: ig-halo 1.6s cubic-bezier(.22,1,.36,1) .5s both; }
-  @keyframes ig-halo { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.45); } }
+  /* Cada rama: primero aparece el riel gris, luego el verde lo recorre hasta la app; al cerrar el ciclo todo se desvanece junto */
+  .ig-wire path { fill: none; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: opacity .5s ease, stroke-dashoffset 0s linear .5s; }
+  .ig-wire .t { stroke: #e3e5e8; }
+  .ig-wire .f { stroke: #16a34a; filter: drop-shadow(0 0 3px rgba(22,163,74,.35)); }
+  .ig-wire .t.ya { opacity: 1; stroke-dashoffset: 0; transition: stroke-dashoffset .55s cubic-bezier(.4,0,.2,1), opacity .2s ease; }
+  .ig-wire .f.ya { opacity: 1; stroke-dashoffset: 0; transition: stroke-dashoffset .6s cubic-bezier(.55,0,.25,1), opacity .15s ease; }
+  .ig-wire circle { fill: #fff; stroke: #16a34a; stroke-width: 2; opacity: 0; transform: scale(.3); transform-box: fill-box; transform-origin: center; transition: opacity .4s ease, transform .4s ease; }
+  .ig-wire circle.ya { opacity: 1; transform: none; transition: opacity .2s ease, transform .45s cubic-bezier(.3,1.5,.5,1); }
+  .ig-core { position: relative; z-index: 1; grid-column: 3; grid-row: 1; justify-self: center; display: grid; justify-items: center; gap: 10px; opacity: 0; transform: scale(.9); filter: blur(4px); transition: opacity .45s ease, transform .5s ease, filter .45s ease; }
+  .ig-core.ya { opacity: 1; transform: none; filter: none; transition: opacity .5s ease, transform .7s cubic-bezier(.22,1,.36,1), filter .5s ease; }
+  .ig-core span { position: relative; width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; color: #fff; background: linear-gradient(180deg, #2a2c31, #111214); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 1px 2px rgba(17,18,20,.12), 0 20px 40px -20px rgba(17,18,20,.45); transition: box-shadow .6s ease; }
+  /* Cuando el verde llega al núcleo: un aro que se expande una vez y un brillo que se queda */
+  .ig-core em { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+  .ig-core em::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid rgba(22,163,74,.5); opacity: 0; }
+  .ig-core em.ya::after { animation: ig-halo 1.2s cubic-bezier(.22,1,.36,1) both; }
+  .ig-core span:has(em.ya) { box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 6px rgba(22,163,74,.1), 0 20px 40px -18px rgba(22,163,74,.45); }
+  @keyframes ig-halo { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.5); } }
   .ig-core svg { width: 40px; height: 22px; fill: currentColor; stroke: none; }
   .ig-core b { font: 600 13px/1 Inter, sans-serif; color: var(--ink); white-space: nowrap; }
   .ig-ph { position: relative; grid-column: 1; grid-row: 1; justify-self: end; align-self: start; width: 236px; margin-bottom: -200px; z-index: 1; aspect-ratio: 720 / 1469; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
@@ -638,8 +644,8 @@
   /* Las tres apps como notificaciones de calidad: icono con brillo, nombre, hora y un check que se dibuja */
   .ig-w { position: relative; padding: 12px 14px 13px; border-radius: 16px; background: #fff; border: 1px solid rgba(17,18,20,.07);
     box-shadow: 0 1px 2px rgba(17,18,20,.04), 0 14px 32px -14px rgba(17,18,20,.2);
-    opacity: 0; transform: translateY(10px) scale(.97); transform-origin: 0 50%; transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.22,1,.36,1); }
-  .ig-w.ya { opacity: 1; transform: none; }
+    opacity: 0; transform: translateX(-10px) scale(.97); transform-origin: 0 50%; filter: blur(3px); transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.22,1,.36,1), filter .5s ease; }
+  .ig-w.ya { opacity: 1; transform: none; filter: none; }
   .ig-w-hd { display: flex; align-items: center; gap: 8px; min-width: 0; }
   .ig-w-hd b { font-size: 12px; font-weight: 600; letter-spacing: -.01em; }
   .ig-w-hd span { font-size: 12px; color: #9a9da3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -816,7 +822,7 @@
     .erp-r > :not(:nth-child(2), :nth-child(5)), .erp-h > :not(:nth-child(2), :nth-child(5)) { display: none; }
     .ds-n { font-size: 40px; }
   }
-  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-core, .ig-wire circle { opacity: 1 !important; transform: none !important; } .ig-wire path { opacity: .55 !important; stroke-dashoffset: 0 !important; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-core, .ig-wire circle { opacity: 1 !important; transform: none !important; filter: none !important; } .ig-wire path { opacity: 1 !important; stroke-dashoffset: 0 !important; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
   .pn .browser.shop { background: #fff; }
   .shop .top { align-items: center; }
   .shop .top span { flex: 1; margin: 0 28px 0 18px; padding: 3px 0; border-radius: 6px; background: #f1f2f4; font: 500 10.5px Inter, sans-serif; color: var(--muted); text-align: center; }
