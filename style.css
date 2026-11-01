@@ -636,15 +636,15 @@
   .ig-core span:has(em.ya) { box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 6px rgba(22,163,74,.1), 0 20px 40px -18px rgba(22,163,74,.45); }
   @keyframes ig-halo { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.5); } }
   .ig-core svg { width: 40px; height: 22px; fill: currentColor; stroke: none; }
-  .ig-core b { font: 600 13px/1 Inter, sans-serif; color: var(--ink); white-space: nowrap; }
+  .ig-core b { position: absolute; top: calc(100% + 10px); font: 600 13px/1 Inter, sans-serif; color: var(--ink); white-space: nowrap; }
   .ig-ph { position: relative; grid-column: 1; grid-row: 1; justify-self: end; align-self: start; width: 236px; margin-bottom: -200px; z-index: 1; aspect-ratio: 720 / 1469; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
   .ig-ph.ya { opacity: 1; transform: none; }
   .ig-ph > img { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 26px 30px rgba(17,18,20,.24)); }
   .ig-scr { position: absolute; left: 5.1%; top: 2.2%; width: 89.8%; height: 95.57%; border-radius: 14.4% / 6.62%; overflow: hidden; background: #efeae2; container-type: inline-size; }
   .ig-scr::before { content: ''; position: absolute; z-index: 4; top: 3cqw; left: 50%; width: 30cqw; height: 8.8cqw; border-radius: 5cqw; background: #111214; transform: translateX(-50%); }
-  .ig-out { position: relative; z-index: 1; grid-column: 5; grid-row: 1; display: grid; gap: 14px; align-content: center; }
+  .ig-out { position: relative; z-index: 1; grid-column: 5; grid-row: 1; display: grid; grid-auto-rows: 108px; gap: 16px; align-content: center; max-width: 360px; }
   /* Las tres apps como notificaciones de calidad: icono con brillo, nombre, hora y un check que se dibuja */
-  .ig-w { position: relative; padding: 12px 14px 13px; border-radius: 16px; background: #fff; border: 1px solid rgba(17,18,20,.07);
+  .ig-w { position: relative; display: flex; flex-direction: column; padding: 12px 14px 13px; border-radius: 16px; background: #fff; border: 1px solid rgba(17,18,20,.07);
     box-shadow: 0 1px 2px rgba(17,18,20,.04), 0 14px 32px -14px rgba(17,18,20,.2);
     opacity: 0; transform: translateX(-10px) scale(.97); transform-origin: 0 50%; filter: blur(3px); transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.22,1,.36,1), filter .5s ease; }
   .ig-w.ya { opacity: 1; transform: none; filter: none; }
@@ -658,7 +658,7 @@
   .ig-ic--nq { background: linear-gradient(150deg, #f0349a, #8a1d8f 55%, #3a0f5e); }
   .ig-ic--crm { background: linear-gradient(150deg, #7aa7ff, #4f46e5); }
   .ig-ic--xl { background: linear-gradient(150deg, #34c27a, #107c41); }
-  .ig-w-bd { display: flex; align-items: center; gap: 12px; margin-top: 9px; padding-left: 30px; }
+  .ig-w-bd { display: flex; align-items: center; gap: 12px; margin-block: auto; padding-left: 30px; }
   .ig-w-bd > div { flex: 1; min-width: 0; display: grid; gap: 2px; }
   .ig-w-bd b { font-size: 13.5px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ig-w-bd span { font-size: 12px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -668,13 +668,12 @@
   .ig-w.ya .ig-ok { transform: none; opacity: 1; }
   .ig-w.ya .ig-ok path { stroke-dashoffset: 0; }
   /* Excel: la fila nueva abre su espacio y se ilumina */
-  .ig-t { display: grid; margin-top: 9px; padding-left: 30px; font-size: 12px; font-variant-numeric: tabular-nums; }
+  .ig-t { display: grid; margin-top: auto; padding-left: 30px; font-size: 12px; font-variant-numeric: tabular-nums; }
   .ig-t > div:first-child, .ig-t .new > div { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; padding: 5px 8px; border-radius: 7px; color: #8a8d93; }
   .ig-t span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-t .new { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s cubic-bezier(.22,1,.36,1) .45s; }
-  .ig-t .new > div { min-height: 0; overflow: hidden; padding-block: 0; margin-top: 3px; color: var(--ink); font-weight: 500; background: #ecfdf3; box-shadow: inset 2px 0 0 #16a34a; transition: padding .55s cubic-bezier(.22,1,.36,1) .45s; }
-  .ig-w.ya .ig-t .new { grid-template-rows: 1fr; }
-  .ig-w.ya .ig-t .new > div { padding-block: 5px; }
+  .ig-t .new { display: grid; }
+  .ig-t .new > div { margin-top: 3px; color: var(--ink); font-weight: 500; background: #ecfdf3; box-shadow: inset 2px 0 0 #16a34a; opacity: 0; transform: translateY(6px); transition: opacity .45s ease .45s, transform .6s cubic-bezier(.22,1,.36,1) .45s; }
+  .ig-w.ya .ig-t .new > div { opacity: 1; transform: none; }
   /* Banda de portátiles angostos: mismo guion con conectores y tipografía más compactos */
   @media (min-width: 961px) and (max-width: 1300px) {
     .pn--x > .ig { left: 20px; right: 20px; grid-template-columns: minmax(0, .8fr) 40px 104px 40px minmax(0, 1.2fr); }
@@ -684,7 +683,7 @@
     .ig-w-bd b { font-size: 12.5px; } .ig-w-bd span, .ig-t { font-size: 11px; }
   }
   /* Chat del iPhone: Ya Viene Tech responde, cobra y confirma solo; todo en cqw para escalar con el teléfono */
-  .wa { display: flex; flex-direction: column; background: #efeae2 radial-gradient(circle at 1px 1px, rgba(120,104,80,.09) 1px, transparent 1.4px) 0 0 / 5.2cqw 5.2cqw; font-family: -apple-system, "SF Pro Text", system-ui, Inter, sans-serif; -webkit-font-smoothing: antialiased; }
+  .wa { display: flex; flex-direction: column; background: linear-gradient(rgba(120,104,80,.08) 1px, transparent 1px) 0 0 / 7.8cqw 7.8cqw, linear-gradient(90deg, rgba(120,104,80,.08) 1px, transparent 1px) 0 0 / 7.8cqw 7.8cqw, radial-gradient(120% 70% at 50% 100%, #f6f1ea, #ebe5dc); font-family: -apple-system, "SF Pro Text", system-ui, Inter, sans-serif; -webkit-font-smoothing: antialiased; }
   .wa-top { background: rgba(250,250,250,.86); backdrop-filter: blur(14px) saturate(180%); -webkit-backdrop-filter: blur(14px) saturate(180%); box-shadow: 0 .5px 0 rgba(17,18,20,.1); position: relative; z-index: 2; }
   .wa-hd { display: flex; align-items: center; gap: 3.38cqw; padding: 1.3cqw 5.85cqw 4.16cqw 3.9cqw; }
   .wa-hd svg { width: 7.8cqw; height: 7.8cqw; color: #1d1c20; }
@@ -810,7 +809,7 @@
     /* En móvil el chat ocupa la escena y las tres apps llegan encima, como notificaciones */
     .pn--x > .ig { grid-template-rows: minmax(0, 1fr); }
     .ig-ph { grid-column: 1; grid-row: 1; width: 200px; margin-bottom: 0; align-self: start; justify-self: center; }
-    .ig-out { grid-column: 1; grid-row: 1; align-self: end; position: relative; z-index: 6; grid-template-rows: repeat(3, auto); gap: 8px; }
+    .ig-out { grid-column: 1; grid-row: 1; align-self: end; position: relative; z-index: 6; grid-template-rows: repeat(3, auto); grid-auto-rows: auto; max-width: none; gap: 8px; }
     .ig-w { padding: 10px 12px 11px; box-shadow: 0 1px 2px rgba(17,18,20,.05), 0 18px 36px -14px rgba(17,18,20,.32); transform: translateY(16px) scale(.97); }
     .ig-w-bd, .ig-t { margin-top: 6px; } .ig-t > div:first-child { display: none; } .ig-t .new > div { margin-top: 0; }
     .pn--ds::before, .pn--ds::after { display: none; }
@@ -826,7 +825,7 @@
     .erp-r > :not(:nth-child(2), :nth-child(5)), .erp-h > :not(:nth-child(2), :nth-child(5)) { display: none; }
     .ds-n { font-size: 40px; }
   }
-  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-core { opacity: 1 !important; transform: none !important; filter: none !important; } .ig-wire .t, .ig-wire .f { opacity: 1 !important; stroke-dashoffset: 0 !important; } .ig-wire .p { display: none; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; margin-bottom: 2.08cqw; opacity: 1; transform: none; filter: none; } }
+  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-core { opacity: 1 !important; transform: none !important; filter: none !important; } .ig-wire .t, .ig-wire .f { opacity: 1 !important; stroke-dashoffset: 0 !important; } .ig-wire .p { display: none; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new > div { opacity: 1 !important; transform: none !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; margin-bottom: 2.08cqw; opacity: 1; transform: none; filter: none; } }
   .pn .browser.shop { background: #fff; }
   .shop .top { align-items: center; }
   .shop .top span { flex: 1; margin: 0 28px 0 18px; padding: 3px 0; border-radius: 6px; background: #f1f2f4; font: 500 10.5px Inter, sans-serif; color: var(--muted); text-align: center; }
