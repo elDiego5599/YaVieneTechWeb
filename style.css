@@ -707,8 +707,8 @@
   .wa-m.out > p, .wa-m.out .wa-pay { margin-left: auto; background: #d9fdd3; border-top-right-radius: 1.04cqw; }
   .wa-m time { float: right; display: inline-flex; align-items: center; gap: 1.04cqw; margin: 2.34cqw 0 -0.78cqw 3.12cqw; font-size: 3.38cqw; color: #667781; letter-spacing: 0; }
   .wa-ck { width: 4.94cqw; height: 3.38cqw; color: #34b7f1; }
-  .wa-yv { display: flex; align-items: center; gap: 1.3cqw; margin-bottom: .52cqw; font-size: 3.64cqw; font-weight: 600; color: #128c7e; letter-spacing: 0; }
-  .wa-yv svg { width: 6.5cqw; height: 3.64cqw; fill: currentColor; stroke: none; }
+  .wa-yv { display: flex; align-items: center; gap: 1.3cqw; margin-bottom: .78cqw; font-size: 3.64cqw; font-weight: 600; color: #2a4478; letter-spacing: 0; }
+  .wa-yv i { flex: none; width: 5.2cqw; height: 5.2cqw; border-radius: 50%; display: grid; place-items: center; background: radial-gradient(circle at 30% 25%, #4a6cab, #1c2c52 75%); outline: .26cqw dashed rgba(244,196,120,.85); outline-offset: -.78cqw; color: #f4d39a; font: 700 2.08cqw/1 Georgia, serif; letter-spacing: -.04em; font-style: normal; }
   .wa-pay { display: flex; align-items: center; gap: 3.12cqw; padding: 3.12cqw 3.64cqw; }
   .wa-pay i { flex: none; width: 9.88cqw; height: 9.88cqw; border-radius: 2.6cqw; display: grid; place-items: center; background: linear-gradient(150deg, #f0349a, #8a1d8f 55%, #3a0f5e); box-shadow: inset 0 1px 0 rgba(255,255,255,.28); color: #fff; font: 800 4.68cqw Inter, sans-serif; font-style: normal; }
   .wa-pay div { flex: 1; min-width: 0; display: grid; }
