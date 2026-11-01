@@ -613,7 +613,7 @@
 
   /* Integraciones: un pedido entra una vez (chat de WhatsApp en un iPhone real) y Ya Viene Tech lo reparte en tres app windows; sobre blanco */
   .ig svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .pn--x > .ig { position: absolute; left: 56px; right: 56px; top: 220px; bottom: 40px; display: grid; grid-template-columns: minmax(0, 1fr) 52px 120px 52px minmax(0, 1.5fr); grid-template-rows: minmax(0, 1fr); align-items: center; font-family: Inter, sans-serif; }
+  .pn--x > .ig { position: absolute; left: 24px; right: 32px; top: 206px; bottom: 24px; display: grid; grid-template-columns: minmax(0, 1fr) 48px 124px 48px minmax(0, 1.35fr); grid-template-rows: minmax(0, 1fr); align-items: center; font-family: Inter, sans-serif; }
   /* Ramas: se calculan con JS desde el chat hasta cada app y se dibujan cuando el pedido pasa por Ya Viene Tech */
   .ig .ig-wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
   /* Cada rama: primero aparece el riel gris, luego el verde lo recorre hasta la app; al cerrar el ciclo todo se desvanece junto */
@@ -637,50 +637,57 @@
   @keyframes ig-halo { 0% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(1.5); } }
   .ig-core svg { width: 40px; height: 22px; fill: currentColor; stroke: none; }
   .ig-core b { position: absolute; top: calc(100% + 10px); font: 600 13px/1 Inter, sans-serif; color: var(--ink); white-space: nowrap; }
-  .ig-ph { position: relative; grid-column: 1; grid-row: 1; justify-self: end; align-self: start; width: 236px; margin-bottom: -200px; z-index: 1; aspect-ratio: 720 / 1469; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
+  .ig-ph { position: relative; grid-column: 1; grid-row: 1; justify-self: end; align-self: start; width: 276px; margin-top: -8px; margin-bottom: -320px; z-index: 1; aspect-ratio: 720 / 1469; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
   .ig-ph.ya { opacity: 1; transform: none; }
   .ig-ph > img { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 26px 30px rgba(17,18,20,.24)); }
   .ig-scr { position: absolute; left: 5.1%; top: 2.2%; width: 89.8%; height: 95.57%; border-radius: 14.4% / 6.62%; overflow: hidden; background: #efeae2; container-type: inline-size; }
   .ig-scr::before { content: ''; position: absolute; z-index: 4; top: 3cqw; left: 50%; width: 30cqw; height: 8.8cqw; border-radius: 5cqw; background: #111214; transform: translateX(-50%); }
-  .ig-out { position: relative; z-index: 1; grid-column: 5; grid-row: 1; display: grid; grid-auto-rows: 108px; gap: 16px; align-content: center; max-width: 360px; }
+  .ig-out { position: relative; z-index: 1; grid-column: 5; grid-row: 1; display: grid; grid-auto-rows: 122px; gap: 12px; align-content: center; max-width: 430px; }
   /* Las tres apps como notificaciones de calidad: icono con brillo, nombre, hora y un check que se dibuja */
-  .ig-w { position: relative; display: flex; flex-direction: column; padding: 12px 14px 13px; border-radius: 16px; background: #fff; border: 1px solid rgba(17,18,20,.07);
+  .ig-w { position: relative; display: flex; flex-direction: column; padding: 14px 16px; border-radius: 20px; background: #fff; border: 1px solid rgba(17,18,20,.07);
     box-shadow: 0 1px 2px rgba(17,18,20,.04), 0 14px 32px -14px rgba(17,18,20,.2);
     opacity: 0; transform: translateX(-10px) scale(.97); transform-origin: 0 50%; filter: blur(3px); transition: opacity .5s cubic-bezier(.2,.8,.2,1), transform .7s cubic-bezier(.22,1,.36,1), filter .5s ease; }
   .ig-w.ya { opacity: 1; transform: none; filter: none; }
-  .ig-w-hd { display: flex; align-items: center; gap: 8px; min-width: 0; }
-  .ig-w-hd b { font-size: 12px; font-weight: 600; letter-spacing: -.01em; }
-  .ig-w-hd span { font-size: 12px; color: #9a9da3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-w-hd time { margin-left: auto; font-size: 11px; color: #a5a8ad; }
-  .ig-ic { flex: none; width: 22px; height: 22px; border-radius: 6.5px; display: grid; place-items: center; color: #fff; font: 800 11px/1 Inter, sans-serif; font-style: normal;
+  .ig-w-hd { display: flex; align-items: center; gap: 10px; min-width: 0; }
+  .ig-w-hd b { font-size: 14px; font-weight: 600; letter-spacing: -.01em; }
+  .ig-w-hd span { font-size: 13px; color: #9a9da3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-w-hd time { margin-left: auto; font-size: 12px; color: #a5a8ad; }
+  .ig-ic { flex: none; width: 28px; height: 28px; border-radius: 8px; display: grid; place-items: center; color: #fff; font: 800 14px/1 Inter, sans-serif; font-style: normal;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.28), inset 0 0 0 .5px rgba(0,0,0,.12), 0 2px 6px -2px rgba(17,18,20,.3); }
-  .ig-ic svg { width: 13px; height: 13px; stroke-width: 2.1; }
+  .ig-ic svg { width: 16px; height: 16px; stroke-width: 2.1; }
   .ig-ic--nq { background: linear-gradient(150deg, #f0349a, #8a1d8f 55%, #3a0f5e); }
   .ig-ic--crm { background: linear-gradient(150deg, #7aa7ff, #4f46e5); }
   .ig-ic--xl { background: linear-gradient(150deg, #34c27a, #107c41); }
-  .ig-w-bd { display: flex; align-items: center; gap: 12px; margin-block: auto; padding-left: 30px; }
+  .ig-w-bd { display: flex; align-items: center; gap: 12px; margin-block: auto 2px; padding-left: 38px; }
+  .ig-av { flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; font: 600 14px/1 Inter, sans-serif; font-style: normal; color: #4338ca; background: linear-gradient(150deg, #e0e7ff, #c7d2fe); box-shadow: inset 0 0 0 1px rgba(67,56,202,.12); }
   .ig-w-bd > div { flex: 1; min-width: 0; display: grid; gap: 2px; }
-  .ig-w-bd b { font-size: 13.5px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig-w-bd span { font-size: 12px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ig .ig-ok { flex: none; width: 20px; height: 20px; stroke: none; transform: scale(.4); opacity: 0; transition: transform .5s cubic-bezier(.3,1.35,.5,1) .35s, opacity .25s ease .35s; }
+  .ig-w-bd b { font-size: 16px; font-weight: 600; letter-spacing: -.015em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-w-bd span { font-size: 13px; color: #6b7280; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-w-bd .ig-amt { font-size: 26px; font-weight: 700; letter-spacing: -.035em; line-height: 1.05; font-variant-numeric: tabular-nums; }
+  .ig .ig-ok { flex: none; width: 26px; height: 26px; stroke: none; transform: scale(.4); opacity: 0; transition: transform .5s cubic-bezier(.3,1.35,.5,1) .35s, opacity .25s ease .35s; }
   .ig-ok circle { fill: #16a34a; }
   .ig-ok path { fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .4s cubic-bezier(.6,0,.3,1) .6s; }
   .ig-w.ya .ig-ok { transform: none; opacity: 1; }
   .ig-w.ya .ig-ok path { stroke-dashoffset: 0; }
   /* Excel: la fila nueva abre su espacio y se ilumina */
-  .ig-t { display: grid; margin-top: auto; padding-left: 30px; font-size: 12px; font-variant-numeric: tabular-nums; }
-  .ig-t > div:first-child, .ig-t .new > div { display: grid; grid-template-columns: 44px minmax(0, 1fr) auto; gap: 10px; padding: 5px 8px; border-radius: 7px; color: #8a8d93; }
+  .ig-t { display: grid; margin-top: auto; padding-left: 38px; font-size: 13px; font-variant-numeric: tabular-nums; }
+  .ig-t > div:not(.new), .ig-t .new > div { display: grid; grid-template-columns: 50px minmax(0, 1fr) auto; gap: 10px; padding: 3px 8px; border-radius: 7px; color: #8a8d93; }
+  .ig-t .hd { padding-block: 0 4px; border-bottom: 1px solid #eef0f2; border-radius: 0; font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: #a5a8ad; }
   .ig-t span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .ig-t .new { display: grid; }
-  .ig-t .new > div { margin-top: 3px; color: var(--ink); font-weight: 500; background: #ecfdf3; box-shadow: inset 2px 0 0 #16a34a; opacity: 0; transform: translateY(6px); transition: opacity .45s ease .45s, transform .6s cubic-bezier(.22,1,.36,1) .45s; }
+  .ig-t .new > div { margin-top: 2px; color: var(--ink); font-weight: 500; background: #ecfdf3; box-shadow: inset 2px 0 0 #16a34a; opacity: 0; transform: translateY(6px); transition: opacity .45s ease .45s, transform .6s cubic-bezier(.22,1,.36,1) .45s; }
   .ig-w.ya .ig-t .new > div { opacity: 1; transform: none; }
   /* Banda de portátiles angostos: mismo guion con conectores y tipografía más compactos */
   @media (min-width: 961px) and (max-width: 1300px) {
     .pn--x > .ig { left: 20px; right: 20px; grid-template-columns: minmax(0, .8fr) 40px 104px 40px minmax(0, 1.2fr); }
-    .ig-ph { width: 200px; }
+    .ig-ph { width: 228px; margin-bottom: -260px; }
+    .ig-out { grid-auto-rows: 124px; gap: 12px; }
+    .ig-w { padding: 14px 15px; }
+    .ig-w-bd, .ig-t { padding-left: 0; }
+    .ig-w-bd .ig-amt { font-size: 22px; }
     .ig-core span { width: 80px; height: 80px; border-radius: 21px; }
     .ig-core svg { width: 38px; height: 21px; }
-    .ig-w-bd b { font-size: 12.5px; } .ig-w-bd span, .ig-t { font-size: 11px; }
+    .ig-w-bd b { font-size: 14px; } .ig-w-bd span, .ig-t { font-size: 12px; } .ig-w-hd span { display: none; }
   }
   /* Chat del iPhone: Ya Viene Tech responde, cobra y confirma solo; todo en cqw para escalar con el teléfono */
   .wa { display: flex; flex-direction: column; background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160' fill='none' stroke='%23a8977a' stroke-opacity='.32' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'%3E%3Cg transform='translate(14 14) rotate(-12 12 12)'%3E%3Cpath d='M4 8h16l-1.4 13H5.4z'/%3E%3Cpath d='M8.5 8V6.5a3.5 3.5 0 0 1 7 0V8'/%3E%3C/g%3E%3Cg transform='translate(70 8) rotate(10 10 10)'%3E%3Cpath d='M10 17s-7-4.3-7-9.2A3.9 3.9 0 0 1 10 5.6a3.9 3.9 0 0 1 7 2.2C17 12.7 10 17 10 17z'/%3E%3C/g%3E%3Cg transform='translate(118 22) rotate(8 12 10)'%3E%3Cpath d='M3 4h18v11H11l-5 4v-4H3z'/%3E%3Cpath d='M8 9.5h8'/%3E%3C/g%3E%3Cg transform='translate(40 58) rotate(-8 10 10)'%3E%3Cpath d='M10 2.5l2.3 4.8 5.2.7-3.8 3.6.9 5.2L10 14.3l-4.6 2.5.9-5.2L2.5 8l5.2-.7z'/%3E%3C/g%3E%3Cg transform='translate(92 62) rotate(14 12 12)'%3E%3Cpath d='M4 8l8-4 8 4v9l-8 4-8-4z'/%3E%3Cpath d='M4 8l8 4 8-4M12 12v9'/%3E%3C/g%3E%3Cg transform='translate(138 92)'%3E%3Ccircle cx='9' cy='9' r='8'/%3E%3Cpath d='M11.4 6.2c-.5-.8-1.4-1.2-2.4-1.2-1.4 0-2.4.8-2.4 1.9 0 2.6 5 1.4 5 4.1 0 1.1-1.1 2-2.6 2-1.1 0-2-.5-2.5-1.3M9 3.5v11'/%3E%3C/g%3E%3Cg transform='translate(12 100) rotate(-18 12 12)'%3E%3Cpath d='M3 12V4h8l10 10-8 8z'/%3E%3Ccircle cx='7.5' cy='8.5' r='1.4'/%3E%3C/g%3E%3Cg transform='translate(66 112)'%3E%3Cpath d='M10 2v16M2 10h16M4.5 4.5l11 11M15.5 4.5l-11 11' stroke-opacity='.18'/%3E%3C/g%3E%3Cg transform='translate(112 124) rotate(-10 8 12)'%3E%3Crect x='2' y='1' width='13' height='22' rx='3'/%3E%3Cpath d='M7 19h3'/%3E%3C/g%3E%3Ccircle cx='58' cy='40' r='1.6'/%3E%3Ccircle cx='130' cy='64' r='1.6'/%3E%3Ccircle cx='34' cy='146' r='1.6'/%3E%3Ccircle cx='100' cy='100' r='1.4'/%3E%3C/svg%3E") 0 0 / 62cqw 62cqw, #efe7dc; font-family: -apple-system, "SF Pro Text", system-ui, Inter, sans-serif; -webkit-font-smoothing: antialiased; }
@@ -808,10 +815,10 @@
     .ig-wire, .ig-core { display: none; }
     /* En móvil el chat ocupa la escena y las tres apps llegan encima, como notificaciones */
     .pn--x > .ig { grid-template-rows: minmax(0, 1fr); }
-    .ig-ph { grid-column: 1; grid-row: 1; width: 200px; margin-bottom: 0; align-self: start; justify-self: center; }
+    .ig-ph { grid-column: 1; grid-row: 1; width: 200px; margin-block: 0; align-self: start; justify-self: center; }
     .ig-out { grid-column: 1; grid-row: 1; align-self: end; position: relative; z-index: 6; grid-template-rows: repeat(3, auto); grid-auto-rows: auto; max-width: none; gap: 8px; }
     .ig-w { padding: 10px 12px 11px; box-shadow: 0 1px 2px rgba(17,18,20,.05), 0 18px 36px -14px rgba(17,18,20,.32); transform: translateY(16px) scale(.97); }
-    .ig-w-bd, .ig-t { margin-top: 6px; } .ig-t > div:first-child { display: none; } .ig-t .new > div { margin-top: 0; }
+    .ig-w-bd, .ig-t { margin-top: 6px; padding-left: 0; } .ig .ig-t > div:not(.new) { display: none; } .ig-av { width: 32px; height: 32px; font-size: 12px; } .ig-w-bd .ig-amt { font-size: 18px; } .ig .ig-ok { width: 22px; height: 22px; } .ig-ic { width: 24px; height: 24px; } .ig-t .new > div { margin-top: 0; }
     .pn--ds::before, .pn--ds::after { display: none; }
     .pn--x > .ds { left: 0; right: 0; top: 224px; grid-template-columns: minmax(0, 1fr); }
     .ds-tb span { display: none; }
