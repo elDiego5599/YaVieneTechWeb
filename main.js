@@ -315,6 +315,26 @@ function guion(now) {
 }
 guion.t = 0;
 requestAnimationFrame(guion);
+// Integraciones: las ramas salen del chat, pasan por Ya Viene Tech y llegan al centro de cada app; se recalculan al cambiar el tamaño
+const ig = document.querySelector('.ig');
+if (ig) {
+  const wire = ig.querySelector('.ig-wire'), rutas = wire.querySelectorAll('path'), puntos = wire.querySelectorAll('circle');
+  const trazar = () => {
+    const o = ig.getBoundingClientRect(), r = el => el.getBoundingClientRect(), nucleo = r(ig.querySelector('.ig-core span'));
+    if (!nucleo.width) return;
+    const y = nucleo.top + nucleo.height / 2 - o.top, x0 = r(ig.querySelector('.ig-scr')).right - o.left, xa = nucleo.left - o.left - 10, xb = nucleo.right - o.left + 10;
+    rutas[0].setAttribute('d', `M${x0} ${y}H${xa}`);
+    puntos[0].setAttribute('cx', xa); puntos[0].setAttribute('cy', y);
+    const s = r(ig.querySelector('.ig-out'));
+    ig.querySelectorAll('.ig-w').forEach((w, i) => {
+      const x1 = s.left - o.left - 8, y1 = s.top - o.top + w.offsetTop + w.offsetHeight / 2, m = (x1 - xb) / 2;
+      rutas[i + 1].setAttribute('d', `M${xb} ${y}C${xb + m} ${y} ${x1 - m} ${y1} ${x1} ${y1}`);
+      puntos[i + 1].setAttribute('cx', x1); puntos[i + 1].setAttribute('cy', y1);
+    });
+  };
+  const ro = new ResizeObserver(trazar); ro.observe(ig); ig.querySelectorAll('.ig-w').forEach(w => ro.observe(w));
+  ig.closest('.pn').addEventListener('transitionend', trazar);
+}
 // Inventario bajo se puede responder: Cancelar pedido deja 1 pendiente en Inventario; Entendido, o no tocar nada, no deja nada
 {
   const erp = document.querySelector('.erp[data-seq]'), modal = erp.closest('.pn').querySelector('.erp-modal'), pend = erp.querySelector('.erp-pend');

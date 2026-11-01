@@ -613,18 +613,14 @@
 
   /* Integraciones: un pedido entra una vez (chat de WhatsApp en un iPhone real) y Ya Viene Tech lo reparte en tres app windows; sobre blanco */
   .ig svg { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-  .pn--x > .ig { position: absolute; left: 56px; right: 56px; top: 220px; bottom: 40px; display: grid; grid-template-columns: minmax(0, 1fr) 52px 120px 52px minmax(0, 1.5fr); grid-template-rows: auto minmax(0, 1fr); row-gap: 24px; align-items: center; font-family: Inter, sans-serif; }
-  .ig-hd { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: baseline; }
-  .ig-cap { margin: 0; opacity: 0; transform: translateY(5px); transition: opacity .45s ease, transform .5s cubic-bezier(.2,.8,.2,1); font: 500 10.5px/1.2 ui-monospace, 'SF Mono', Menlo, monospace; letter-spacing: .1em; text-transform: uppercase; color: #85888e; }
-  .ig-cap--r { display: inline-flex; align-items: center; gap: 8px; }
-  .ig-cap--r::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #0d9488; }
-  .ig-cap.ya { opacity: 1; transform: none; }
-  .ig-l, .ig-fan { display: block; overflow: visible; }
-  .ig-l path, .ig-fan path { fill: none; stroke: #e4e5e8; stroke-width: 1.5; stroke-linecap: round; }
-  .ig-l .go, .ig-fan .go { stroke: #0d9488; stroke-width: 2; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset .8s cubic-bezier(.6,0,.3,1); }
-  .ig-fan .go:nth-of-type(5) { transition-delay: .1s; } .ig-fan .go:nth-of-type(6) { transition-delay: .2s; }
-  .ig-l.ya .go, .ig-fan.ya .go { stroke-dashoffset: 0; }
-  .ig-core { grid-column: 3; grid-row: 2; justify-self: center; display: grid; justify-items: center; gap: 10px; }
+  .pn--x > .ig { position: absolute; left: 56px; right: 56px; top: 220px; bottom: 40px; display: grid; grid-template-columns: minmax(0, 1fr) 52px 120px 52px minmax(0, 1.5fr); grid-template-rows: minmax(0, 1fr); align-items: center; font-family: Inter, sans-serif; }
+  /* Ramas: se calculan con JS desde el chat hasta cada app y se dibujan cuando el pedido pasa por Ya Viene Tech */
+  .ig .ig-wire { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 0; }
+  .ig-wire path { fill: none; stroke: #0d9488; stroke-width: 1.75; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; transition: stroke-dashoffset .9s cubic-bezier(.65,0,.35,1), opacity .3s ease; }
+  .ig-wire path.ya { stroke-dashoffset: 0; opacity: .55; }
+  .ig-wire circle { fill: #0d9488; stroke: #fff; stroke-width: 2; opacity: 0; transform: scale(0); transform-box: fill-box; transform-origin: center; transition: opacity .3s ease .75s, transform .45s cubic-bezier(.3,1.4,.5,1) .75s; }
+  .ig-wire circle.ya { opacity: 1; transform: none; }
+  .ig-core { position: relative; z-index: 1; grid-column: 3; grid-row: 1; justify-self: center; display: grid; justify-items: center; gap: 10px; }
   .ig-core span { width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; color: #fff; background: var(--ink); transition: box-shadow .7s ease; box-shadow: 0 1px 2px rgba(17,18,20,.1), 0 20px 44px -24px rgba(17,18,20,.32); }
   .ig-core.ya span { box-shadow: 0 0 0 9px rgba(13,148,136,.09), 0 22px 44px -16px rgba(13,148,136,.4); }
   .ig-core span { position: relative; }
@@ -633,12 +629,12 @@
   @keyframes ig-halo { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.45); } }
   .ig-core svg { width: 40px; height: 22px; fill: currentColor; stroke: none; }
   .ig-core b { font: 600 13px/1 Inter, sans-serif; color: var(--ink); white-space: nowrap; }
-  .ig-ph { position: relative; grid-column: 1; grid-row: 2; justify-self: end; align-self: end; width: 236px; margin-bottom: -150px; aspect-ratio: 720 / 1469; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
+  .ig-ph { position: relative; grid-column: 1; grid-row: 1; justify-self: end; align-self: start; width: 236px; margin-bottom: -200px; z-index: 1; aspect-ratio: 720 / 1469; opacity: 0; transform: translateY(12px) scale(.985); transition: opacity .4s ease, transform .55s cubic-bezier(.2,.8,.2,1); }
   .ig-ph.ya { opacity: 1; transform: none; }
   .ig-ph > img { position: absolute; inset: 0; z-index: 5; width: 100%; height: 100%; pointer-events: none; filter: drop-shadow(0 26px 30px rgba(17,18,20,.24)); }
   .ig-scr { position: absolute; left: 5.1%; top: 2.2%; width: 89.8%; height: 95.57%; border-radius: 14.4% / 6.62%; overflow: hidden; background: #efeae2; container-type: inline-size; }
   .ig-scr::before { content: ''; position: absolute; z-index: 4; top: 3cqw; left: 50%; width: 30cqw; height: 8.8cqw; border-radius: 5cqw; background: #111214; transform: translateX(-50%); }
-  .ig-out { grid-column: 5; grid-row: 2; display: grid; gap: 14px; align-content: center; }
+  .ig-out { position: relative; z-index: 1; grid-column: 5; grid-row: 1; display: grid; gap: 14px; align-content: center; }
   /* Las tres apps como notificaciones de calidad: icono con brillo, nombre, hora y un check que se dibuja */
   .ig-w { position: relative; padding: 12px 14px 13px; border-radius: 16px; background: #fff; border: 1px solid rgba(17,18,20,.07);
     box-shadow: 0 1px 2px rgba(17,18,20,.04), 0 14px 32px -14px rgba(17,18,20,.2);
@@ -674,9 +670,7 @@
   /* Banda de portátiles angostos: mismo guion con conectores y tipografía más compactos */
   @media (min-width: 961px) and (max-width: 1300px) {
     .pn--x > .ig { left: 20px; right: 20px; grid-template-columns: minmax(0, .8fr) 40px 104px 40px minmax(0, 1.2fr); }
-    .ig-l { width: 40px; }
-    .ig-fan { width: 40px; }
-    .ig-ph { width: 200px; margin-bottom: -125px; }
+    .ig-ph { width: 200px; }
     .ig-core span { width: 80px; height: 80px; border-radius: 21px; }
     .ig-core svg { width: 38px; height: 21px; }
     .ig-w-bd b { font-size: 12.5px; } .ig-w-bd span, .ig-t { font-size: 11px; }
@@ -802,7 +796,7 @@
     .erp-side { display: none; } .erp-main { border-top-left-radius: 14px; padding: 0 16px; }
     .pn--x > .erp-modal { inset: 224px 0 0 16px; }
     .pn--x > .ig { left: 16px; right: 16px; top: 224px; bottom: 16px; grid-template-columns: minmax(0, 1fr); align-content: start; gap: 10px; }
-    .ig-l, .ig-fan, .ig-core, .ig-hd { display: none; }
+    .ig-wire, .ig-core { display: none; }
     /* En móvil el chat ocupa la escena y las tres apps llegan encima, como notificaciones */
     .pn--x > .ig { grid-template-rows: minmax(0, 1fr); }
     .ig-ph { grid-column: 1; grid-row: 1; width: 200px; margin-bottom: 0; align-self: start; justify-self: center; }
@@ -822,7 +816,7 @@
     .erp-r > :not(:nth-child(2), :nth-child(5)), .erp-h > :not(:nth-child(2), :nth-child(5)) { display: none; }
     .ds-n { font-size: 40px; }
   }
-  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-cap { opacity: 1 !important; transform: none !important; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-core, .ig-wire circle { opacity: 1 !important; transform: none !important; } .ig-wire path { opacity: .55 !important; stroke-dashoffset: 0 !important; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
   .pn .browser.shop { background: #fff; }
   .shop .top { align-items: center; }
   .shop .top span { flex: 1; margin: 0 28px 0 18px; padding: 3px 0; border-radius: 6px; background: #f1f2f4; font: 500 10.5px Inter, sans-serif; color: var(--muted); text-align: center; }
