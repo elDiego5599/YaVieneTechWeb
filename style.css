@@ -622,8 +622,10 @@
   .ig-wire .f { stroke: #16a34a; filter: drop-shadow(0 0 3px rgba(22,163,74,.35)); }
   .ig-wire .t.ya { opacity: 1; stroke-dashoffset: 0; transition: stroke-dashoffset .55s cubic-bezier(.4,0,.2,1), opacity .2s ease; }
   .ig-wire .f.ya { opacity: 1; stroke-dashoffset: 0; transition: stroke-dashoffset .6s cubic-bezier(.55,0,.25,1), opacity .15s ease; }
-  .ig-wire circle { fill: #fff; stroke: #16a34a; stroke-width: 2; opacity: 0; transform: scale(.3); transform-box: fill-box; transform-origin: center; transition: opacity .4s ease, transform .4s ease; }
-  .ig-wire circle.ya { opacity: 1; transform: none; transition: opacity .2s ease, transform .45s cubic-bezier(.3,1.5,.5,1); }
+  /* Pulso: un destello corto que recorre la rama una y otra vez mientras la integración está viva */
+  .ig-wire .p { stroke: #86efac; stroke-width: 2.5; stroke-dasharray: .08 1.2; stroke-dashoffset: .08; filter: drop-shadow(0 0 4px rgba(74,222,128,.9)); transition: opacity .4s ease; }
+  .ig-wire .p.ya { opacity: 1; animation: ig-pulso 1.8s cubic-bezier(.45,0,.55,1) infinite; transition: opacity .3s ease; }
+  @keyframes ig-pulso { from { stroke-dashoffset: .08; } to { stroke-dashoffset: -1.1; } }
   .ig-core { position: relative; z-index: 1; grid-column: 3; grid-row: 1; justify-self: center; display: grid; justify-items: center; gap: 10px; opacity: 0; transform: scale(.9); filter: blur(4px); transition: opacity .45s ease, transform .5s ease, filter .45s ease; }
   .ig-core.ya { opacity: 1; transform: none; filter: none; transition: opacity .5s ease, transform .7s cubic-bezier(.22,1,.36,1), filter .5s ease; }
   .ig-core span { position: relative; width: 84px; height: 84px; border-radius: 22px; display: grid; place-items: center; color: #fff; background: linear-gradient(180deg, #2a2c31, #111214); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 1px 2px rgba(17,18,20,.12), 0 20px 40px -20px rgba(17,18,20,.45); transition: box-shadow .6s ease; }
@@ -822,7 +824,7 @@
     .erp-r > :not(:nth-child(2), :nth-child(5)), .erp-h > :not(:nth-child(2), :nth-child(5)) { display: none; }
     .ds-n { font-size: 40px; }
   }
-  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-core, .ig-wire circle { opacity: 1 !important; transform: none !important; filter: none !important; } .ig-wire path { opacity: 1 !important; stroke-dashoffset: 0 !important; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .pn.on .ds-l, .pn.on .ds-a, .pn.on .ds-dot, .pn.on .ds-top p::before, .pn.on .ds-ph, .pn.on .ds-rp { animation-duration: .01s; animation-delay: 0s; } .ig .ig-ph, .ig .ig-w, .ig .ig-core { opacity: 1 !important; transform: none !important; filter: none !important; } .ig-wire .t, .ig-wire .f { opacity: 1 !important; stroke-dashoffset: 0 !important; } .ig-wire .p { display: none; } .ig .ig-ok { opacity: 1 !important; transform: none !important; } .ig-ok path { stroke-dashoffset: 0 !important; } .ig-t .new { grid-template-rows: 1fr !important; } .wa-m { transition: none !important; } .wa-m:not(.wa-ty) { grid-template-rows: 1fr; opacity: 1; transform: none; } }
   .pn .browser.shop { background: #fff; }
   .shop .top { align-items: center; }
   .shop .top span { flex: 1; margin: 0 28px 0 18px; padding: 3px 0; border-radius: 6px; background: #f1f2f4; font: 500 10.5px Inter, sans-serif; color: var(--muted); text-align: center; }

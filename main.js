@@ -319,18 +319,18 @@ requestAnimationFrame(guion);
 const ig = document.querySelector('.ig');
 if (ig) {
   const ramas = [...ig.querySelectorAll('.ig-r')];
-  const pon = (g, d, x, y) => { g.querySelectorAll('path').forEach(p => p.setAttribute('d', d)); const c = g.querySelector('circle'); if (c) { c.setAttribute('cx', x); c.setAttribute('cy', y); } };
+  const pon = (g, d) => g.querySelectorAll('path').forEach(p => p.setAttribute('d', d));
+  // Ramas rectas con esquinas redondeadas: nacen debajo del chat, se esconden bajo el núcleo y terminan debajo de cada app
   const trazar = () => {
-    const o = ig.getBoundingClientRect(), r = el => el.getBoundingClientRect(), nucleo = r(ig.querySelector('.ig-core span'));
-    if (!nucleo.width) return;
-    // el núcleo entra escalado: se usa su caja sin escala (centro igual, lado fijo)
-    const cx = nucleo.left + nucleo.width / 2 - o.left, lado = ig.querySelector('.ig-core span').offsetWidth / 2;
-    const y = nucleo.top + nucleo.height / 2 - o.top, x0 = r(ig.querySelector('.ig-scr')).right - o.left, xa = cx - lado - 12, xb = cx + lado + 12;
-    pon(ramas[0], `M${x0} ${y}H${xa}`);
-    const s = r(ig.querySelector('.ig-out'));
+    const o = ig.getBoundingClientRect(), r = el => el.getBoundingClientRect(), nucleo = ig.querySelector('.ig-core span'), n = r(nucleo);
+    if (!n.width) return;
+    const cx = n.left + n.width / 2 - o.left, y = n.top + n.height / 2 - o.top, lado = nucleo.offsetWidth / 2;
+    pon(ramas[0], `M${r(ig.querySelector('.ig-scr')).right - o.left - 24} ${y}H${cx}`);
+    const s = r(ig.querySelector('.ig-out')), x1 = s.left - o.left + 24, xs = Math.round((cx + lado + s.left - o.left) / 2), rad = 12;
     ig.querySelectorAll('.ig-w').forEach((w, i) => {
-      const x1 = s.left - o.left - 10, y1 = s.top - o.top + w.offsetTop + w.offsetHeight / 2, m = (x1 - xb) * .55;
-      pon(ramas[i + 1], `M${xb} ${y}C${xb + m} ${y} ${x1 - m} ${y1} ${x1} ${y1}`, x1, y1);
+      const y1 = s.top - o.top + w.offsetTop + w.offsetHeight / 2, dy = y1 - y, k = Math.sign(dy), q = Math.min(rad, Math.abs(dy) / 2);
+      pon(ramas[i + 1], Math.abs(dy) < 2 ? `M${cx} ${y}H${x1}`
+        : `M${cx} ${y}H${xs - q}Q${xs} ${y} ${xs} ${y + k * q}V${y1 - k * q}Q${xs} ${y1} ${xs + q} ${y1}H${x1}`);
     });
   };
   const ro = new ResizeObserver(trazar); ro.observe(ig); ig.querySelectorAll('.ig-w').forEach(w => ro.observe(w));
