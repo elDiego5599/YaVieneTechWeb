@@ -378,25 +378,43 @@ enVista.observe(escena);
 // Las secciones de abajo aparecen con el mismo observador
 document.querySelectorAll('.rv').forEach(el => enVista.observe(el));
 
-// Proceso: cuando el paso siguiente sube encima, el de abajo se encoge un poco y se apaga, como una carta que queda atrás
+// Proceso: cada tarjeta rota sus vistas con las pestañas, y al subir la siguiente la de atrás se hunde y se desvanece
 {
-  const pasos = [...document.querySelectorAll('.paso')];
-  let pend = 0;
-  const pinta = () => {
-    pend = 0;
-    pasos.forEach((p, i) => {
-      const sig = pasos[i + 1], inn = p.firstElementChild;
-      if (!sig) return;
-      const r = p.getBoundingClientRect(), d = sig.getBoundingClientRect().top - r.top;
-      const t = Math.min(1, Math.max(0, 1 - d / r.height));
-      inn.style.setProperty('--s', (1 - t * .05).toFixed(4));
-      inn.style.setProperty('--o', (t * .5).toFixed(3));
-    });
-  };
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const caja = document.querySelector('.pasos'), pasos = [...caja.children];
+  const quieto = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ojo = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle('vis', e.isIntersecting)), { threshold: .3 });
+  pasos.forEach(p => {
+    const tabs = [...p.querySelectorAll('.pt button')], vistas = [...p.querySelectorAll('.pv-s')];
+    const ve = n => { tabs.forEach((t, i) => t.classList.toggle('on', i === n)); vistas.forEach((v, i) => v.classList.toggle('on', i === n)); };
+    tabs.forEach((t, i) => t.addEventListener('click', () => ve(i)));
+    p.querySelector('.pt').addEventListener('animationend', e => { if (e.animationName === 'llena') ve((tabs.indexOf(e.target.parentElement) + 1) % tabs.length); });
+    ojo.observe(p);
+  });
+  if (!quieto) {
+    let pend = 0, alto = 0, arriba = 0;
+    const mide = () => {
+      pasos.forEach(p => p.style.removeProperty('--t'));
+      alto = Math.max(...pasos.map(p => p.offsetHeight));
+      const cabe = innerWidth > 960 && innerHeight >= alto + 140;
+      caja.classList.toggle('apila', cabe);
+      arriba = Math.max(96, (innerHeight - alto) / 2 + 30);
+      caja.style.setProperty('--top', arriba + 'px');
+      pinta();
+    };
+    const pinta = () => {
+      pend = 0;
+      if (!caja.classList.contains('apila')) return;
+      pasos.forEach((p, i) => {
+        const sig = pasos[i + 1];
+        if (!sig) return;
+        const d = sig.getBoundingClientRect().top - arriba;
+        const t = Math.min(1, Math.max(0, 1 - d / (p.offsetHeight + 60)));
+        p.style.setProperty('--t', t.toFixed(4));
+      });
+    };
     addEventListener('scroll', () => { pend ||= requestAnimationFrame(pinta); }, { passive: true });
-    addEventListener('resize', pinta);
-    pinta();
+    addEventListener('resize', mide);
+    mide();
   }
 }
 
