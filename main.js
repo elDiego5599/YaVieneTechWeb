@@ -378,12 +378,26 @@ enVista.observe(escena);
 // Las secciones de abajo aparecen con el mismo observador
 document.querySelectorAll('.rv').forEach(el => enVista.observe(el));
 
-// Proceso: una fila abierta a la vez y el lienzo muestra la pantalla de ese paso
+// Proceso: cuando el paso siguiente sube encima, el de abajo se encoge un poco y se apaga, como una carta que queda atrás
 {
-  const filas = [...document.querySelectorAll('.how-row')], pantallas = document.querySelectorAll('.how-ui');
-  filas.forEach((f, i) => f.addEventListener('click', () => filas.forEach((g, j) => {
-    g.classList.toggle('on', i === j); g.setAttribute('aria-expanded', i === j); pantallas[j].classList.toggle('on', i === j);
-  })));
+  const pasos = [...document.querySelectorAll('.paso')];
+  let pend = 0;
+  const pinta = () => {
+    pend = 0;
+    pasos.forEach((p, i) => {
+      const sig = pasos[i + 1], inn = p.firstElementChild;
+      if (!sig) return;
+      const r = p.getBoundingClientRect(), d = sig.getBoundingClientRect().top - r.top;
+      const t = Math.min(1, Math.max(0, 1 - d / r.height));
+      inn.style.setProperty('--s', (1 - t * .05).toFixed(4));
+      inn.style.setProperty('--o', (t * .5).toFixed(3));
+    });
+  };
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    addEventListener('scroll', () => { pend ||= requestAnimationFrame(pinta); }, { passive: true });
+    addEventListener('resize', pinta);
+    pinta();
+  }
 }
 
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
