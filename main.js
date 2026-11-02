@@ -234,37 +234,32 @@ let uso = 'app';
 const fmtCO = new Intl.NumberFormat('es-CO');
 // El panel de datos vive mientras está activo: ventas siguen subiendo, un KPI hace tick por ciclo y la curva crece más allá de "Ahora".
 function vivoDatos() {
-  const pn = escena.querySelector('.pn--ds'), n = pn.querySelector('.ds-n'), l = pn.querySelector('.ds-l'), a = pn.querySelector('.ds-a'), dot = pn.querySelector('.ds-dot');
-  const vn = pn.querySelector('.ds-m-n'), vp = pn.querySelector('.ds-m-p'), vt = pn.querySelector('.ds-m-t');
+  const pn = escena.querySelector('.pn--ds'), n = pn.querySelector('.ds-n'), l = pn.querySelector('.ds-l'), a = pn.querySelector('.ds-a');
   const kpi = [...pn.querySelectorAll('.ds-k')].map(el => ({ b: el.querySelector('b'), em: el.querySelector('em'), v: +el.querySelector('b').textContent.replace(/\D/g, ''), d: +el.querySelector('em').textContent.replace(/\D/g, ''), esMoneda: el.querySelector('b').textContent.includes('$') }));
-  const lineas = [l.getAttribute('d'), a.getAttribute('d').replace(/V130H0z$/, '')], cola = [' C348 29 356 28.2 364 27.5', ' C374 26.7 382 26.3 392 26.2', ' C395 26.2 397.5 26.1 400 26.1'], puntos = [[364, 27.5], [392, 26.2], [400, 26.1]];
+  const lineas = [l.getAttribute('d'), a.getAttribute('d').replace(/V130H0z$/, '')], cola = [' C348 29 356 28.2 364 27.5', ' C374 26.7 382 26.3 392 26.2', ' C395 26.2 397.5 26.1 400 26.1'];
   const defK = [[126, '+12'], [33480, '+4%'], [18, '+6']];
   const tm = [], armar = t => { t.b.textContent = t.esMoneda ? '$' + fmtCO.format(Math.round(t.v)) : t.v; t.b.classList.remove('bump'); void t.b.offsetWidth; t.b.classList.add('bump'); };
   let ventas = 4218300, i = 0;
   const paso = () => {
     if (!escena.classList.contains('vis')) { tm.push(setTimeout(paso, 1400)); return; }
     const r = Math.random();
-    if (r < .5) { const s = '$' + fmtCO.format(Math.round((ventas += 9000 + Math.random() * 29000) / 100) * 100); n.textContent = s; if (vn) vn.textContent = s; }
+    if (r < .5) { const s = '$' + fmtCO.format(Math.round((ventas += 9000 + Math.random() * 29000) / 100) * 100); n.textContent = s; }
     else if (i < cola.length && r < .78) {
       l.setAttribute('d', lineas[0] + cola.slice(0, ++i).join(''));
       a.setAttribute('d', lineas[1] + cola.slice(0, i).join('') + 'V130H0z');
-      dot.style.left = puntos[i - 1][0] / 4 + '%'; dot.style.top = puntos[i - 1][1] / 1.3 + '%';
     }
     else if (r < .9) { // entra un pedido: el ticket promedio se recalcula con las ventas reales
       kpi[0].v++; kpi[0].d++; kpi[0].em.textContent = '+' + kpi[0].d; armar(kpi[0]);
       kpi[1].v = ventas / kpi[0].v; armar(kpi[1]);
-      if (vp) { vp.textContent = kpi[0].v; vt.textContent = '$' + fmtCO.format(Math.round(kpi[1].v)); }
     }
     else if (kpi[2]) { kpi[2].v++; kpi[2].d++; kpi[2].em.textContent = '+' + kpi[2].d; armar(kpi[2]); }
     tm.push(setTimeout(paso, 2600 + Math.random() * 2400));
   };
   tm.forEach(clearTimeout); tm.length = 0;
-  l.setAttribute('d', lineas[0]); a.setAttribute('d', lineas[1] + 'V130H0z'); dot.style.left = ''; dot.style.top = '';
+  l.setAttribute('d', lineas[0]); a.setAttribute('d', lineas[1] + 'V130H0z');
   ventas = 4218300; i = 0;
   n.textContent = '$' + fmtCO.format(ventas);
-  if (vn) vn.textContent = n.textContent;
   kpi.forEach((t, k) => { t.v = defK[k][0]; t.d = +defK[k][1].replace(/\D/g, ''); t.b.textContent = t.esMoneda ? '$' + fmtCO.format(t.v) : t.v; t.em.textContent = defK[k][1]; });
-  if (vp) { vp.textContent = kpi[0].v; vt.textContent = '$' + fmtCO.format(Math.round(kpi[1].v)); }
   if (uso !== 'data' || clra.matches) return;
   tm.push(setTimeout(paso, 3200));
 }
@@ -287,7 +282,7 @@ function vaya(row, quieto) {
     if (n && !clra.matches) {
       const t0 = performance.now();
       (function tick(now) {
-        const k = Math.min(1, (now - t0) / 1400), p = 1 - (1 - k) ** 3;
+        const k = Math.min(1, (now - t0) / 1400), p = .9 + .1 * (1 - (1 - k) ** 3); /* arranca en ~90%: la cifra grande nunca lee $0 */
         n.textContent = '$' + fmt.format(Math.round(4218300 * p / 100) * 100);
         if (k < 1 && uso === 'data') requestAnimationFrame(tick);
       })(t0);
