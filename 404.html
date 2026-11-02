@@ -75,10 +75,24 @@
   nav .links { display: flex; gap: 6px; }
   nav .links a { white-space: nowrap; padding: 12px 18px; border-radius: 999px; font-size: 17px; font-weight: 600; color: var(--ink); text-decoration: none; transition: background .2s, transform .5s cubic-bezier(.2,.8,.2,1); }
   nav .links a:hover { background: rgba(17,18,20,.05); transform: translateY(-2px); }
+  /* Menú móvil, igual que en el sitio: disclosure nativo sobre vidrio */
+  .mnav { display: none; }
+  @media (max-width: 760px) {
+    .mnav { display: block; position: relative; }
+    .mnav summary { list-style: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; background: rgba(17,18,20,.06); cursor: pointer; transition: background .2s; }
+    .mnav summary::-webkit-details-marker { display: none; }
+    .mnav summary svg { width: 20px; height: 20px; color: var(--ink); transition: transform .3s ease; }
+    .mnav[open] summary { background: rgba(17,18,20,.1); }
+    .mnav[open] summary svg { transform: rotate(90deg); }
+    .mnav-x { position: absolute; top: calc(100% + 12px); right: 0; z-index: 12; display: grid; gap: 4px; min-width: 218px; padding: 10px; border-radius: 18px; background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); box-shadow: inset 0 0 0 1px rgba(17,18,20,.06), 0 30px 60px -24px rgba(17,18,20,.4); animation: rise .35s cubic-bezier(.2,.8,.2,1) backwards; }
+    .mnav-x a { padding: 10px 16px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; color: var(--ink); }
+    .mnav-x a:hover { background: rgba(17,18,20,.05); }
+  }
+  @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
   @media (max-width: 760px) {
     nav .links { display: none; }
     .brand span { font-size: 17px; }
-    nav .btn { font-size: 15px; padding: 0 18px; height: 40px; box-shadow: none; }
+    nav .btn { font-size: 15px; padding: 0 18px; height: 44px; box-shadow: none; }
     nav { top: 20px; height: 56px; gap: 12px; padding: 0 8px 0 16px; max-width: calc(100% - 40px); border-radius: 18px; }
     .brand svg { width: 32px; height: 17px; }
   }
@@ -109,7 +123,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .brand i { animation: none; }
-    .btn, .btn svg, nav .links a { transition: none; }
+    .btn, .btn svg, nav .links a, .mnav summary svg, .mnav-x { transition: none; animation: none; }
   }
 </style>
 </head>
@@ -129,6 +143,14 @@
     <a href="https://yavienetech.com">Ya Viene</a>
     <a href="index.html#contacto" data-raiz="/#contacto">Contacto</a>
   </div>
+  <details class="mnav">
+    <summary aria-label="Menú de secciones"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+    <div class="mnav-x">
+      <a href="index.html#soluciones" data-raiz="/#soluciones">Soluciones</a>
+      <a href="https://yavienetech.com">Ya Viene</a>
+      <a href="index.html#contacto" data-raiz="/#contacto">Contacto</a>
+    </div>
+  </details>
   <a class="btn" href="https://wa.me/573004438626" target="_blank" rel="noopener">Hablemos</a>
 </nav>
 
@@ -150,6 +172,8 @@
 <script>
 // En http(s) enlaces y favicon apuntan a la raíz, así sirven desde cualquier ruta rota; en file:// se quedan relativos para el preview
 document.querySelectorAll('[data-raiz]').forEach(a => { if (location.protocol !== 'file:' && !location.pathname.endsWith('/404.html')) a.href = a.dataset.raiz; });
+// El menú móvil se cierra al elegir una sección
+document.querySelectorAll('.mnav-x a').forEach(a => a.addEventListener('click', () => a.closest('.mnav').removeAttribute('open')));
 </script>
 
 </body>

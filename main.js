@@ -4,6 +4,8 @@ document.getElementById('contactForm').addEventListener('submit', e => {
   open('https://wa.me/573004438626?text=' + encodeURIComponent(`Hola, soy ${f.get('n')}. ${f.get('m')}`), '_blank', 'noopener');
 });
 document.documentElement.classList.add('js'); // las tarjetas del bento solo se ocultan cuando el script corre (no-JS = visibles)
+// El menú móvil se cierra al elegir una sección
+document.querySelectorAll('.mnav-x a').forEach(a => a.addEventListener('click', () => a.closest('.mnav').removeAttribute('open')));
 // El nav sube con la página hasta tocar el techo y ahí se queda quieto
 {
   const nav = document.querySelector('nav');
@@ -362,7 +364,7 @@ const enVista = new IntersectionObserver(es => es.forEach(e => {
   if (e.target === escena) { escena.classList.toggle('vis', e.isIntersecting); return; }
   if (!e.isIntersecting) return;
   e.target.classList.add('seen'); enVista.unobserve(e.target);
-}), { threshold: .15 });
+}), { threshold: .05, rootMargin: '0px 0px 220px 0px' });
 rows.forEach((r, i) => { r.style.transitionDelay = i * 55 + 'ms'; enVista.observe(r); r.addEventListener('transitionend', () => r.style.transitionDelay = '', { once: true }); });
 enVista.observe(escena);
 // Las secciones de abajo aparecen con el mismo observador

@@ -72,7 +72,7 @@
     background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
     box-shadow: inset 0 -1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(17,18,20,.05), 0 12px 32px -18px rgba(17,18,20,.28);
   }
-  nav.pin { position: fixed; top: 0; }
+  nav.pin { position: fixed; top: 0; background: rgba(255,255,255,.92); }
   @media (prefers-reduced-transparency: reduce) { nav { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; } }
   @media (prefers-contrast: more) {
     :root { --muted: #3f4247; --line: rgba(17,18,20,.24); }
@@ -87,6 +87,19 @@
   nav .links a { white-space: nowrap; padding: 12px 18px; border-radius: 999px; font-size: 17px; font-weight: 600; color: var(--ink); transition: background .2s, transform .5s cubic-bezier(.2,.8,.2,1), scale .12s ease-out; }
   nav .btn { font-size: 17px; font-weight: 700; padding: 15px 28px; }
   nav .links a:hover { background: rgba(17,18,20,.05); transform: translateY(-2px); }
+  /* Menú de secciones en pantallas angostas: disclosure nativo sobre vidrio, sin JS extra (mismo corte donde .links desaparece) */
+  .mnav { display: none; }
+  @media (max-width: 760px) {
+    .mnav { display: block; position: relative; margin-left: auto; }
+    .mnav summary { list-style: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 999px; background: rgba(17,18,20,.06); cursor: pointer; transition: background .2s; }
+    .mnav summary::-webkit-details-marker { display: none; }
+    .mnav summary svg { width: 20px; height: 20px; color: var(--ink); transition: transform .3s ease; }
+    .mnav[open] summary { background: rgba(17,18,20,.1); }
+    .mnav[open] summary svg { transform: rotate(90deg); }
+    .mnav-x { position: absolute; top: calc(100% + 12px); right: 0; z-index: 12; display: grid; gap: 4px; min-width: 218px; padding: 10px; border-radius: 18px; background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); box-shadow: inset 0 0 0 1px rgba(17,18,20,.06), 0 30px 60px -24px rgba(17,18,20,.4); animation: rise .35s cubic-bezier(.2,.8,.2,1) backwards; }
+    .mnav-x a { padding: 10px 16px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; color: var(--ink); }
+    .mnav-x a:hover { background: rgba(17,18,20,.05); }
+  }
   .btn {
     display: inline-flex; align-items: center; gap: 10px; border-radius: 999px;
     background: var(--ink-2); color: #eef1f6; font-weight: 600; font-size: 16px; padding: 14px 24px;
@@ -102,8 +115,9 @@
   .copy { position: relative; z-index: 4; text-align: center; padding: calc(96px + clamp(28px, 6vh, 64px)) 16px 0; }
   h1 {
     font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(38px, 5.2vw, 76px);
-    line-height: .96; letter-spacing: -.035em; color: var(--ink);
+    line-height: .96; letter-spacing: -.035em; color: var(--muted);
   }
+  /* Jerarquía del titular: el planteamiento se atenúa y el desenlace queda a plena tinta */
   h1 .soft { color: var(--ink); }
   h1 em { font-style: normal; }
   /* "Tech" lleva los colores del túnel y el brillo se desliza despacio */
@@ -451,8 +465,9 @@
   .pn h4 { font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 2.9vw, 42px); line-height: 1.05; letter-spacing: -.045em; text-wrap: balance; }
   .pn figcaption p { margin-top: 14px; color: var(--muted); font-size: 16.5px; line-height: 1.55; max-width: 46ch; }
   /* Apps: el mismo iPhone de Ya Viene, grande, saliendo desde abajo con avisos flotando alrededor */
-  .pn .apps { align-self: stretch; justify-self: stretch; }
-  .apps .yv { position: absolute; left: 50%; top: 9%; width: 360px; margin-left: -190px; }
+  .pn .apps { align-self: stretch; justify-self: stretch; container-type: inline-size; }
+  /* El iPhone vive en su columna: a escala (cqw de la columna) se acorta en pantallas donde la columna es angosta (961-1300) y deja de pisar el texto */
+  .apps .yv { position: absolute; left: 50%; top: 9%; width: min(360px, 96cqw); margin-left: calc(-1 * min(190px, 48cqw) - 10px); }
   /* Los artefactos suben de escala para el marco grande del escenario */
   .pn .phone { margin-top: 0; }
   .pn .bars3 { height: 150px; gap: 13px; }
@@ -932,7 +947,7 @@
   @media (max-width: 760px) {
     nav .links { display: none; }
     .brand span { font-size: 17px; }
-    nav .btn { font-size: 15px; padding: 0 18px; height: 40px; box-shadow: none; }
+    nav .btn { font-size: 15px; padding: 0 18px; height: 44px; box-shadow: none; }
     /* En móvil la nav también flota despegada dentro del marco */
     nav { --t: 20px; --r0: 18px; --r1: 20px; height: 56px; gap: 12px; padding: 0 8px 0 16px; }
     .brand svg { width: 32px; height: 17px; }
@@ -949,7 +964,8 @@
   .blk > header p { max-width: 560px; margin: 16px auto 0; color: var(--muted); font-size: 18px; line-height: 1.5; }
   /* Aparecen al entrar en pantalla, escalonadas con --d. Es animation y no transition para no retrasar el hover */
   .js .rv:not(.seen) { opacity: 0; }
-  .js .rv.seen { animation: rise .9s cubic-bezier(.2,.8,.2,1) calc(var(--d, 0) * 90ms) backwards; }
+  /* Entradas cortas y con retardo topeado: el salto de scroll rápido nunca ve texto invisible más de ~700ms */
+  .js .rv.seen { animation: rise .55s cubic-bezier(.2,.8,.2,1) calc(min(var(--d, 0), 2) * 90ms) backwards; }
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
 
   /* Caso Ya Viene: módulo de historia de cliente al estilo incident.io. Texto arriba y abajo a la izquierda, medio cuadrado a la derecha */
@@ -1285,7 +1301,7 @@
   .pc::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--line); pointer-events: none; z-index: 5; }
   .pc h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 36px; line-height: 1.1; letter-spacing: -.04em; }
   .pc > div > p { margin-top: 12px; color: #6b6f78; font-size: 19px; line-height: 1.45; letter-spacing: -.01em; }
-  .pc-art { position: relative; margin-top: auto; height: 320px; font-family: Inter, sans-serif; letter-spacing: -.01em; }
+  .pc-art { position: relative; margin-top: auto; height: 416px; font-family: Inter, sans-serif; letter-spacing: -.01em; }
   .pc-pan { position: absolute; left: 6%; right: 6%; top: 24px; bottom: -24px; padding: 20px; border-radius: 22px 22px 0 0; background: #fff;
     box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 30px 60px -30px rgba(17,18,20,.35); }
   .pc-pan > small, .pc-fl small { display: block; font-size: 13px; color: #8a8e97; }
@@ -1369,28 +1385,31 @@
   .aura i:nth-child(3) { --g: rgba(198,62,134,1); --o: .6; width: 900px; aspect-ratio: 1; left: -14%; bottom: -30%; }
   .cierre { max-width: 1180px; margin: 0 auto; padding: 200px 16px 0; text-align: center; }
   .cierre h2 { font-family: Manrope, sans-serif; font-weight: 700; font-size: clamp(44px, 5.4vw, 80px); line-height: 1; letter-spacing: -.035em; text-wrap: balance; }
-  .cierre > p { margin: 14px auto 0; max-width: 34ch; font-size: 19px; line-height: 1.45; color: rgba(255,255,255,.82); }
+  .cierre > p { margin: 14px auto 0; max-width: 34ch; font-size: 19px; font-weight: 700; line-height: 1.45; color: rgba(255,255,255,.95); }
   .acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 32px; }
   .fin .btn { background: #fff; color: var(--ink); box-shadow: 0 1px 2px rgba(17,18,20,.12), 0 8px 18px -6px rgba(17,18,20,.25); }
+  /* El hover global pinta el botón de oscuro; acá se queda blanco, solo mantiene la elevación */
   .fin .btn:hover { background: #fff; }
-  .fin .btn.ghost { background: transparent; color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.55); }
-  .fin .btn.ghost:hover { background: rgba(255,255,255,.1); }
+  /* Vidrio oscuro local: sobre el degradado magenta, el blanco puro no alcanza 4.5:1 salvo que el respaldo baje de ~L .18 */
+  .fin .btn.ghost { background: rgba(17,18,20,.38); color: #fff; box-shadow: inset 0 0 0 1px rgba(255,255,255,.28); }
+  .fin .btn.ghost:hover { background: rgba(17,18,20,.3); }
   .fin form { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 12px; max-width: 760px; margin: 72px auto 0; padding: 12px; text-align: left;
     border-radius: 16px; background: rgba(255,255,255,.14); box-shadow: inset 0 0 0 1px rgba(255,255,255,.28); -webkit-backdrop-filter: blur(20px) saturate(140%); backdrop-filter: blur(20px) saturate(140%); }
-  .fin label { display: grid; gap: 6px; padding: 12px 14px; border-radius: 10px; background: rgba(255,255,255,.12); font-size: 13px; font-weight: 600; color: rgba(255,255,255,.75); transition: background .2s; }
-  .fin label:focus-within { background: rgba(255,255,255,.2); }
+  .fin label { display: grid; gap: 6px; padding: 12px 14px; border-radius: 10px; background: rgba(17,18,20,.28); font-size: 13px; font-weight: 600; color: #fff; transition: background .2s; }
+  .fin label:focus-within { background: rgba(17,18,20,.38); }
   .fin input, .fin textarea { width: 100%; padding: 0; border: 0; background: none; color: #fff; font: 16px/1.45 Inter, system-ui, sans-serif; resize: none; outline: none; }
-  .fin input::placeholder, .fin textarea::placeholder { color: rgba(255,255,255,.6); }
+  .fin input::placeholder, .fin textarea::placeholder { color: rgba(255,255,255,.9); }
   .fin form .row { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 4px 4px 4px 14px; }
-  .fin form small { font-size: 13px; color: rgba(255,255,255,.75); }
+  /* La frase de reversibilidad merece su propio respaldo: tag oscuro mínimo, AA garantizado en todo el degradado */
+  .fin form small { align-self: flex-start; padding: 8px 12px; border-radius: 10px; background: rgba(17,18,20,.4); font-size: 14px; color: rgba(255,255,255,.95); }
   footer { max-width: 1180px; margin: 0 auto; padding: 160px 16px 48px; display: grid; grid-template-columns: minmax(0, 1fr) repeat(3, 200px); gap: 32px; font-size: 16px; }
   footer .brand { align-self: start; margin: 0; padding: 0; color: #fff; }
   footer .brand svg { width: 36px; height: 19px; } footer .brand span { font-size: 18px; }
-  footer .legal { grid-column: 1; align-self: end; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.75); }
+  footer .legal { grid-column: 1; align-self: end; font-size: 13px; line-height: 1.6; color: rgba(255,255,255,.95); }
   footer .legal a { text-decoration: underline; text-underline-offset: 3px; }
-  footer h3 { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.7); margin-bottom: 12px; }
-  footer ul { display: grid; gap: 2px; list-style: none; padding: 0; margin: 0; }
-  footer ul a { display: inline-block; padding: 4px 0; transition: opacity .2s, transform .5s cubic-bezier(.2,.8,.2,1); }
+  footer h3 { font-size: 14px; font-weight: 500; color: rgba(255,255,255,.95); margin-bottom: 12px; }
+  footer ul { display: grid; gap: 6px; list-style: none; padding: 0; margin: 0; }
+  footer ul a { display: inline-flex; align-items: center; min-height: 44px; padding: 4px 0; transition: opacity .2s, transform .5s cubic-bezier(.2,.8,.2,1); }
   footer ul a:hover { opacity: .75; transform: translateX(2px); }
 
   @media (max-width: 960px) {

@@ -40,6 +40,14 @@
     <a href="https://yavienetech.com">Ya Viene</a>
     <a href="#contacto">Contacto</a>
   </div>
+  <details class="mnav">
+    <summary aria-label="Menú de secciones"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 5.5h13M3.5 10h13M3.5 14.5h13" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></summary>
+    <div class="mnav-x">
+      <a href="#soluciones">Soluciones</a>
+      <a href="https://yavienetech.com">Ya Viene</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+  </details>
   <a class="btn" href="#contacto">Hablemos</a>
 </nav>
 
@@ -469,7 +477,7 @@
       <i class="ya-dedo"></i>
         </div>
         <div class="cm-s vid-s">
-          <video class="vid-t" preload="none" muted loop playsinline></video>
+          <video class="vid-t" preload="none" poster="assets/ya-viene-control-poster.jpg" muted loop playsinline></video>
           <button class="vid-go" type="button" aria-haspopup="dialog"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4.6 3.1v9.8c0 .6.6 1 1.1.6l7.4-4.9c.5-.3.5-1 0-1.2L5.7 2.5c-.5-.3-1.1.1-1.1.6z"/></svg> Ver video <b>0:50</b></button>
         </div>
       </div>
@@ -483,7 +491,7 @@
   </div>
   <div class="vidm" hidden role="dialog" aria-modal="true" aria-label="Video real del panel de control de Ya Viene">
     <div class="vd-bd"></div>
-    <video class="vid-m" controls playsinline preload="none"></video>
+    <video class="vid-m" controls playsinline preload="none" poster="assets/ya-viene-control-poster.jpg"></video>
     <button class="vd-x" type="button" aria-label="Cerrar"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3l10 10M13 3 3 13"/></svg></button>
   </div>
 </div></section>
@@ -610,11 +618,11 @@
       <a class="btn ghost" href="mailto:contacto@yavienetech.com">Enviar un correo</a>
     </div>
     <form id="contactForm" class="rv" style="--d:3">
-      <label>Tu nombre<input name="n" autocomplete="name" placeholder="Marta Pérez" required></label>
-      <label>¿Qué necesitas?<textarea name="m" rows="1" placeholder="Que mis clientes reserven solos" required></textarea></label>
+      <label>Tu nombre<input name="n" autocomplete="name" placeholder="Ej: Marta Pérez" required></label>
+      <label>¿Qué necesitas?<textarea name="m" rows="1" placeholder="Ej: que mis clientes reserven solos" required></textarea></label>
       <div class="row">
         <small>Se abre WhatsApp con tu mensaje listo; tú decides si enviarlo.</small>
-        <button class="btn" type="submit">Enviar <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
+        <button class="btn" type="submit">Enviar por WhatsApp <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg></button>
       </div>
     </form>
   </section>
