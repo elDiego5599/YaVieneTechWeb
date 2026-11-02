@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Página no encontrada | Ya Viene Tech</title>
+<link rel="icon" href="assets/favicon.svg" data-raiz="/assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #2a292e;
+    --ink-2: #2f2e34;
+    --muted: #5f6267;
+    --page: #eef0f1;
+    --line: rgba(17, 18, 20, .14);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { -webkit-font-smoothing: antialiased; }
+  body { font-family: Inter, system-ui, sans-serif; background: var(--page); color: var(--ink); min-height: 100dvh; display: flex; flex-direction: column; }
+  ::selection { background: rgba(232,54,79,.18); }
+  /* Grano fino encima de todo: le quita lo plano al gris */
+  body::after {
+    content: ''; position: fixed; inset: 0; z-index: 100; pointer-events: none; opacity: .07; mix-blend-mode: multiply;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Lavado de color suave al fondo: el mismo aliento de los marcos del sitio */
+  body::before {
+    content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+    background:
+      radial-gradient(560px 260px at 12% 92%, rgba(34,197,94,.17), transparent 70%),
+      radial-gradient(720px 320px at 44% 100%, rgba(56,189,248,.15), transparent 70%),
+      radial-gradient(680px 300px at 88% 94%, rgba(251,146,60,.14), transparent 70%),
+      radial-gradient(520px 240px at 70% 108%, rgba(167,139,250,.16), transparent 70%);
+  }
+
+  /* Cielo del hero arriba: azul con nubecitas que se disuelve bajando, y las mismas nubes de ruido del sitio */
+  .cielo {
+    position: absolute; z-index: 0; top: 0; left: 0; right: 0; height: 100dvh; pointer-events: none; isolation: isolate;
+    background:
+      radial-gradient(420px 140px at 15% 38%, rgba(255,255,255,.6), transparent 72%),
+      radial-gradient(280px 100px at 22% 34%, rgba(255,255,255,.55), transparent 72%),
+      radial-gradient(380px 130px at 85% 44%, rgba(255,255,255,.55), transparent 72%),
+      radial-gradient(260px 90px at 79% 40%, rgba(255,255,255,.5), transparent 72%),
+      linear-gradient(#a9c8f5 0%, #cadff9 24%, #e8f0fb 46%, transparent 68%);
+  }
+  .cielo svg { position: absolute; inset: 0; width: 100%; height: 100%; opacity: .95;
+    -webkit-mask-image: linear-gradient(#000 0, #000 30%, rgba(0,0,0,.5) 50%, transparent 72%);
+    mask-image: linear-gradient(#000 0, #000 30%, rgba(0,0,0,.5) 50%, transparent 72%); }
+
+  /* Nav de vidrio, calca de la del sitio en su estado de arriba: ancho al contenido, con un techo */
+  nav {
+    position: absolute; z-index: 200; top: 24px; left: 50%; transform: translate(-50%); height: 80px;
+    width: max-content; max-width: calc(100% - 64px);
+    border-radius: 22px;
+    display: flex; align-items: center; gap: 28px; padding: 0 12px 0 28px;
+    background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(17,18,20,.05), 0 12px 32px -18px rgba(17,18,20,.28);
+  }
+  @media (prefers-reduced-transparency: reduce) { nav { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; } }
+  @media (prefers-contrast: more) { :root { --muted: #3f4247; } nav { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1px rgba(17,18,20,.4); } }
+  .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; padding: 12px 0; border-radius: 12px; color: var(--ink); text-decoration: none; }
+  .brand svg { width: 48px; height: 25px; }
+  .brand span { font-family: Manrope, sans-serif; font-size: 25px; letter-spacing: -.02em; white-space: nowrap; }
+  .brand b { font-weight: 800; }
+  /* "Tech" lleva los colores del túnel, igual que en el sitio */
+  .brand i {
+    font-style: normal; font-weight: 700; padding-right: .04em;
+    background: linear-gradient(90deg, #ff3b30, #ff8a00 35%, #2f6bff 65%, #ff3b30) 0 0 / 300% 100%;
+    -webkit-background-clip: text; background-clip: text; color: transparent; animation: tech-run 9s linear infinite;
+  }
+  @keyframes tech-run { to { background-position: 300% 0; } }
+  nav .links { display: flex; gap: 6px; }
+  nav .links a { white-space: nowrap; padding: 12px 18px; border-radius: 999px; font-size: 17px; font-weight: 600; color: var(--ink); text-decoration: none; transition: background .2s, transform .5s cubic-bezier(.2,.8,.2,1); }
+  nav .links a:hover { background: rgba(17,18,20,.05); transform: translateY(-2px); }
+  @media (max-width: 760px) {
+    nav .links { display: none; }
+    .brand span { font-size: 17px; }
+    nav .btn { font-size: 15px; padding: 0 18px; height: 40px; box-shadow: none; }
+    nav { top: 20px; height: 56px; gap: 12px; padding: 0 8px 0 16px; max-width: calc(100% - 40px); border-radius: 18px; }
+    .brand svg { width: 32px; height: 17px; }
+  }
+
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; text-decoration: none;
+    background: var(--ink-2); color: #eef1f6; font-weight: 600; font-size: 16px; padding: 14px 24px;
+    transition: background .2s, transform .5s cubic-bezier(.2,.8,.2,1), scale .12s ease-out;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 1px 2px rgba(17,18,20,.2), 0 8px 18px -6px rgba(17,18,20,.35);
+  }
+  .btn:hover { background: #1d1c20; transform: translateY(-3px); }
+  .btn svg { width: 16px; height: 16px; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
+  .btn:hover svg { transform: translateX(2px); }
+  nav .btn { font-size: 17px; font-weight: 700; padding: 15px 28px; }
+
+  main { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 130px 20px 40px; }
+  /* El 404 gigante: solo el contorno, con el mensaje superpuesto */
+  .g404 {
+    display: block; font: 800 clamp(140px, 32vw, 380px)/0.9 Manrope, sans-serif; letter-spacing: -.06em;
+    color: transparent; -webkit-text-stroke: 2px rgba(17,18,20,.15);
+  }
+  .encima { position: relative; z-index: 1; margin-top: calc(clamp(32px, 7vw, 108px) * -1); }
+  .encima h1 { font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.035em; }
+  .encima h1 em { font-style: normal; }
+  .sub { max-width: 50ch; margin: 16px auto 0; font-size: 17px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
+  .cta { margin-top: 30px; display: flex; justify-content: center; }
+  .cta .btn { font-size: 17px; padding: 16px 30px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .brand i { animation: none; }
+    .btn, .btn svg, nav .links a { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cielo" aria-hidden="true">
+  <svg><filter id="nube" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency=".0022 .0052" numOctaves="5" seed="11"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  2.6 0 0 0 -1.15"/><feGaussianBlur stdDeviation="3"/></filter><rect width="100%" height="100%" filter="url(#nube)"/></svg>
+</div>
+
+<nav>
+  <a class="brand" href="index.html" data-raiz="/" aria-label="Ya Viene Tech, inicio">
+    <svg viewBox="26 60 150 80" aria-hidden="true"><circle cx="136" cy="100" r="34" fill="currentColor"/><rect x="54" y="70" width="47.9" height="12" rx="6" fill="currentColor" opacity=".4"/><rect x="32" y="94" width="60" height="12" rx="6" fill="currentColor" opacity=".7"/><rect x="54" y="118" width="47.9" height="12" rx="6" fill="currentColor" opacity=".4"/></svg>
+    <span><b>Ya Viene</b> <i>Tech</i></span>
+  </a>
+  <div class="links">
+    <a href="index.html#soluciones" data-raiz="/#soluciones">Soluciones</a>
+    <a href="https://yavienetech.com">Ya Viene</a>
+    <a href="index.html#contacto" data-raiz="/#contacto">Contacto</a>
+  </div>
+  <a class="btn" href="https://wa.me/573004438626" target="_blank" rel="noopener">Hablemos</a>
+</nav>
+
+<main>
+  <div class="e404">
+    <strong class="g404" aria-hidden="true">404</strong>
+    <div class="encima">
+      <h1>Esta página <em>no existe.</em></h1>
+      <p class="sub">El enlace que seguiste no lleva a nada de este sitio. Todo lo demás sigue acá, a un clic.</p>
+      <div class="cta">
+        <a class="btn" href="index.html" data-raiz="/">Volver al inicio
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+// En http(s) enlaces y favicon apuntan a la raíz, así sirven desde cualquier ruta rota; en file:// se quedan relativos para el preview
+document.querySelectorAll('[data-raiz]').forEach(a => { if (location.protocol !== 'file:' && !location.pathname.endsWith('/404.html')) a.href = a.dataset.raiz; });
+</script>
+
+</body>
+</html>
