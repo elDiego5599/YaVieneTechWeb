@@ -60,11 +60,12 @@
 
   /* Nav despegada: una tarjeta flotante con aire arriba y a los lados, así el marco del hero se ve entero con sus esquinas curvas */
   nav {
-    --t: 24px; --g0: 64px; --g1: 32px; --r0: 22px; --r1: 24px; --p: 0;
+    --t: 24px; --r0: 22px; --r1: 24px; --p: 0;
     position: absolute; z-index: 200; left: 50%; transform: translate(-50%); height: 80px;
-    /* Va con la página (también en el rebote) hasta tocar el techo y ahí se queda fijo; ancho y esquinas cambian al mismo ritmo */
+    /* Va con la página (también en el rebote) hasta tocar el techo y ahí se queda fijo; las esquinas cambian al mismo ritmo */
     top: var(--t);
-    width: min(1344px, calc(100% - var(--g0) + (var(--g0) - var(--g1)) * var(--p)));
+    /* Mismo ancho que el cuadro de servicios en todos los tamaños */
+    width: min(1344px, calc(100% - 32px));
     border-radius: calc(var(--r0) * (1 - var(--p))) calc(var(--r0) * (1 - var(--p))) calc(var(--r0) + (var(--r1) - var(--r0)) * var(--p)) calc(var(--r0) + (var(--r1) - var(--r0)) * var(--p));
     display: flex; align-items: center; gap: 28px; padding: 0 12px 0 28px;
     /* Arriba es vidrio tenue con filo fino y sin sombra; al subir (--p) se vuelve el vidrio completo */
@@ -934,7 +935,7 @@
     .brand span { font-size: 17px; }
     nav .btn { font-size: 15px; padding: 0 18px; height: 40px; box-shadow: none; }
     /* En móvil la nav también flota despegada dentro del marco */
-    nav { --t: 20px; --g0: 40px; --g1: 0px; --r0: 18px; --r1: 20px; height: 56px; gap: 12px; padding: 0 8px 0 16px; }
+    nav { --t: 20px; --r0: 18px; --r1: 20px; height: 56px; gap: 12px; padding: 0 8px 0 16px; }
     .brand svg { width: 32px; height: 17px; }
     .copy { padding-top: calc(76px + 28px); }
     .hero { padding-bottom: 130px; }
