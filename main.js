@@ -233,36 +233,49 @@ const clra = matchMedia('(prefers-reduced-motion: reduce)');
 let uso = 'app';
 const fmtCO = new Intl.NumberFormat('es-CO');
 // El panel de datos vive mientras está activo: ventas siguen subiendo, un KPI hace tick por ciclo y la curva crece más allá de "Ahora".
-function vivoDatos() {
+const vivoDatos = (() => {
   const pn = escena.querySelector('.pn--ds'), n = pn.querySelector('.ds-n'), l = pn.querySelector('.ds-l'), a = pn.querySelector('.ds-a');
   const kpi = [...pn.querySelectorAll('.ds-k')].map(el => ({ b: el.querySelector('b'), em: el.querySelector('em'), v: +el.querySelector('b').textContent.replace(/\D/g, ''), d: +el.querySelector('em').textContent.replace(/\D/g, ''), esMoneda: el.querySelector('b').textContent.includes('$') }));
-  const lineas = [l.getAttribute('d'), a.getAttribute('d').replace(/V130H0z$/, '')], cola = [' C348 29 356 28.2 364 27.5', ' C374 26.7 382 26.3 392 26.2', ' C395 26.2 397.5 26.1 400 26.1'];
+  const lineas = [l.getAttribute('d'), a.getAttribute('d').replace(/V130H0z$/, '')], cola = [[348, 29, 356, 28.2, 364, 27.5], [374, 26.7, 382, 26.3, 392, 26.2], [395, 26.2, 397.5, 26.1, 400, 26.1]];
   const defK = [[126, '+12'], [33480, '+4%'], [18, '+6']];
-  const tm = [], armar = t => { t.b.textContent = t.esMoneda ? '$' + fmtCO.format(Math.round(t.v)) : t.v; t.b.classList.remove('bump'); void t.b.offsetWidth; t.b.classList.add('bump'); };
+  // Todo cambio se interpola: cifras que corren hasta su valor y una curva que se estira, nunca un salto.
+  let gen = 0;
+  const anima = (ms, f) => { const g = gen, t0 = performance.now(); const tick = now => { if (g !== gen) return; const p = Math.min(1, (now - t0) / ms); f(1 - Math.pow(1 - p, 3)); if (p < 1) requestAnimationFrame(tick); }; requestAnimationFrame(tick); };
+  const pesos = v => '$' + fmtCO.format(Math.round(v / 100) * 100);
+  const corre = (el, de, a, fmt, ms = 900) => anima(ms, e => { el.textContent = fmt(de + (a - de) * e); });
+  const tramo = (k, e) => { const x0 = k ? cola[k - 1][4] : 320, y0 = k ? cola[k - 1][5] : 30; let s = ' C'; for (let j = 0; j < 6; j += 2) s += (j ? ' ' : '') + (x0 + (cola[k][j] - x0) * e).toFixed(2) + ' ' + (y0 + (cola[k][j + 1] - y0) * e).toFixed(2); return s; };
+  const hecho = k => cola.slice(0, k).map((c, j) => tramo(j, 1)).join('');
+  const tm = [], armar = (t, de) => {
+    corre(t.b, de, t.v, v => t.esMoneda ? '$' + fmtCO.format(Math.round(v)) : Math.round(v), 700);
+    t.em.classList.add('bump'); tm.push(setTimeout(() => t.em.classList.remove('bump'), 450));
+  };
   let ventas = 4218300, i = 0;
   const paso = () => {
     if (!escena.classList.contains('vis')) { tm.push(setTimeout(paso, 1400)); return; }
     const r = Math.random();
-    if (r < .5) { const s = '$' + fmtCO.format(Math.round((ventas += 9000 + Math.random() * 29000) / 100) * 100); n.textContent = s; }
+    if (r < .5) { const de = ventas; ventas += 9000 + Math.random() * 29000; corre(n, de, ventas, pesos, 1100); }
     else if (i < cola.length && r < .78) {
-      l.setAttribute('d', lineas[0] + cola.slice(0, ++i).join(''));
-      a.setAttribute('d', lineas[1] + cola.slice(0, i).join('') + 'V130H0z');
+      const k = i++, base = hecho(k);
+      anima(1400, e => { const d = base + tramo(k, e); l.setAttribute('d', lineas[0] + d); a.setAttribute('d', lineas[1] + d + 'V130H0z'); });
     }
     else if (r < .9) { // entra un pedido: el ticket promedio se recalcula con las ventas reales
-      kpi[0].v++; kpi[0].d++; kpi[0].em.textContent = '+' + kpi[0].d; armar(kpi[0]);
-      kpi[1].v = ventas / kpi[0].v; armar(kpi[1]);
+      const d0 = kpi[0].v, d1 = kpi[1].v;
+      kpi[0].v++; kpi[0].d++; kpi[0].em.textContent = '+' + kpi[0].d; armar(kpi[0], d0);
+      kpi[1].v = ventas / kpi[0].v; armar(kpi[1], d1);
     }
-    else if (kpi[2]) { kpi[2].v++; kpi[2].d++; kpi[2].em.textContent = '+' + kpi[2].d; armar(kpi[2]); }
+    else if (kpi[2]) { const d0 = kpi[2].v; kpi[2].v++; kpi[2].d++; kpi[2].em.textContent = '+' + kpi[2].d; armar(kpi[2], d0); }
     tm.push(setTimeout(paso, 2600 + Math.random() * 2400));
   };
-  tm.forEach(clearTimeout); tm.length = 0;
-  l.setAttribute('d', lineas[0]); a.setAttribute('d', lineas[1] + 'V130H0z');
-  ventas = 4218300; i = 0;
-  n.textContent = '$' + fmtCO.format(ventas);
-  kpi.forEach((t, k) => { t.v = defK[k][0]; t.d = +defK[k][1].replace(/\D/g, ''); t.b.textContent = t.esMoneda ? '$' + fmtCO.format(t.v) : t.v; t.em.textContent = defK[k][1]; });
-  if (uso !== 'data' || clra.matches) return;
-  tm.push(setTimeout(paso, 3200));
-}
+  return () => {
+    gen++; tm.forEach(clearTimeout); tm.length = 0;
+    l.setAttribute('d', lineas[0]); a.setAttribute('d', lineas[1] + 'V130H0z');
+    ventas = 4218300; i = 0;
+    n.textContent = '$' + fmtCO.format(ventas);
+    kpi.forEach((t, k) => { t.v = defK[k][0]; t.d = +defK[k][1].replace(/\D/g, ''); t.b.textContent = t.esMoneda ? '$' + fmtCO.format(t.v) : t.v; t.em.textContent = defK[k][1]; t.em.classList.remove('bump'); });
+    if (uso !== 'data' || clra.matches) return;
+    tm.push(setTimeout(paso, 3200));
+  };
+})();
 function vaya(row, quieto) {
   if (uso === row.dataset.s) return;
   uso = row.dataset.s;
