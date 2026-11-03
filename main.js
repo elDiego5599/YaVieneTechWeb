@@ -688,3 +688,55 @@ let congelarMapa = null, mapaLista = false;
   document.querySelector('.car-next').addEventListener('click', () => ve(idx() + 1));
   document.querySelectorAll('.car-dots i').forEach((d, k) => d.addEventListener('click', () => ve(k)));
 }
+
+// Tres promesas: cada figura reacciona distinto al pasar el mouse
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const [pRg, pHc, pOrb] = document.querySelectorAll('.pcs .pc');
+
+  // Anillo: el arco se recoge y vuelve a llenarse hasta 72 %, y el número lo sigue
+  const arco = pRg.querySelector('.rg-p'), num = pRg.querySelector('.rg b').firstChild;
+  let barrido = null;
+  pRg.addEventListener('pointerenter', () => {
+    if (barrido || !pRg.classList.contains('seen')) return;
+    barrido = arco.animate([
+      { strokeDasharray: '362 503', easing: 'cubic-bezier(.5,0,.75,0)' },
+      { strokeDasharray: '0 503', offset: .3, easing: 'cubic-bezier(.2,.8,.2,1)' },
+      { strokeDasharray: '362 503' }
+    ], { duration: 1900 });
+    const cuenta = () => { if (!barrido) return;
+      num.nodeValue = Math.round(parseFloat(getComputedStyle(arco).strokeDasharray) / 503 * 100);
+      requestAnimationFrame(cuenta); };
+    cuenta();
+    barrido.finished.then(() => { barrido = null; num.nodeValue = '72'; });
+  });
+
+  // Tarjeta: se inclina hacia el cursor como una pieza física y vuelve sola al soltar
+  const hc = pHc.querySelector('.hc');
+  let rx = 0, ry = 0, mx = 0, my = 0, rafHc = 0;
+  const inclina = () => {
+    rx += (mx - rx) * .12; ry += (my - ry) * .12;
+    hc.style.transform = `perspective(900px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(${Math.hypot(rx, ry) * 2}px)`;
+    rafHc = (Math.abs(mx - rx) + Math.abs(my - ry) > .01) ? requestAnimationFrame(inclina) : 0;
+  };
+  pHc.addEventListener('pointermove', e => {
+    const b = hc.getBoundingClientRect();
+    my = Math.max(-1, Math.min(1, (e.clientX - b.left - b.width / 2) / (b.width / 2))) * 9;
+    mx = Math.max(-1, Math.min(1, (e.clientY - b.top - b.height / 2) / (b.height / 2))) * -9;
+    if (!rafHc) rafHc = requestAnimationFrame(inclina);
+  });
+  pHc.addEventListener('pointerleave', () => { mx = my = 0; if (!rafHc) rafHc = requestAnimationFrame(inclina); });
+
+  // Órbita: los íconos arrancan despacio alrededor del centro y al salir frenan sin saltos
+  const orb = pOrb.querySelector('.orb');
+  let ang = 0, vel = 0, meta = 0, rafOrb = 0, t0 = 0;
+  const gira = t => {
+    const dt = Math.min((t - (t0 || t)) / 1000, .05); t0 = t;
+    vel += (meta - vel) * (1 - Math.exp(-dt * 2));
+    ang = (ang + vel * dt) % 360;
+    orb.style.setProperty('--spin', ang + 'deg');
+    if (meta || vel > .3) rafOrb = requestAnimationFrame(gira); else { rafOrb = 0; t0 = 0; }
+  };
+  const orbita = on => { meta = on ? 28 : 0; if (!rafOrb) rafOrb = requestAnimationFrame(gira); };
+  pOrb.addEventListener('pointerenter', () => orbita(true));
+  pOrb.addEventListener('pointerleave', () => orbita(false));
+}
