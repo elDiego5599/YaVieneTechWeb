@@ -1335,8 +1335,8 @@
   .tl-nota svg { width: 54px; height: 30px; margin: -6px 0 0 6px; fill: none; stroke: #2a292e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 
   /* 03: el celular con la app real en el centro y alrededor lo que pasa mientras la construimos y después */
-  .ph { background: #fff; }
-  .wb { position: absolute; z-index: 1; left: 32px; top: 32px; width: 600px; height: 436px; border-radius: 12px; overflow: hidden; background: #fbf8f3; color: #1d2733;
+  .ph { background: #fff; overflow: visible; }
+  .wb { position: absolute; z-index: 1; left: 32px; top: 32px; width: calc(100% - 64px); height: calc(100% - 64px); border-radius: 12px; overflow: hidden; background: #fbf8f3; color: #1d2733;
     box-shadow: 0 0 0 1px rgba(17,18,20,.08), 0 30px 60px -24px rgba(17,18,20,.3); }
   .wb svg { fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
   .wb-bar { display: flex; align-items: center; height: 40px; padding: 0 14px; background: #f1efec; border-bottom: 1px solid #e4e1dc; }
@@ -1375,7 +1375,7 @@
   .ph-c { position: absolute; z-index: 2; padding: 16px 18px; border-radius: 16px; background: #fff; color: #2a292e;
     box-shadow: 0 0 0 1px rgba(17,18,20,.05), 0 18px 40px -16px rgba(17,18,20,.28); }
   .ph-c > small { display: block; font-size: 12px; font-weight: 600; color: var(--muted); }
-  .ph-pub { right: 24px; bottom: 16px; width: 250px; padding: 14px 16px; }
+  .ph-pub { right: -28px; bottom: -26px; width: 250px; padding: 14px 16px; }
   .ph-pub p + p { margin-top: 8px; }
   .ph-pub p { display: flex; align-items: center; gap: 10px; margin-top: 12px; font-size: 14px; font-weight: 600; }
   .ph-pub svg { width: 20px; height: 20px; flex: none; }
@@ -1576,7 +1576,7 @@
     .tl-nota { right: auto; left: 12px; top: auto; bottom: 18px; translate: none; }
     .tl-nota svg { display: none; }
     .tl-nota b { font-size: 20px; }
-    .ph { height: 466px; }
+    .ph { height: 466px; overflow: hidden; }
     .wb { left: 14px; top: 18px; width: calc(100% - 28px); height: 460px; }
     .wb-bar p { width: auto; padding: 0 10px; margin-right: 0; }
     .wb-nav { height: 52px; padding: 0 16px; }
