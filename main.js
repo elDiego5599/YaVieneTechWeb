@@ -1,7 +1,14 @@
 document.getElementById('contactForm').addEventListener('submit', e => {
   e.preventDefault();
+  const b = e.target.querySelector('[type=submit]');
+  if (b.disabled) return; // un doble toque no abre WhatsApp dos veces
+  b.disabled = true; setTimeout(() => b.disabled = false, 2000);
   const f = new FormData(e.target);
   open('https://wa.me/573004438626?text=' + encodeURIComponent(`Hola, soy ${f.get('n')}. ${f.get('m')}`), '_blank', 'noopener');
+});
+// El mensaje crece con lo que escribes
+document.querySelector('#contactForm textarea').addEventListener('input', e => {
+  e.target.style.height = 'auto'; e.target.style.height = e.target.scrollHeight + 'px';
 });
 document.documentElement.classList.add('js'); // las tarjetas del bento solo se ocultan cuando el script corre (no-JS = visibles)
 // El menú móvil se cierra al elegir una sección

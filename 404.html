@@ -63,7 +63,7 @@
   @media (prefers-contrast: more) { :root { --muted: #3f4247; } nav { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: 0 0 0 1px rgba(17,18,20,.4); } }
   .brand { display: flex; align-items: center; gap: 10px; margin-right: auto; padding: 12px 0; border-radius: 12px; color: var(--ink); text-decoration: none; }
   .brand svg { width: 48px; height: 25px; }
-  .brand span { font-family: Manrope, sans-serif; font-size: 25px; letter-spacing: -.02em; white-space: nowrap; }
+  .brand span { font-family: Manrope, sans-serif; font-size: 1.5625rem; letter-spacing: -.02em; white-space: nowrap; }
   .brand b { font-weight: 800; }
   /* "Tech" lleva los colores del túnel, igual que en el sitio */
   .brand i {
@@ -73,7 +73,7 @@
   }
   @keyframes tech-run { to { background-position: 300% 0; } }
   nav .links { display: flex; gap: 6px; }
-  nav .links a { white-space: nowrap; padding: 12px 18px; border-radius: 999px; font-size: 17px; font-weight: 600; color: var(--ink); text-decoration: none; transition: background .2s, transform .5s cubic-bezier(.2,.8,.2,1); }
+  nav .links a { white-space: nowrap; padding: 12px 18px; border-radius: 999px; font-size: 1.0625rem; font-weight: 600; color: var(--ink); text-decoration: none; transition: background .2s, transform .5s cubic-bezier(.2,.8,.2,1); }
   nav .links a:hover { background: rgba(17,18,20,.05); transform: translateY(-2px); }
   /* Menú móvil, igual que en el sitio: disclosure nativo sobre vidrio */
   .mnav { display: none; }
@@ -85,41 +85,41 @@
     .mnav[open] summary { background: rgba(17,18,20,.1); }
     .mnav[open] summary svg { transform: rotate(90deg); }
     .mnav-x { position: absolute; top: calc(100% + 12px); right: 0; z-index: 12; display: grid; gap: 4px; min-width: 218px; padding: 10px; border-radius: 18px; background: rgba(255,255,255,.92); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%); box-shadow: inset 0 0 0 1px rgba(17,18,20,.06), 0 30px 60px -24px rgba(17,18,20,.4); animation: rise .35s cubic-bezier(.2,.8,.2,1) backwards; }
-    .mnav-x a { padding: 10px 16px; border-radius: 12px; font-size: 16px; font-weight: 600; text-decoration: none; color: var(--ink); }
+    .mnav-x a { padding: 10px 16px; border-radius: 12px; font-size: 1rem; font-weight: 600; text-decoration: none; color: var(--ink); }
     .mnav-x a:hover { background: rgba(17,18,20,.05); }
   }
   @keyframes rise { from { opacity: 0; transform: translateY(18px); } }
   @media (max-width: 760px) {
     nav .links { display: none; }
-    .brand span { font-size: 17px; }
-    nav .btn { font-size: 15px; padding: 0 18px; height: 44px; box-shadow: none; }
+    .brand span { font-size: 1.0625rem; }
+    nav .btn { font-size: 0.9375rem; padding: 0 18px; height: 44px; box-shadow: none; }
     nav { top: 20px; height: 56px; gap: 12px; padding: 0 8px 0 16px; max-width: calc(100% - 40px); border-radius: 18px; }
     .brand svg { width: 32px; height: 17px; }
   }
 
   .btn {
     display: inline-flex; align-items: center; gap: 10px; border-radius: 999px; text-decoration: none;
-    background: var(--ink-2); color: #eef1f6; font-weight: 600; font-size: 16px; padding: 14px 24px;
+    background: var(--ink-2); color: #eef1f6; font-weight: 600; font-size: 1rem; padding: 14px 24px;
     transition: background .2s, transform .5s cubic-bezier(.2,.8,.2,1), scale .12s ease-out;
     box-shadow: inset 0 1px 0 rgba(255,255,255,.14), 0 1px 2px rgba(17,18,20,.2), 0 8px 18px -6px rgba(17,18,20,.35);
   }
   .btn:hover { background: #1d1c20; transform: translateY(-3px); }
   .btn svg { width: 16px; height: 16px; transition: transform .5s cubic-bezier(.2,.8,.2,1); }
   .btn:hover svg { transform: translateX(2px); }
-  nav .btn { font-size: 17px; font-weight: 700; padding: 15px 28px; }
+  nav .btn { font-size: 1.0625rem; font-weight: 700; padding: 15px 28px; }
 
   main { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 130px 20px 40px; }
   /* El 404 gigante: solo el contorno, con el mensaje superpuesto */
   .g404 {
-    display: block; font: 800 clamp(140px, 32vw, 380px)/0.9 Manrope, sans-serif; letter-spacing: -.06em;
+    display: block; font: 800 clamp(8.75rem, 32vw, 23.75rem)/0.9 Manrope, sans-serif; letter-spacing: -.06em;
     color: transparent; -webkit-text-stroke: 2px rgba(17,18,20,.24);
   }
   .encima { position: relative; z-index: 1; margin-top: calc(clamp(32px, 7vw, 108px) * -1); }
-  .encima h1 { font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(30px, 4.4vw, 56px); line-height: 1.02; letter-spacing: -.035em; }
+  .encima h1 { font-family: Manrope, sans-serif; font-weight: 800; font-size: clamp(1.875rem, 4.4vw, 3.5rem); line-height: 1.02; letter-spacing: -.035em; }
   .encima h1 em { font-style: normal; }
-  .sub { max-width: 50ch; margin: 16px auto 0; font-size: 17px; line-height: 1.5; color: var(--muted); text-wrap: balance; }
+  .sub { max-width: 50ch; margin: 16px auto 0; font-size: 1.0625rem; line-height: 1.5; color: var(--muted); text-wrap: balance; }
   .cta { margin-top: 30px; display: flex; justify-content: center; }
-  .cta .btn { font-size: 17px; padding: 16px 30px; }
+  .cta .btn { font-size: 1.0625rem; padding: 16px 30px; }
 
   @media (prefers-reduced-motion: reduce) {
     .brand i { animation: none; }
