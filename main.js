@@ -389,7 +389,9 @@ document.querySelectorAll('.rv').forEach(el => enVista.observe(el));
       pasos.forEach(p => { p.style.removeProperty('--t'); p.style.removeProperty('--u'); });
       const alto = Math.max(...pasos.map(p => p.offsetHeight));
       caja.classList.toggle('apila', innerWidth > 960 && innerHeight >= alto + 140);
-      arriba = Math.max(96, (innerHeight - alto) / 2 + 30);
+      // Centrada en el espacio que deja libre el menú fijo de arriba
+      const techo = document.querySelector("nav").offsetHeight;
+      arriba = Math.max(techo + 16, techo + (innerHeight - techo - alto) / 2);
       caja.style.setProperty('--top', arriba + 'px');
       pinta();
     };
