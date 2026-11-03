@@ -1263,7 +1263,7 @@
   .proc > header { text-align: left; margin: 0 0 48px; }
   .proc > header p { margin-left: 0; }
   .pasos { display: grid; gap: 60px; }
-  .paso { position: relative; display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 32px 64px; padding: 56px; border-radius: 18px; background: #f6f7f8;
+  .paso { position: relative; display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 32px 64px; padding: 56px; border-radius: 18px; background: #fff;
     box-shadow: 0 0 0 1px rgba(17,18,20,.05); transform-origin: 50% 0; }
   /* Velo blanco encima: la tarjeta de atrás se aclara pero sigue siendo opaca */
   .paso::after { content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; background: #fff; opacity: calc(var(--t, 0) * .72); pointer-events: none; }
@@ -1317,7 +1317,7 @@
   .gm-adj small { display: block; font-size: 0.6875rem; color: #5f6368; }
 
   /* 02: el cronograma. Cada fase tiene su barra y sus fechas de entrega */
-  .tl { --lc: 128px; --hd: 60px; }
+  .tl { --lc: 128px; --hd: 60px; background: var(--page); }
   .tl-g { --tw: calc((100% - var(--lc)) * 5 / 6); position: absolute; left: 40px; right: -64px; top: 80px; height: 380px; overflow: hidden; isolation: isolate; display: grid; grid-template-rows: var(--hd) repeat(3, 1fr); border-radius: 12px; background: #fff;
     box-shadow: 0 0 0 1px rgba(17,18,20,.09), 0 24px 48px -26px rgba(17,18,20,.28); }
   .tl-g::before { content: ''; position: absolute; z-index: -1; left: var(--lc); right: 0; top: 0; bottom: 0; background: repeating-linear-gradient(90deg, #eef0f2 0 1px, transparent 1px calc(100% / 6)); }
@@ -1344,10 +1344,10 @@
   .b3 { --tx: #7a5900; box-shadow: none; border: 1.5px dashed #e2b52b; background: repeating-linear-gradient(135deg, #fff6d6 0 6px, #ffecaa 6px 12px); }
   .tl-bar .tl-cur { position: absolute; right: -12px; bottom: -14px; width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: #fff; fill: none; stroke: #1f1f1f; stroke-width: 1.8; stroke-linecap: round;
     box-shadow: 0 2px 6px rgba(17,18,20,.25); }
-  .tl-nota { position: absolute; z-index: 2; right: calc(100% - var(--lc) - var(--tw) * .66 + 4px); top: calc(var(--hd) + (100% - var(--hd)) * 5 / 6 + 9px); translate: 0 -50%; display: flex; align-items: center; }
+  .tl-nota { position: absolute; z-index: 2; left: 46%; top: 470px; display: flex; flex-direction: row-reverse; align-items: flex-start; }
   .tl-nota b { padding: 6px 14px 8px; border-radius: 10px; background: #fff; transform: rotate(-4deg); font: 600 1.4375rem/1 Caveat, cursive; color: #2a292e; white-space: nowrap;
     box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 10px 24px -10px rgba(17,18,20,.3); }
-  .tl-nota svg { width: 54px; height: 30px; margin: -6px 0 0 6px; fill: none; stroke: #2a292e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  .tl-nota svg { width: 44px; height: 40px; margin: -14px 6px 0 0; fill: none; stroke: #2a292e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 
   /* 03: el celular con la app real en el centro y alrededor lo que pasa mientras la construimos y después */
   .ph { background: none; box-shadow: none; border-radius: 0; overflow: visible; }
@@ -1422,57 +1422,16 @@
 
   /* Promesas: tarjetas de Pangram, cinta de color arriba e ícono de línea */
   .ppl .blk { padding-block: 100px; }
-  .pcs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-  /* Tarjetas al estilo Bevel: cielo claro arriba que se tiñe abajo, título grande y una pieza de la promesa asomando desde el borde inferior */
-  .pc { position: relative; display: flex; flex-direction: column; min-height: 620px; padding: 40px 40px 0; border-radius: 28px; overflow: hidden; color: var(--ink);
-    background:
-      radial-gradient(34% 22% at 50% 100%, rgba(255,255,255,.9), transparent),
-      radial-gradient(90% 85% at 12% 104%, color-mix(in srgb, var(--a) 70%, transparent), transparent 70%),
-      radial-gradient(90% 85% at 90% 104%, color-mix(in srgb, var(--b) 65%, transparent), transparent 70%),
-      radial-gradient(110% 70% at 50% 100%, color-mix(in srgb, var(--a) 22%, transparent), transparent),
-      linear-gradient(180deg, #fff 0%, #fff 22%, #f6f4f6 100%); transition: transform .7s cubic-bezier(.2,.8,.2,1); }
-  .pc:hover { transform: translateY(-4px); }
-  .pc::after { content: ''; position: absolute; inset: 0; border-radius: inherit; box-shadow: inset 0 0 0 1px var(--line); pointer-events: none; z-index: 5; }
-  .pc h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: 2.25rem; line-height: 1.1; letter-spacing: -.04em; }
-  .pc > div > p { margin-top: 12px; color: #6b6f78; font-size: 1.1875rem; line-height: 1.45; letter-spacing: -.01em; }
-  .pc-art { position: relative; margin-top: auto; height: 416px; font-family: Inter, sans-serif; letter-spacing: -.01em; }
-  .pc-pan { position: absolute; left: 6%; right: 6%; top: 24px; bottom: -24px; padding: 20px; border-radius: 22px 22px 0 0; background: #fff;
-    box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 30px 60px -30px rgba(17,18,20,.35); }
-  .pc-pan > small, .pc-fl small { display: block; font-size: 0.8125rem; color: #8a8e97; }
-  .pc-pan > b { display: block; margin: 2px 0 14px; font: 700 1.0625rem/1.2 Manrope, sans-serif; }
-  .pc-fl { position: absolute; z-index: 2; padding: 14px 16px; border-radius: 18px; background: rgba(255,255,255,.92); backdrop-filter: blur(12px);
-    box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 24px 40px -18px rgba(17,18,20,.35); }
-  .pc-fl strong { display: block; margin-top: 4px; font: 700 1.625rem/1 Manrope, sans-serif; letter-spacing: -.03em; }
-  .pc-fl em { display: block; margin-top: 6px; font-style: normal; font-size: 0.8125rem; font-weight: 600; }
-  /* Rápido: entregas de cada semana */
-  .wk, .own { list-style: none; margin: 0; padding: 0; }
-  .wk { display: grid; gap: 10px; }
-  .wk li, .own li { white-space: nowrap; }
-  .wk li { display: grid; grid-template-columns: 22px 1fr auto; align-items: center; gap: 10px; font-size: 0.875rem; }
-  .wk i { width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; background: #e8f7ee; color: #12a150; font: 700 0.75rem/1 Inter, sans-serif; font-style: normal; }
-  .wk li span { color: #8a8e97; font-size: 0.75rem; }
-  .wk li.now i { background: #fdeae4; color: #e8603c; }
-  .wk .bar { grid-column: 2 / -1; height: 6px; border-radius: 6px; background: #f1f1f3; overflow: hidden; }
-  .wk .bar::after { content: ''; display: block; width: 64%; height: 100%; border-radius: inherit; background: linear-gradient(90deg, #f6a58a, #e8603c); }
-  /* Hecho a mano: lienzo de diseño */
-  .pc-pan.cv { background: #1d1e24; color: #fff; }
-  .pc-pan.cv > small { color: rgba(255,255,255,.5); }
-  .cv-fr { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
-  .cv-fr span { height: 112px; border-radius: 12px; background: #2a2b33; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); position: relative; overflow: hidden; }
-  .cv-fr span::before { content: ''; position: absolute; left: 10px; right: 10px; top: 12px; height: 26px; border-radius: 7px; background: var(--k); opacity: .9; }
-  .cv-fr span::after { content: ''; position: absolute; left: 10px; right: 26px; top: 48px; height: 6px; border-radius: 6px; background: rgba(255,255,255,.25); box-shadow: 0 12px 0 rgba(255,255,255,.14), -0px 24px 0 rgba(255,255,255,.14); }
-  .cv-fr span.sel { box-shadow: inset 0 0 0 2px #8f7cf0; }
-  .cv-cur { position: absolute; z-index: 3; left: 56%; top: 150px; display: flex; align-items: flex-start; gap: 2px; }
-  .cv-cur svg { width: 18px; height: 18px; fill: #8f7cf0; stroke: #fff; stroke-width: 1.4; }
-  .cv-cur b { margin-top: 14px; padding: 4px 9px; border-radius: 8px; background: #8f7cf0; color: #fff; font-size: 0.75rem; font-weight: 600; }
-  .sw { display: flex; gap: 6px; margin-top: 8px; }
-  .sw i { width: 22px; height: 22px; border-radius: 50%; background: var(--k); box-shadow: inset 0 0 0 1px rgba(17,18,20,.08); }
-  /* Tuyo: todo a tu nombre */
-  .own { display: grid; gap: 0; }
-  .own li { display: flex; justify-content: space-between; align-items: center; padding: 11px 0; border-top: 1px solid #f0f0f2; font-size: 0.875rem; }
-  .own li:first-child { border-top: 0; }
-  .own li span { display: inline-flex; align-items: center; gap: 6px; color: #12a150; font-size: 0.8125rem; font-weight: 600; }
-  .own li span::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .pcs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px 40px; }
+  /* Tarjetas al estilo blog de incident.io: dibujo firme con el título en serif dentro de la imagen, y debajo el título y el texto */
+  .pc { color: var(--ink); }
+  .pc-img { position: relative; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; aspect-ratio: 4 / 3; padding: 0 24px 9%; border-radius: 14px; background: #faf8f5;
+    box-shadow: 0 0 0 1px rgba(17,18,20,.05); overflow: hidden; transition: transform .7s cubic-bezier(.2,.8,.2,1), box-shadow .7s cubic-bezier(.2,.8,.2,1); }
+  .pc:hover .pc-img { transform: translateY(-4px); box-shadow: 0 0 0 1px rgba(17,18,20,.05), 0 24px 40px -24px rgba(17,18,20,.3); }
+  .pc-img svg { position: absolute; left: 50%; top: 9%; height: 58%; translate: -50% 0; overflow: visible; filter: drop-shadow(0 10px 12px rgba(80,40,30,.16)); }
+  .pc-img p { font: 400 clamp(1.75rem, 2.5vw, 2.375rem)/1.05 Newsreader, Georgia, serif; letter-spacing: -.02em; color: #1e1d22; text-align: center; text-wrap: balance; }
+  .pc h3 { margin-top: 22px; font: 600 1.5rem/1.25 Inter, sans-serif; letter-spacing: -.02em; }
+  .pc > p { margin-top: 8px; color: #6b6f78; font-size: 1.0625rem; line-height: 1.5; }
 
   /* Con qué construimos: retícula de líneas finas al estilo Profound, etiquetas en mono y cruces en las esquinas */
   .stk { padding-bottom: 8px; }
@@ -1555,7 +1514,6 @@
     .paso { grid-template-columns: 1fr; padding: 10px; gap: 20px; }
     .paso-tx { padding: 22px 12px 0; }
     .pcs { grid-template-columns: 1fr; max-width: 520px; margin-inline: auto; }
-    .pc { min-height: 580px; }
     .tools { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .faq-grid { grid-template-columns: 1fr; }
     .faq-grid > header { position: static; }
@@ -1585,7 +1543,7 @@
     .gm-sub b { font-size: 1.125rem; }
     .gm-tx { font-size: 0.8438rem; }
     .tl { --lc: 0px; --hd: 44px; }
-    .tl { height: 360px; }
+    .tl { height: 410px; }
     .tl-g { left: 12px; right: -44px; top: 20px; height: 320px; }
     .tl-ult b { transform: translateX(calc(-100% + 1px)); }
     .tl-rw small { display: none; }
@@ -1593,8 +1551,7 @@
     .tl-hd span { padding-left: 6px; }
     .tl-bar { height: 36px; padding: 0 9px; font-size: 0.7188rem; }
     .tl-bar::before { display: none; }
-    .tl-nota { right: auto; left: 12px; top: auto; bottom: 18px; translate: none; }
-    .tl-nota svg { display: none; }
+    .tl-nota { left: 30%; top: 352px; }
     .tl-nota b { font-size: 1.25rem; }
     .ph { height: auto; overflow: visible; }
     .wb-w { position: relative; right: auto; top: auto; margin-bottom: 64px; }
@@ -1607,9 +1564,7 @@
     .paso-tx p { font-size: 1.0625rem; }
     .tools { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .ppl .blk { padding-block: 72px; }
-    .pc { padding: 32px 24px 0; }
-    .pc h3 { font-size: 1.875rem; }
-    .pc > div > p { font-size: 1.0625rem; }
+    .pc-img p { font-size: 2rem; }
   }
   /* Press instantáneo en pointer-down, no al soltar (§1): escala sola, sin pisar el transform inline de los botones magnéticos */
   .btn:active, nav .links a:active, .flag:active { scale: .96; }
