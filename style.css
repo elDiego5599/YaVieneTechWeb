@@ -1316,11 +1316,14 @@
   .gm-adj small { display: block; font-size: 0.6875rem; color: #5f6368; }
 
   /* 02: el cronograma. Cada fase tiene su barra y sus fechas de entrega */
-  .tl { --lc: 128px; --hd: 60px; background: #f6f8fc; }
-  .tl-g { --tw: calc((100% - var(--lc)) * 5 / 6); position: absolute; left: 40px; right: -64px; top: 56px; height: 360px; overflow: hidden; isolation: isolate; display: grid; grid-template-rows: var(--hd) repeat(3, 1fr); border-radius: 12px; background: #fff;
+  .tl { --lc: 128px; --hd: 60px; overflow: visible; background: none; box-shadow: none; }
+  /* Sin panel detrás: el cuadro crece y lo corta el borde derecho de la tarjeta */
+  .paso:has(.tl) { overflow: hidden; }
+  .tl { --sale: 260px; }
+  .tl-g { --tw: calc((100% - var(--lc)) * 5.6 / 8); position: absolute; left: 0; right: calc(var(--sale) * -1); top: 50px; height: 440px; overflow: hidden; isolation: isolate; display: grid; grid-template-rows: var(--hd) repeat(3, 1fr); border-radius: 12px; background: #fbf8f3;
     box-shadow: 0 0 0 1px rgba(17,18,20,.09), 0 24px 48px -26px rgba(17,18,20,.28); }
-  .tl-g::before { content: ''; position: absolute; z-index: -1; left: var(--lc); right: 0; top: 0; bottom: 0; background: repeating-linear-gradient(90deg, #eef0f2 0 1px, transparent 1px calc(100% / 6)); }
-  .tl-hd { display: grid; grid-template-columns: var(--lc) repeat(6, 1fr); align-items: center; border-bottom: 1px solid #eef0f2; font-size: 0.8125rem; font-weight: 600; color: #2a292e; }
+  .tl-g::before { content: ''; position: absolute; z-index: -1; left: var(--lc); right: 0; top: 0; bottom: 0; background: repeating-linear-gradient(90deg, #eef0f2 0 1px, transparent 1px calc(100% / 8)); }
+  .tl-hd { display: grid; grid-template-columns: var(--lc) repeat(8, 1fr); align-items: center; border-bottom: 1px solid #eef0f2; font-size: 0.8125rem; font-weight: 600; color: #2a292e; }
   .tl-hd span { padding-left: 12px; }
   .tl-rw { display: flex; align-items: center; padding-left: 20px; border-bottom: 1px solid #f3f4f6; }
   .tl-rw:last-child { border: 0; }
@@ -1343,10 +1346,12 @@
   .b3 { --tx: #7a5900; box-shadow: none; border: 1.5px dashed #e2b52b; background: repeating-linear-gradient(135deg, #fff6d6 0 6px, #ffecaa 6px 12px); }
   .tl-bar .tl-cur { position: absolute; right: -12px; bottom: -14px; width: 22px; height: 22px; padding: 3px; border-radius: 50%; background: #fff; fill: none; stroke: #1f1f1f; stroke-width: 1.8; stroke-linecap: round;
     box-shadow: 0 2px 6px rgba(17,18,20,.25); }
-  .tl-nota { position: absolute; z-index: 2; left: 44%; top: 420px; display: flex; flex-direction: column; align-items: flex-start; }
-  .tl-nota b { padding: 6px 14px 8px; border-radius: 10px; background: #fff; transform: rotate(-4deg); font: 600 1.4375rem/1 Caveat, cursive; color: #2a292e; white-space: nowrap;
+  /* La nota vive dentro del cronograma, en la fila vacía, y señala las barras de arriba */
+  .tl-nota { position: absolute; z-index: 2; left: calc(var(--lc) + (100% + var(--sale) - var(--lc)) * 5.6 / 8 * .17 + 28px); top: 413px; }
+  .tl-nota b { display: block; padding: 6px 14px 8px; border-radius: 10px; background: #fff; transform: rotate(-4deg); font: 600 1.4375rem/1 Caveat, cursive; color: #2a292e; white-space: nowrap;
     box-shadow: 0 0 0 1px rgba(17,18,20,.06), 0 10px 24px -10px rgba(17,18,20,.3); }
-  .tl-nota svg { width: 40px; height: 34px; margin: 0 0 -2px 6px; fill: none; stroke: #2a292e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  /* La flecha sale del borde del cuadrito y sube hasta la barra de Versión de prueba */
+  .tl-nota svg { position: absolute; left: calc(50% - 7px); bottom: calc(100% + 8px); width: 34px; height: 48px; fill: none; stroke: #2a292e; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 
   /* 03: el celular con la app real en el centro y alrededor lo que pasa mientras la construimos y después */
   .ph { background: none; box-shadow: none; border-radius: 0; overflow: visible; }
@@ -1570,16 +1575,17 @@
     .gm-sub b { font-size: 1.125rem; }
     .gm-tx { font-size: 0.8438rem; }
     .tl { --lc: 0px; --hd: 44px; }
-    .tl { height: 430px; }
-    .tl-g { left: 12px; right: -44px; top: 20px; height: 320px; }
+    .tl { height: 360px; --sale: 140px; }
+    .tl-g { top: 0; height: 360px; }
     .tl-ult b { transform: translateX(calc(-100% + 1px)); }
     .tl-rw small { display: none; }
-    .tl-hd { grid-template-columns: 0 repeat(6, 1fr); font-size: 0.7188rem; }
+    .tl-hd { grid-template-columns: 0 repeat(8, 1fr); font-size: 0.7188rem; }
     .tl-hd span { padding-left: 6px; }
     .tl-bar { height: 36px; padding: 0 9px; font-size: 0.7188rem; }
     .tl-bar::before { display: none; }
-    .tl-nota { left: 26%; top: 344px; }
-    .tl-nota b { font-size: 1.25rem; }
+    .tl-nota { left: calc((100% + var(--sale)) * 5.6 / 8 * .17 + 12px); top: 300px; }
+    .tl-nota svg { left: calc(50% - 6px); bottom: calc(100% + 6px); width: 28px; height: 40px; }
+    .tl-nota b { font-size: 1.125rem; }
     .ph { height: auto; overflow: visible; }
     .wb-w { position: relative; right: auto; top: auto; margin-bottom: 64px; }
     .wb-bar p { width: auto; padding: 0 10px; margin-right: 0; }
