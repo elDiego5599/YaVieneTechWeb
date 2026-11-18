@@ -60,19 +60,21 @@
 
   /* Nav despegada: una tarjeta flotante con aire arriba y a los lados, así el marco del hero se ve entero con sus esquinas curvas */
   nav {
-    --t: 24px; --r0: 22px; --r1: 24px; --p: 0;
+    --t: 24px; --r0: 22px; --r1: 24px; --p: 0; --g: 0;
     position: absolute; z-index: 200; left: 50%; transform: translate(-50%); height: 80px;
     /* Va con la página (también en el rebote) hasta tocar el techo y ahí se queda fijo; las esquinas cambian al mismo ritmo */
     top: var(--t);
-    /* Mismo ancho que el cuadro de servicios en todos los tamaños */
-    width: min(1344px, calc(100% - 32px));
+    /* Arriba va recogida para que logo, enlaces y botón se lean juntos sin el vidrio; al bajar se abre hasta el ancho del cuadro de servicios */
+    --wa: min(860px, calc(100% - 32px)); --wb: min(1344px, calc(100% - 32px));
+    width: calc(var(--wa) + (var(--wb) - var(--wa)) * var(--g));
     border-radius: calc(var(--r0) * (1 - var(--p))) calc(var(--r0) * (1 - var(--p))) calc(var(--r0) + (var(--r1) - var(--r0)) * var(--p)) calc(var(--r0) + (var(--r1) - var(--r0)) * var(--p));
     display: flex; align-items: center; gap: 28px; padding: 0 12px 0 28px;
-    /* Siempre vidrio */
-    background: rgba(255,255,255,.78); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
-    box-shadow: inset 0 -1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(17,18,20,.05), 0 12px 32px -18px rgba(17,18,20,.28);
+    /* Arriba del todo se funde con el cielo del hero; el vidrio aparece poco a poco al bajar (--g va de 0 a 1) */
+    background: rgba(255,255,255,calc(.78 * var(--g)));
+    -webkit-backdrop-filter: blur(calc(24px * var(--g))) saturate(calc(100% + 80% * var(--g))); backdrop-filter: blur(calc(24px * var(--g))) saturate(calc(100% + 80% * var(--g)));
+    box-shadow: inset 0 -1px 0 rgba(255,255,255,calc(.5 * var(--g))), 0 1px 0 rgba(17,18,20,calc(.05 * var(--g))), 0 12px 32px -18px rgba(17,18,20,calc(.28 * var(--g)));
   }
-  nav.pin { position: fixed; top: 0; background: rgba(255,255,255,.92); }
+  nav.pin { position: fixed; top: 0; background: rgba(255,255,255,calc(.92 * var(--g))); }
   @media (prefers-reduced-transparency: reduce) { nav { background: #fff; -webkit-backdrop-filter: none; backdrop-filter: none; } }
   @media (prefers-contrast: more) {
     :root { --muted: #3f4247; --line: rgba(17,18,20,.24); }
@@ -1264,10 +1266,8 @@
   .pasos { display: grid; gap: 60px; }
   .paso { position: relative; display: grid; grid-template-columns: minmax(0, 360px) minmax(0, 1fr); gap: 32px 64px; padding: 56px; border-radius: 18px; background: #fff;
     box-shadow: 0 0 0 1px rgba(17,18,20,.05); transform-origin: 50% 0; }
-  /* Velo blanco encima: la tarjeta de atrás se aclara pero sigue siendo opaca */
-  .paso::after { content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; background: #fff; opacity: calc(var(--t, 0) * .72); pointer-events: none; }
-  /* La de dos lugares atrás se apaga mientras la siguiente se hunde, así nunca asoman dos bordes */
-  .apila .paso { position: sticky; top: var(--top, 120px); transform: scale(calc(1 - var(--t, 0) * .05)); opacity: calc(1 - var(--u, 0)); will-change: transform, opacity;
+  /* Cada tarjeta se queda arriba y la siguiente sube y la tapa; la de atrás no se mueve */
+  .apila .paso { position: sticky; top: var(--top, 120px);
     box-shadow: 0 0 0 1px rgba(17,18,20,.05), 0 -18px 48px -30px rgba(17,18,20,.22); }
   .paso-tx { display: flex; flex-direction: column; justify-content: center; }
   .paso-tx h3 { font-family: Manrope, sans-serif; font-weight: 700; font-size: clamp(1.875rem, 2.6vw, 2.375rem); line-height: 1.1; letter-spacing: -.04em; text-wrap: balance; }
@@ -1324,7 +1324,7 @@
     box-shadow: 0 0 0 1px rgba(17,18,20,.09), 0 24px 48px -26px rgba(17,18,20,.28); }
   .tl-g::before { content: ''; position: absolute; z-index: -1; left: var(--lc); right: 0; top: 0; bottom: 0; background: repeating-linear-gradient(90deg, #eef0f2 0 1px, transparent 1px calc(100% / 8)); }
   .tl-hd { display: grid; grid-template-columns: var(--lc) repeat(8, 1fr); align-items: center; border-bottom: 1px solid #eef0f2; font-size: 0.8125rem; font-weight: 600; color: #2a292e; }
-  .tl-hd span { padding-left: 12px; }
+  .tl-hd span { text-align: center; }
   .tl-rw { display: flex; align-items: center; padding-left: 20px; border-bottom: 1px solid #f3f4f6; }
   .tl-rw:last-child { border: 0; }
   .tl-rw small { font-size: 0.6875rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: #9a9da3; }
@@ -1492,19 +1492,18 @@
   .faq-grid > header { position: sticky; top: 112px; }
   .faq-grid > header p { margin-top: 16px; color: var(--muted); font-size: 1.0625rem; line-height: 1.5; max-width: 34ch; }
   .faq-grid > header .btn { margin-top: 26px; }
-  .qs { display: grid; gap: 12px; interpolate-size: allow-keywords; }
-  .qs details { border-radius: 20px; background: #fff; box-shadow: 0 0 0 1px rgba(17,18,20,.06); transition: box-shadow .4s ease; }
-  .qs details:hover { box-shadow: 0 0 0 1px rgba(17,18,20,.12); }
-  .qs summary { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr) 32px; column-gap: 24px; align-items: start; padding: 20px; cursor: pointer; }
+  .qs { display: grid; gap: 16px; interpolate-size: allow-keywords; }
+  .qs details { border-radius: 16px; background: rgba(17,18,20,.045); transition: background .4s ease; }
+  .qs details:hover { background: rgba(17,18,20,.065); }
+  .qs summary { list-style: none; display: grid; grid-template-columns: minmax(0, 1fr) 20px; column-gap: 24px; align-items: start; padding: 26px 30px; cursor: pointer; transition: padding-bottom .55s cubic-bezier(.2,.8,.2,1); }
+  .qs details[open] summary { padding-bottom: 12px; }
   .qs summary::-webkit-details-marker { display: none; }
-  .qs .n { display: block; font: 500 0.875rem/1.25rem ui-monospace, 'SF Mono', Menlo, monospace; color: #e8364f; margin-bottom: 8px; }
-  .qs .q { font-family: Manrope, sans-serif; font-weight: 600; font-size: 1.5rem; line-height: 32px; letter-spacing: -.02em; }
-  .qs .pm { position: relative; width: 32px; height: 32px; border-radius: 50%; border: 1px solid #d1d5db; transition: border-color .3s ease, background .3s ease; }
-  .qs summary:hover .pm { border-color: #9ca3af; }
-  .qs .pm::before, .qs .pm::after { content: ''; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; margin: -.75px 0 0 -6px; border-radius: 1px; background: var(--ink); transition: transform .5s cubic-bezier(.2,.8,.2,1); }
-  .qs .pm::after { transform: rotate(90deg); }
-  .qs details[open] .pm::after { transform: rotate(0deg); }
-  .qs details p { padding: 0 76px 24px 20px; font-size: 1rem; line-height: 24px; opacity: .8; }
+  .qs .q { font-weight: 600; font-size: 1.1875rem; line-height: 28px; letter-spacing: -.01em; color: var(--ink); }
+  /* Chevron que gira suave al abrir */
+  .qs .pm { position: relative; width: 20px; height: 28px; }
+  .qs .pm::before { content: ''; position: absolute; left: 5px; top: 8px; width: 9px; height: 9px; border-right: 2px solid var(--ink); border-bottom: 2px solid var(--ink); border-radius: 0 0 2px 0; transform: rotate(45deg); transition: transform .5s cubic-bezier(.2,.8,.2,1), top .5s cubic-bezier(.2,.8,.2,1); }
+  .qs details[open] .pm::before { top: 12px; transform: rotate(-135deg); }
+  .qs details p { padding: 0 74px 26px 30px; font-size: 1.0625rem; line-height: 28px; color: #6b6e72; }
   .qs details::details-content { block-size: 0; overflow: clip; opacity: 0;
     transition: block-size .55s cubic-bezier(.2,.8,.2,1), opacity .45s ease, content-visibility .55s allow-discrete; }
   .qs details[open]::details-content { block-size: auto; opacity: 1; }
@@ -1552,8 +1551,11 @@
     .faq-grid > header { position: static; }
   }
   @media (max-width: 760px) {
-    .qs .q { font-size: 1.25rem; line-height: 28px; }
-    .qs details p { padding-right: 20px; }
+    .qs summary { padding: 22px 22px; column-gap: 16px; }
+    .qs details[open] summary { padding-bottom: 10px; }
+    .qs .q { font-size: 1.0625rem; line-height: 26px; }
+    .qs .pm { height: 26px; }
+    .qs details p { padding: 0 22px 22px; font-size: 1rem; line-height: 26px; }
     .cierre { padding-top: 190px; }
     .fin form { grid-template-columns: 1fr; margin-top: 56px; }
     .fin form .row { flex-direction: column; align-items: stretch; padding: 4px; }
@@ -1580,7 +1582,6 @@
     .tl-ult b { transform: translateX(calc(-100% + 1px)); }
     .tl-rw small { display: none; }
     .tl-hd { grid-template-columns: 0 repeat(8, 1fr); font-size: 0.7188rem; }
-    .tl-hd span { padding-left: 6px; }
     .tl-bar { height: 36px; padding: 0 9px; font-size: 0.7188rem; }
     .tl-bar::before { display: none; }
     .tl-nota { left: calc((100% + var(--sale)) * 5.6 / 8 * .17 + 12px); top: 300px; }

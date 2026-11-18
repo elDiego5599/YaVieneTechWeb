@@ -19,6 +19,9 @@ document.querySelectorAll('.mnav-x a').forEach(a => a.addEventListener('click', 
   const pon = () => {
     const t = parseFloat(getComputedStyle(nav).getPropertyValue('--t'));
     nav.style.setProperty('--p', Math.max(0, Math.min(scrollY / t, 1)));
+    // Vidrio progresivo: transparente sobre el hero arriba, completo a los 420 px, con entrada y salida suaves
+    const k = Math.max(0, Math.min(scrollY / 420, 1));
+    nav.style.setProperty('--g', k * k * (3 - 2 * k));
     nav.classList.toggle('pin', scrollY >= t);
   };
   addEventListener('resize', pon);
@@ -385,36 +388,20 @@ enVista.observe(escena);
 // Las secciones de abajo aparecen con el mismo observador
 document.querySelectorAll('.rv').forEach(el => enVista.observe(el));
 
-// Proceso: cada tarjeta cuenta su paso al entrar, y al subir la siguiente la de atrás se hunde hacia el fondo
+// Proceso: cada tarjeta cuenta su paso al entrar; en escritorio se quedan arriba y la siguiente sube a taparla
 {
   const caja = document.querySelector('.pasos'), pasos = [...caja.children];
   const ojo = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vio'); ojo.unobserve(e.target); } }), { threshold: .45 });
   pasos.forEach(p => ojo.observe(p));
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    let pend = 0, arriba = 0;
-    const mide = () => {
-      pasos.forEach(p => { p.style.removeProperty('--t'); p.style.removeProperty('--u'); });
-      const alto = Math.max(...pasos.map(p => p.offsetHeight));
-      caja.classList.toggle('apila', innerWidth > 960 && innerHeight >= alto + 140);
-      // Centrada en el espacio que deja libre el menú fijo de arriba
-      const techo = document.querySelector("nav").offsetHeight;
-      arriba = Math.max(techo + 16, techo + (innerHeight - techo - alto) / 2);
-      caja.style.setProperty('--top', arriba + 'px');
-      pinta();
-    };
-    const pinta = () => {
-      pend = 0;
-      if (!caja.classList.contains('apila')) return;
-      const ts = pasos.map((p, i) => {
-        const sig = pasos[i + 1];
-        return sig ? Math.min(1, Math.max(0, 1 - (sig.getBoundingClientRect().top - arriba) / (p.offsetHeight + 60))) : 0;
-      });
-      pasos.forEach((p, i) => { p.style.setProperty('--t', ts[i].toFixed(4)); p.style.setProperty('--u', (ts[i + 1] || 0).toFixed(4)); });
-    };
-    addEventListener('scroll', () => { pend ||= requestAnimationFrame(pinta); }, { passive: true });
-    addEventListener('resize', mide);
-    mide();
-  }
+  const mide = () => {
+    const alto = Math.max(...pasos.map(p => p.offsetHeight));
+    caja.classList.toggle('apila', innerWidth > 960 && innerHeight >= alto + 140);
+    // Centrada en el espacio que deja libre el menú fijo de arriba
+    const techo = document.querySelector("nav").offsetHeight;
+    caja.style.setProperty('--top', techo + 24 + 'px');
+  };
+  addEventListener('resize', mide);
+  mide();
 }
 
 if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -699,10 +686,10 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
   pRg.addEventListener('pointerenter', () => {
     if (barrido || !pRg.classList.contains('seen')) return;
     barrido = arco.animate([
-      { strokeDasharray: '362 503', easing: 'cubic-bezier(.5,0,.75,0)' },
-      { strokeDasharray: '0 503', offset: .3, easing: 'cubic-bezier(.2,.8,.2,1)' },
+      { strokeDasharray: '362 503', easing: 'cubic-bezier(.45,0,.55,1)' },
+      { strokeDasharray: '0 503', offset: .3, easing: 'cubic-bezier(.65,0,.35,1)' },
       { strokeDasharray: '362 503' }
-    ], { duration: 1900 });
+    ], { duration: 3000 });
     const cuenta = () => { if (!barrido) return;
       num.nodeValue = Math.round(parseFloat(getComputedStyle(arco).strokeDasharray) / 503 * 100);
       requestAnimationFrame(cuenta); };
