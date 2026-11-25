@@ -1,5 +1,7 @@
 # Ya Viene Tech — Web
 
+> **Note:** This project targets Barranquilla, Colombia, so its docs and earlier commit history are in Spanish. New commits are in English.
+
 Sitio web de **Ya Viene Tech**, empresa de soluciones informáticas.
 
 ## Contexto
